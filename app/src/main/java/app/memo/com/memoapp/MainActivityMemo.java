@@ -1,6 +1,8 @@
 package app.memo.com.memoapp;
 
+import android.app.SearchManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -155,4 +160,36 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapterMemo.swapCursor(null);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
+        if (searchView != null){
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    return false;
+                }
+            });
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
+
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }

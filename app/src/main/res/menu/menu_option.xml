@@ -7,4 +7,9 @@
         app:showAsAction="always"
         android:id="@+id/ins_fast_note"
         android:title="ok"></item>
+
+    <item
+        app:showAsAction="always"
+        android:title="share"
+        android:icon="@drawable/ic_share"></item>
 </menu>

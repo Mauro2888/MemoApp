@@ -9,16 +9,21 @@
     tools:context="app.memo.com.memoapp.InsertNoteActivity">
 
     <EditText
+        android:inputType="text"
         android:id="@+id/ins_title"
         android:hint="Inserisci Titolo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
+        android:inputType="text"
         android:id="@+id/ins_nota"
         android:hint="Inserisci nota"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
+
 
 
 </LinearLayout>

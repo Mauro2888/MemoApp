@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import app.memo.com.memoapp.database.ContractMemoApp;
 import app.memo.com.memoapp.database.HelperClass;
@@ -28,6 +30,7 @@ public class InsertNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_insert_note);
         mInsTitle = (EditText)findViewById(R.id.ins_title);
         mInsNote = (EditText)findViewById(R.id.ins_nota);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -42,6 +45,9 @@ public class InsertNoteActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.ins_fast_note:
                InsertNote();
+                break;
+            case android.R.id.home:
+                onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -49,10 +55,17 @@ public class InsertNoteActivity extends AppCompatActivity {
     public void InsertNote(){
         mHelper = new HelperClass(getApplicationContext());
         mSQLdata = mHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mInsTitle.getText().toString());
-        contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mInsNote.getText().toString());
-        getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
-        finish();
+        String TitleControl = mInsTitle.getText().toString();
+        String NoteControl = mInsNote.getText().toString();
+        if (TitleControl.isEmpty() && NoteControl.isEmpty()){
+            Toast.makeText(this, "Please Insert a Note", Toast.LENGTH_SHORT).show();
+        }else{
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mInsTitle.getText().toString());
+            contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mInsNote.getText().toString());
+            getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
+            finish();
+        }
+
     }
 }
