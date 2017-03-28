@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="#ECEDF0"
+    android:background="@color/backGroundMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="app.memo.com.memoapp.MainActivityMemo">
@@ -37,6 +37,7 @@
             android:src="@drawable/ic_add"
             app:fab_label="Normal Note"
             app:fab_size="normal"
+            app:fab_colorNormal="@color/colorBtnNormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -44,6 +45,7 @@
             android:id="@+id/floatingActionButtonAddFast"
             android:src="@drawable/ic_add"
             app:fab_size="mini"
+            app:fab_colorNormal="@color/colorBtnFast"
             app:fab_label="Fast note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
