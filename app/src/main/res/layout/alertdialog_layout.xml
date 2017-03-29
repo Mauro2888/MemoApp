@@ -6,13 +6,13 @@
 
     <EditText
         android:id="@+id/ins_title"
-        android:hint="Inserisci Titolo"
+        android:hint="@string/ins_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/ins_nota"
-        android:hint="Inserisci nota"
+        android:hint="@string/ins_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

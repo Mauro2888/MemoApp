@@ -4,16 +4,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_app"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivityMemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.SEARCH">
-                </action>
+                <action android:name="android.intent.action.SEARCH"></action>
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -21,9 +20,10 @@
         <provider
             android:name=".database.ContentProvider"
             android:authorities="app.memo.com.memoapp"
-            android:exported="true"></provider>
+            android:exported="true" />
 
-        <activity android:name=".InsertNoteActivity"></activity>
+        <activity android:name=".InsertNoteActivity" />
+        <activity android:name=".DetailActivity"></activity>
     </application>
 
 </manifest>

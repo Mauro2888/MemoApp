@@ -1,6 +1,7 @@
 package app.memo.com.memoapp;
 
 import android.app.SearchManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,7 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,18 +24,16 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import app.memo.com.memoapp.MemoUtils.MemoUtils;
+import app.memo.com.memoapp.database.ClickItem;
 import app.memo.com.memoapp.database.ContractMemoApp;
 import app.memo.com.memoapp.database.HelperClass;
 
-public class MainActivityMemo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
+public class MainActivityMemo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,ClickItem {
 
     RecyclerView mRecyclerMemo ;
     RecyclerView.LayoutManager mLayoutManager;
     CursorAdapterMemo mAdapterMemo;
-    List<ModelMemo>mListaMemo;
     HelperClass mHelper;
     SQLiteDatabase mSQLdata;
     public static final int LOADER_ID = 111;
@@ -44,23 +41,24 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     com.github.clans.fab.FloatingActionButton mFloatAddNoteFast;
     EditText mInsNota;
     EditText mInsTitle;
-
+    String mMemoDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_memo);
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
-
+        setTitle("Memo List");
         mRecyclerMemo = (RecyclerView)findViewById(R.id.recyclerMemo);
         mFloatAddNote = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAdd);
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerMemo.setHasFixedSize(true);
         mRecyclerMemo.setLayoutManager(mLayoutManager);
-        mListaMemo = new ArrayList<>();
         mAdapterMemo = new CursorAdapterMemo(this);
         mRecyclerMemo.setAdapter(mAdapterMemo);
+        mAdapterMemo.setmClickItem(MainActivityMemo.this);
+        mMemoDate = new MemoUtils().GetDate();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
@@ -96,14 +94,14 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 mInsTitle = (EditText)alertView.findViewById(R.id.ins_title);
                 alert.setView(alertView);
                 alert.setCancelable(false);
-                alert.setTitle("Inserisci la Nota");
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                alert.setTitle(R.string.insert_note_title);
+                alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Empty
                     }
                 });
-                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -123,6 +121,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                         if (!mInsNota.getText().toString().trim().isEmpty() && !mInsTitle.getText().toString().isEmpty()){
                             contentValues.put("title",mInsTitle.getText().toString());
                             contentValues.put("note",mInsNota.getText().toString());
+                            contentValues.put("date",mMemoDate);
                             alertView.getContext().getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
                             dialog.dismiss();
                             mSQLdata.close();
@@ -134,6 +133,15 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
             }
         });
         getSupportLoaderManager().restartLoader(LOADER_ID,null,this);
+    }
+
+    @Override
+    public void OnclickItem(View view, int pos) {
+        Intent DetailActivity = new Intent(MainActivityMemo.this, DetailActivity.class);
+        Uri ContentUri = ContractMemoApp.MemoAppContract.URI_CONTENT;
+        Uri Uri = ContentUris.withAppendedId(ContentUri,pos);
+        DetailActivity.setData(Uri);
+        startActivity(DetailActivity);
     }
 
 

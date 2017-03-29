@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#004d40</color>
-    <color name="colorAccent">#ff6e40</color>
-    <color name="colorBtnFast">#FFEB3B</color>
-    <color name="colorBtnNormal">#FF9800</color>
+    <color name="colorPrimaryDark">#00695C</color>
+    <color name="colorAccent">#FF6E40</color>
+    <color name="colorBtnFast">#4DB6AC</color>
+    <color name="colorBtnNormal">#B2DFDB</color>
     <color name="backGroundMain">#ECEDF0</color>
+    <color name="colorPressedFab">#004D40</color>
+    <color name="colorDateBar">#B2DFDB</color>
 </resources>

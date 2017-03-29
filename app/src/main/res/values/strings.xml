@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MemoApp</string>
+    <string name="ins_title">Title</string>
+    <string name="ins_note">Note</string>
+    <string name="insert_note_title">Insert Memo</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="memo">Memo</string>
+    <string name="memo_detail">Detail Memo</string>
 </resources>

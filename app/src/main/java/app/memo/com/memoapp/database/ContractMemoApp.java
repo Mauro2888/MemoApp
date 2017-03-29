@@ -28,6 +28,7 @@ public class ContractMemoApp {
         public static final String TABLE_NAME = "memo";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_NOTETXT = "note";
+        public static final String COLUMN_DATE = "date";
 
     }
 }
