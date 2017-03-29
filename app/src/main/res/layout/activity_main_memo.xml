@@ -45,15 +45,6 @@
             android:layout_height="wrap_content" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/floatingActionButtonAddReg"
-            android:src="@drawable/ic_record_voice_over"
-            app:fab_label="@string/record_note"
-            app:fab_size="mini"
-            app:fab_colorNormal="@color/colorBtnRecord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/floatingActionButtonAddFast"
             android:src="@drawable/ic_add"
             app:fab_size="mini"
@@ -62,7 +53,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/floatingActionButtonAddReg"
+            android:src="@drawable/ic_record_voice_over"
+            app:fab_label="@string/record_note"
+            app:fab_size="mini"
+            app:fab_colorNormal="@color/colorBtnRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </com.github.clans.fab.FloatingActionMenu>
 

@@ -1,6 +1,7 @@
 package app.memo.com.memoapp;
 
 import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,13 +19,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
 
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
 import app.memo.com.memoapp.database.ClickItem;
@@ -39,9 +48,12 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     public static final int LOADER_ID = 111;
     com.github.clans.fab.FloatingActionButton mFloatAddNote;
     com.github.clans.fab.FloatingActionButton mFloatAddNoteFast;
+    com.github.clans.fab.FloatingActionButton mFloatAddNoteReg;
     EditText mInsNota;
     EditText mInsTitle;
-    String mMemoDate;
+
+    private static final int REQUEST_CODE = 1022;
+    private ContentValues contentValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +64,18 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mRecyclerMemo = (RecyclerView)findViewById(R.id.recyclerMemo);
         mFloatAddNote = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAdd);
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
+        mFloatAddNoteReg = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddReg);
+
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerMemo.setHasFixedSize(true);
         mRecyclerMemo.setLayoutManager(mLayoutManager);
         mAdapterMemo = new CursorAdapterMemo(this);
         mRecyclerMemo.setAdapter(mAdapterMemo);
         mAdapterMemo.setmClickItem(MainActivityMemo.this);
-        mMemoDate = new MemoUtils().GetDate();
+        mHelper = new HelperClass(this);
+        mSQLdata = mHelper.getWritableDatabase();
+        contentValues = new ContentValues();
+
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
@@ -74,6 +91,13 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
             }
         }).attachToRecyclerView(mRecyclerMemo);
+
+        mFloatAddNoteReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SpeechToText();
+            }
+        });
 
 
 
@@ -114,14 +138,11 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
                     @Override
                     public void onClick(View view) {
-                        mHelper = new HelperClass(getApplicationContext());
-                        mSQLdata = mHelper.getWritableDatabase();
-                        ContentValues contentValues = new ContentValues();
 
-                        if (!mInsNota.getText().toString().trim().isEmpty() && !mInsTitle.getText().toString().isEmpty()){
+                        if (!mInsNota.getText().toString().trim().isEmpty() && !mInsTitle.getText().toString().trim().isEmpty()){
                             contentValues.put("title",mInsTitle.getText().toString());
                             contentValues.put("note",mInsNota.getText().toString());
-                            contentValues.put("date",mMemoDate);
+                            contentValues.put("date",new MemoUtils().GetDate());
                             alertView.getContext().getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
                             dialog.dismiss();
                             mSQLdata.close();
@@ -185,10 +206,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-
                     return false;
                 }
-
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     return false;
@@ -200,4 +219,31 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         return super.onCreateOptionsMenu(menu);
     }
 
+    public void SpeechToText(){
+        Intent speech = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        speech.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        speech.putExtra(RecognizerIntent.EXTRA_LANGUAGE,Locale.ITALIAN);
+        speech.putExtra(RecognizerIntent.EXTRA_PROMPT,"Speak Someting...");
+        try {
+            startActivityForResult(speech, REQUEST_CODE);
+        }catch (ActivityNotFoundException a){
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case REQUEST_CODE:
+                if (resultCode == RESULT_OK && null != data){
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    contentValues.put("title","Vocal Note");
+                    contentValues.put("note",result.get(0).toString());
+                    contentValues.put("date",new MemoUtils().GetDate());
+                    getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
+                }
+                break;
+        }
+    }
 }

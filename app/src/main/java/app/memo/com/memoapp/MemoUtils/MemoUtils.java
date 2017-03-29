@@ -1,12 +1,15 @@
 package app.memo.com.memoapp.MemoUtils;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.speech.RecognizerIntent;
 
 import com.bumptech.glide.util.Util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -23,5 +26,6 @@ public class MemoUtils {
         String date = dateFormat.format(Calendar.getInstance().getTime());
         return date;
     }
+
 
 }

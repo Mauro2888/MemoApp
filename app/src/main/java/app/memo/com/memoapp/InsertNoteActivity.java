@@ -1,13 +1,20 @@
 package app.memo.com.memoapp;
 
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
 import app.memo.com.memoapp.database.ContractMemoApp;
@@ -20,6 +27,9 @@ public class InsertNoteActivity extends AppCompatActivity {
     public SQLiteDatabase  mSQLdata;
     private HelperClass  mHelper;
     String mMemoDate;
+    private static final int REQUEST_CODE = 1022;
+    ContentValues contentValues;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +40,10 @@ public class InsertNoteActivity extends AppCompatActivity {
         mInsNote = (EditText)findViewById(R.id.ins_nota);
         mMemoDate = new MemoUtils().GetDate();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mHelper = new HelperClass(getApplicationContext());
+        mSQLdata = mHelper.getWritableDatabase();
+        contentValues = new ContentValues();
+
     }
 
     @Override
@@ -51,14 +65,11 @@ public class InsertNoteActivity extends AppCompatActivity {
     }
 
     public void InsertNote(){
-        mHelper = new HelperClass(getApplicationContext());
-        mSQLdata = mHelper.getWritableDatabase();
         String TitleControl = mInsTitle.getText().toString();
         String NoteControl = mInsNote.getText().toString();
         if (TitleControl.isEmpty() && NoteControl.isEmpty()){
             Toast.makeText(this, "Please Insert a Note", Toast.LENGTH_SHORT).show();
         }else{
-            ContentValues contentValues = new ContentValues();
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mInsTitle.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mInsNote.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE,mMemoDate);
@@ -66,6 +77,5 @@ public class InsertNoteActivity extends AppCompatActivity {
             finish();
         }
     }
-
 
 }

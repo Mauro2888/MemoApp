@@ -58,12 +58,11 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         String dateNote = mCursor.getString(date);
         int posId = mCursor.getInt(id);
 
-
         holder.itemView.setTag(posId);
+
         holder.mTitleNote.setText(titleNote);
         holder.mNoteText.setText(noteTxt);
         holder.mDateBox.setText(dateNote);
-
 
     }
 
