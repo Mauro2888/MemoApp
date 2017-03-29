@@ -19,7 +19,7 @@ public class MemoUtils {
 
     }
     public String GetDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy , HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy , HH:mm");
         String date = dateFormat.format(Calendar.getInstance().getTime());
         return date;
     }

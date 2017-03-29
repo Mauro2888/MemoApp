@@ -7,4 +7,7 @@
     <string name="cancel">Cancel</string>
     <string name="memo">Memo</string>
     <string name="memo_detail">Detail Memo</string>
+    <string name="record_note">Record Note</string>
+    <string name="fast_note">Fast Note</string>
+    <string name="normal_note">Normal Note</string>
 </resources>

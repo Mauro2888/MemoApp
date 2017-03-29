@@ -13,19 +13,24 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         app:cardElevation="2dp"
         app:cardUseCompatPadding="true"
-        android:layout_height="120dp">
+        android:layout_height="@dimen/cardHeight">
         <TextView
+            android:background="@color/colorDateBar"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dateBoxSize" />
+        <TextView
+            android:textColor="@color/colorTextDate"
             android:paddingRight="@dimen/TextSpace"
             android:textAlignment="textEnd"
             android:gravity="end"
             android:textSize="@dimen/dateBoxText"
             android:hint="date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:id="@+id/timebox"
-            android:background="@color/colorDateBar"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dateBoxSize" />
+            android:layout_height="20sp" />
         <LinearLayout
             android:layout_marginLeft="@dimen/TextSpace"
             android:id="@+id/layout"

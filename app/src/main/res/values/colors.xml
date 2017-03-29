@@ -8,4 +8,6 @@
     <color name="backGroundMain">#ECEDF0</color>
     <color name="colorPressedFab">#004D40</color>
     <color name="colorDateBar">#B2DFDB</color>
+    <color name="colorTextDate">#7b353535</color>
+    <color name="colorBtnRecord">#F44336</color>
 </resources>

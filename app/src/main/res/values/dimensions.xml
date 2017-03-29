@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="dateBoxText">13sp</dimen>
+    <dimen name="dateBoxText">12sp</dimen>
     <dimen name="TextSpace">8dp</dimen>
-    <dimen name="dateBoxSize">22dp</dimen>
+    <dimen name="dateBoxSize">4dp</dimen>
+    <dimen name="cardHeight">130dp</dimen>
 
 </resources>

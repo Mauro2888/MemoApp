@@ -30,6 +30,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        app:menu_openDirection="up"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
@@ -37,9 +38,18 @@
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/floatingActionButtonAdd"
             android:src="@drawable/ic_add"
-            app:fab_label="Normal Note"
+            app:fab_label="@string/normal_note"
             app:fab_size="normal"
             app:fab_colorNormal="@color/colorBtnNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/floatingActionButtonAddReg"
+            android:src="@drawable/ic_record_voice_over"
+            app:fab_label="@string/record_note"
+            app:fab_size="mini"
+            app:fab_colorNormal="@color/colorBtnRecord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -48,9 +58,11 @@
             android:src="@drawable/ic_add"
             app:fab_size="mini"
             app:fab_colorNormal="@color/colorBtnFast"
-            app:fab_label="Fast note"
+            app:fab_label="@string/fast_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+
 
     </com.github.clans.fab.FloatingActionMenu>
 
