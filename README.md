@@ -1,3 +1,3 @@
 # MemoApp
-Fast and easy implementation of Memo application
--Alpha stage
+Color Memo application 
+- Alpha stage 1.0
