@@ -1,3 +1,8 @@
 # MemoApp
 Color Memo application 
-- Alpha stage 1.0
+- Now Alpha stage 1.1
+
+1.1
+- Added Color Picker
+- DetailActivity for modify Note
+- Added Speech to Text function (Basic)
