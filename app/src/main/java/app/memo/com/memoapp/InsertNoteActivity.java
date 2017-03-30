@@ -4,13 +4,19 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,9 +35,10 @@ public class InsertNoteActivity extends AppCompatActivity {
     String mMemoDate;
     private static final int REQUEST_CODE = 1022;
     ContentValues contentValues;
+    private ImageButton mBtnColorPicker;
+    private ImageView mColorSelected;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_note);
@@ -43,8 +50,18 @@ public class InsertNoteActivity extends AppCompatActivity {
         mHelper = new HelperClass(getApplicationContext());
         mSQLdata = mHelper.getWritableDatabase();
         contentValues = new ContentValues();
-
+        mBtnColorPicker = (ImageButton)findViewById(R.id.pickerColor) ;
+        mColorSelected = (ImageView)findViewById(R.id.colorSelected);
+        mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MemoUtils().ColorPicker(InsertNoteActivity.this);
+                mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                mColorSelected.setVisibility(View.VISIBLE);
+            }
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,9 +90,11 @@ public class InsertNoteActivity extends AppCompatActivity {
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mInsTitle.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mInsNote.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE,mMemoDate);
+            contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(InsertNoteActivity.this,"colorSaved",0));
             getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
             finish();
         }
     }
+
 
 }

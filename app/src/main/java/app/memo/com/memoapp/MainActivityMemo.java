@@ -23,14 +23,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.NumberPicker;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
@@ -40,18 +39,17 @@ import app.memo.com.memoapp.database.HelperClass;
 
 public class MainActivityMemo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,ClickItem {
 
-    RecyclerView mRecyclerMemo ;
-    RecyclerView.LayoutManager mLayoutManager;
-    CursorAdapterMemo mAdapterMemo;
+    private RecyclerView mRecyclerMemo ;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private CursorAdapterMemo mAdapterMemo;
     HelperClass mHelper;
     SQLiteDatabase mSQLdata;
     public static final int LOADER_ID = 111;
-    com.github.clans.fab.FloatingActionButton mFloatAddNote;
-    com.github.clans.fab.FloatingActionButton mFloatAddNoteFast;
-    com.github.clans.fab.FloatingActionButton mFloatAddNoteReg;
-    EditText mInsNota;
-    EditText mInsTitle;
-
+    private com.github.clans.fab.FloatingActionButton mFloatAddNote;
+    private com.github.clans.fab.FloatingActionButton mFloatAddNoteFast;
+    private com.github.clans.fab.FloatingActionButton mFloatAddNoteReg;
+    private EditText mInsNota;
+    private EditText mInsTitle;
     private static final int REQUEST_CODE = 1022;
     private ContentValues contentValues;
 
@@ -65,6 +63,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mFloatAddNote = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAdd);
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
         mFloatAddNoteReg = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddReg);
+
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerMemo.setHasFixedSize(true);
@@ -116,6 +115,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 final View alertView = getLayoutInflater().inflate(R.layout.alertdialog_layout,null);
                 mInsNota = (EditText)alertView.findViewById(R.id.ins_nota);
                 mInsTitle = (EditText)alertView.findViewById(R.id.ins_title);
+
                 alert.setView(alertView);
                 alert.setCancelable(false);
                 alert.setTitle(R.string.insert_note_title);
@@ -143,6 +143,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                             contentValues.put("title",mInsTitle.getText().toString());
                             contentValues.put("note",mInsNota.getText().toString());
                             contentValues.put("date",new MemoUtils().GetDate());
+                            contentValues.put("color",new MemoUtils().random());
                             alertView.getContext().getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
                             dialog.dismiss();
                             mSQLdata.close();
@@ -223,7 +224,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         Intent speech = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speech.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speech.putExtra(RecognizerIntent.EXTRA_LANGUAGE,Locale.ITALIAN);
-        speech.putExtra(RecognizerIntent.EXTRA_PROMPT,"Speak Someting...");
+        speech.putExtra(RecognizerIntent.EXTRA_PROMPT,"Speak Something...");
         try {
             startActivityForResult(speech, REQUEST_CODE);
         }catch (ActivityNotFoundException a){
@@ -238,7 +239,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
             case REQUEST_CODE:
                 if (resultCode == RESULT_OK && null != data){
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    contentValues.put("title","Vocal Note");
+                    contentValues.put("title","Vocal Memo");
                     contentValues.put("note",result.get(0).toString());
                     contentValues.put("date",new MemoUtils().GetDate());
                     getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);

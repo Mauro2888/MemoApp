@@ -15,9 +15,7 @@
             android:id="@+id/recyclerMemo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteY="6dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            tools:layout_editor_absoluteY="6dp">
         </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>

@@ -26,7 +26,8 @@ public class HelperClass extends SQLiteOpenHelper {
                 ContractMemoApp.MemoAppContract._ID + " INTEGER PRIMARY KEY, " +
                 ContractMemoApp.MemoAppContract.COLUMN_TITLE + " TEXT NOT NULL, " +
                 ContractMemoApp.MemoAppContract.COLUMN_NOTETXT + " TEXT NOT NULL, " +
-                ContractMemoApp.MemoAppContract.COLUMN_DATE + " TEXT " +
+                ContractMemoApp.MemoAppContract.COLUMN_DATE + " TEXT, " +
+                ContractMemoApp.MemoAppContract.COLUMN_COLOR + " INTEGER " +
                 ")";
         sqLiteDatabase.execSQL(create_dataBase);
 

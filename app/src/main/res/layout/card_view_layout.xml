@@ -14,11 +14,24 @@
         app:cardElevation="2dp"
         app:cardUseCompatPadding="true"
         android:layout_height="@dimen/cardHeight">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/colorBarMain"
+                android:background="@color/colorDateBar"
+                android:layout_gravity="bottom"
+                android:layout_width="10dp"
+                android:layout_height="150dp" />
+        </LinearLayout>
+
         <TextView
+            android:id="@+id/colorBarMain2"
             android:background="@color/colorDateBar"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dateBoxSize" />
+            android:layout_height="2dp" />
         <TextView
             android:textColor="@color/colorTextDate"
             android:paddingRight="@dimen/TextSpace"
@@ -39,13 +52,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:padding="@dimen/paddingLeft"
+                android:inputType="textCapSentences"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:padding="2dp"
                 android:id="@+id/noteTitle"
                 tools:text="@string/ins_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
+                android:layout_marginLeft="@dimen/TextSpace"
+                android:inputType="textCapSentences"
                 android:id="@+id/noteText"
                 android:layout_weight="1"
                 android:layout_width="match_parent"

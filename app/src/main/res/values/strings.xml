@@ -11,4 +11,5 @@
     <string name="fast_note">Fast Note</string>
     <string name="normal_note">Normal Note</string>
     <string name="vocal_note">Vocal Note</string>
+    <string name="choose_color">Choose Note color :</string>
 </resources>

@@ -51,19 +51,21 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         int title = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_TITLE);
         int note = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT);
         int date = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_DATE);
+        int color = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_COLOR);
         mCursor.moveToPosition(position);
 
         String titleNote = mCursor.getString(title);
         String noteTxt = mCursor.getString(note);
         String dateNote = mCursor.getString(date);
+        int colorNote = mCursor.getInt(color);
         int posId = mCursor.getInt(id);
 
         holder.itemView.setTag(posId);
-
         holder.mTitleNote.setText(titleNote);
         holder.mNoteText.setText(noteTxt);
         holder.mDateBox.setText(dateNote);
-
+        holder.mColorBox1.setBackgroundColor(colorNote);
+        holder.mColorBox2.setBackgroundColor(colorNote);
     }
 
     @Override
@@ -93,6 +95,8 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         TextView mTitleNote;
         TextView mNoteText;
         TextView mDateBox;
+        TextView mColorBox1;
+        TextView mColorBox2;
 
         public ViewHolderMemo(View itemView) {
             super(itemView);
@@ -100,6 +104,8 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             mTitleNote = (TextView)itemView.findViewById(R.id.noteTitle);
             mNoteText = (TextView)itemView.findViewById(R.id.noteText);
             mDateBox = (TextView)itemView.findViewById(R.id.timebox);
+            mColorBox1 = (TextView)itemView.findViewById(R.id.colorBarMain);
+            mColorBox2 = (TextView)itemView.findViewById(R.id.colorBarMain2);
         }
 
         @Override

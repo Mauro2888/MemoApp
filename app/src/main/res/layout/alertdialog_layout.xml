@@ -5,15 +5,18 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:inputType="textCapSentences"
         android:id="@+id/ins_title"
         android:hint="@string/ins_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
+        android:inputType="textCapSentences"
         android:id="@+id/ins_nota"
         android:hint="@string/ins_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 
 </LinearLayout>

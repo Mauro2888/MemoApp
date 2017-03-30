@@ -29,6 +29,7 @@ public class ContractMemoApp {
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_NOTETXT = "note";
         public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_COLOR = "color";
 
     }
 }
