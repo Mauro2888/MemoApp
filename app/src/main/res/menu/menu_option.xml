@@ -5,7 +5,7 @@
     <item
         android:icon="@drawable/ic_action_tick"
         app:showAsAction="always"
-        android:id="@+id/ins_fast_note"
+        android:id="@+id/ins_note_menu"
         android:title="ok"></item>
 
     <item

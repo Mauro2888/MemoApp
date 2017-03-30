@@ -17,17 +17,17 @@
         <ImageView
             android:visibility="invisible"
             android:id="@+id/colorSelected"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="10dp"
+            android:layout_height="match_parent" />
 
         <TextView
+            android:layout_marginLeft="@dimen/TextSpace"
             android:layout_marginTop="15dp"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:text="@string/choose_color"
-            android:textAlignment="center"
             android:textStyle="italic" />
 
         <ImageButton

@@ -7,9 +7,9 @@
     <string name="cancel">Cancel</string>
     <string name="memo">Memo</string>
     <string name="memo_detail">Detail Memo</string>
-    <string name="record_note">Record Note</string>
+    <string name="record_note">Speech to Text</string>
     <string name="fast_note">Fast Note</string>
-    <string name="normal_note">Normal Note</string>
+    <string name="normal_note">Note</string>
     <string name="vocal_note">Vocal Note</string>
     <string name="choose_color">Choose Note color :</string>
 </resources>

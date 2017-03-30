@@ -2,6 +2,7 @@ package app.memo.com.memoapp;
 
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
@@ -18,6 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorChangedListener;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -55,9 +61,33 @@ public class InsertNoteActivity extends AppCompatActivity {
         mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MemoUtils().ColorPicker(InsertNoteActivity.this);
-                mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
-                mColorSelected.setVisibility(View.VISIBLE);
+                ColorPickerDialogBuilder
+                        .with(InsertNoteActivity.this)
+                        .setTitle("Choose color")
+                        .initialColor(0xffffffff)
+                        .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+                        .density(12)
+                        .setOnColorChangedListener(new OnColorChangedListener() {
+                            @Override
+                            public void onColorChanged(int selectedColor) {
+                            }
+                        })
+                        .setPositiveButton("ok", new ColorPickerClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int selectedColor, Integer[] selectedColors) {
+                                new MemoUtils().PreferenceSave(InsertNoteActivity.this,"colorSaved",selectedColor);
+                                mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                                mColorSelected.setVisibility(View.VISIBLE);
+                            }
+                        })
+                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .build()
+                        .show();
             }
         });
     }
@@ -72,7 +102,7 @@ public class InsertNoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()){
-            case R.id.ins_fast_note:
+            case R.id.ins_note_menu:
                InsertNote();
                 break;
             case android.R.id.home:
@@ -95,6 +125,5 @@ public class InsertNoteActivity extends AppCompatActivity {
             finish();
         }
     }
-
 
 }

@@ -39,7 +39,7 @@
             android:gravity="end"
             android:textSize="@dimen/dateBoxText"
             android:hint="date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="italic"
             android:id="@+id/timebox"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:id="@+id/noteTitle"
                 tools:text="@string/ins_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginLeft="@dimen/TextSpace"

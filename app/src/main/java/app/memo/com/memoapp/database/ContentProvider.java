@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import static android.R.attr.id;
+
 /**
  * Created by Msi-Locale on 27/03/2017.
  */
@@ -75,11 +77,22 @@ public class ContentProvider extends android.content.ContentProvider {
                     null,
                     sortOrds);
             break;
+            case SELECT_ROW:
+                selection = ContractMemoApp.MemoAppContract._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                cursor = mSQLite.query(
+                        ContractMemoApp.MemoAppContract.TABLE_NAME,
+                        projector,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrds);
+                break;
             default:
                 throw new IllegalArgumentException("Errore query" + uri);
         }
         cursor.setNotificationUri(getContext().getContentResolver(),uri);
-
         return cursor;
     }
 
@@ -122,12 +135,13 @@ public class ContentProvider extends android.content.ContentProvider {
                         selectionArgs);
                 break;
             case SELECT_ROW:
-                selection = ContractMemoApp.MemoAppContract._ID + "= ?";
-                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                String id = uri.getPathSegments().get(1);
+                String mSel = ContractMemoApp.MemoAppContract._ID + "= ? ";
+                String[] mSelectionArgs = new String[]{id};
                 returned = mSQLite.update(ContractMemoApp.MemoAppContract.TABLE_NAME,
                         contentValues,
-                        selection,
-                        selectionArgs);
+                        mSel,
+                        mSelectionArgs);
         }
         getContext().getContentResolver().notifyChange(uri,null);
         return returned;

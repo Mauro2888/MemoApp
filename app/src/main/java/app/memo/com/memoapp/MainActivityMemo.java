@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,12 +18,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -36,6 +32,8 @@ import app.memo.com.memoapp.MemoUtils.MemoUtils;
 import app.memo.com.memoapp.database.ClickItem;
 import app.memo.com.memoapp.database.ContractMemoApp;
 import app.memo.com.memoapp.database.HelperClass;
+
+import static app.memo.com.memoapp.database.ContractMemoApp.MemoAppContract.URI_CONTENT;
 
 public class MainActivityMemo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,ClickItem {
 
@@ -75,7 +73,6 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mSQLdata = mHelper.getWritableDatabase();
         contentValues = new ContentValues();
 
-
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -85,7 +82,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = (int) viewHolder.itemView.getTag();
-                Uri Uri = ContractMemoApp.MemoAppContract.URI_CONTENT.buildUpon().appendPath(String.valueOf(pos)).build();
+                Uri Uri = URI_CONTENT.buildUpon().appendPath(String.valueOf(pos)).build();
                 getContentResolver().delete(Uri,null,null);
 
             }
@@ -144,7 +141,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                             contentValues.put("note",mInsNota.getText().toString());
                             contentValues.put("date",new MemoUtils().GetDate());
                             contentValues.put("color",new MemoUtils().random());
-                            alertView.getContext().getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
+                            alertView.getContext().getContentResolver().insert(URI_CONTENT,contentValues);
                             dialog.dismiss();
                             mSQLdata.close();
                         }else {
@@ -160,12 +157,11 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     @Override
     public void OnclickItem(View view, int pos) {
         Intent DetailActivity = new Intent(MainActivityMemo.this, DetailActivity.class);
-        Uri ContentUri = ContractMemoApp.MemoAppContract.URI_CONTENT;
-        Uri Uri = ContentUris.withAppendedId(ContentUri,pos);
+        pos = (int) view.getTag();
+        Uri Uri = URI_CONTENT.withAppendedPath(URI_CONTENT, String.valueOf(pos));
         DetailActivity.setData(Uri);
         startActivity(DetailActivity);
     }
-
 
     @Override
     protected void onResume() {
@@ -175,7 +171,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri Url = ContractMemoApp.MemoAppContract.URI_CONTENT;
+        Uri Url = URI_CONTENT;
         CursorLoader cursorLoader = new CursorLoader(this,Url,null,null,null,null);
         return cursorLoader;
     }
@@ -242,7 +238,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                     contentValues.put("title","Vocal Memo");
                     contentValues.put("note",result.get(0).toString());
                     contentValues.put("date",new MemoUtils().GetDate());
-                    getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
+                    contentValues.put("color",new MemoUtils().random());
+                    getContentResolver().insert(URI_CONTENT,contentValues);
                 }
                 break;
         }
