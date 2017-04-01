@@ -2,7 +2,6 @@ package app.memo.com.memoapp;
 
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,10 +9,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -22,33 +24,30 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
 import app.memo.com.memoapp.database.ClickItem;
-import app.memo.com.memoapp.database.ContractMemoApp;
 import app.memo.com.memoapp.database.HelperClass;
 
 import static app.memo.com.memoapp.database.ContractMemoApp.MemoAppContract.URI_CONTENT;
 
 public class MainActivityMemo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,ClickItem {
 
+    public static final int LOADER_ID = 111;
+    private static final int REQUEST_CODE = 1022;
+    HelperClass mHelper;
+    SQLiteDatabase mSQLdata;
     private RecyclerView mRecyclerMemo ;
     private RecyclerView.LayoutManager mLayoutManager;
     private CursorAdapterMemo mAdapterMemo;
-    HelperClass mHelper;
-    SQLiteDatabase mSQLdata;
-    public static final int LOADER_ID = 111;
     private com.github.clans.fab.FloatingActionButton mFloatAddNote;
     private com.github.clans.fab.FloatingActionButton mFloatAddNoteFast;
     private com.github.clans.fab.FloatingActionButton mFloatAddNoteReg;
     private EditText mInsNota;
     private EditText mInsTitle;
-    private static final int REQUEST_CODE = 1022;
     private ContentValues contentValues;
 
     @Override
@@ -57,18 +56,20 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         setContentView(R.layout.activity_main_memo);
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
         setTitle("Memo List");
+
         mRecyclerMemo = (RecyclerView)findViewById(R.id.recyclerMemo);
         mFloatAddNote = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAdd);
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
         mFloatAddNoteReg = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddReg);
-
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerMemo.setHasFixedSize(true);
         mRecyclerMemo.setLayoutManager(mLayoutManager);
         mAdapterMemo = new CursorAdapterMemo(this);
         mRecyclerMemo.setAdapter(mAdapterMemo);
+
         mAdapterMemo.setmClickItem(MainActivityMemo.this);
+
         mHelper = new HelperClass(this);
         mSQLdata = mHelper.getWritableDatabase();
         contentValues = new ContentValues();
@@ -158,7 +159,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     public void OnclickItem(View view, int pos) {
         Intent DetailActivity = new Intent(MainActivityMemo.this, DetailActivity.class);
         pos = (int) view.getTag();
-        Uri Uri = URI_CONTENT.withAppendedPath(URI_CONTENT, String.valueOf(pos));
+        Uri Uri = android.net.Uri.withAppendedPath(URI_CONTENT, String.valueOf(pos));
         DetailActivity.setData(Uri);
         startActivity(DetailActivity);
     }

@@ -1,20 +1,14 @@
 package app.memo.com.memoapp;
 
-import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.speech.RecognizerIntent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,22 +19,19 @@ import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
-import java.util.ArrayList;
-import java.util.Locale;
-
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
 import app.memo.com.memoapp.database.ContractMemoApp;
 import app.memo.com.memoapp.database.HelperClass;
 
 public class InsertNoteActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE = 1022;
+    public SQLiteDatabase  mSQLdata;
+    String mMemoDate;
+    ContentValues contentValues;
     private EditText mInsTitle;
     private EditText mInsNote;
-    public SQLiteDatabase  mSQLdata;
-    private HelperClass  mHelper;
-    String mMemoDate;
-    private static final int REQUEST_CODE = 1022;
-    ContentValues contentValues;
+    private HelperClass mHelper;
     private ImageButton mBtnColorPicker;
     private ImageView mColorSelected;
 
@@ -50,12 +41,16 @@ public class InsertNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_insert_note);
         setTitle(R.string.memo);
         mInsTitle = (EditText)findViewById(R.id.ins_title);
+        mInsTitle.setTypeface(null, Typeface.BOLD);
+
         mInsNote = (EditText)findViewById(R.id.ins_nota);
         mMemoDate = new MemoUtils().GetDate();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mHelper = new HelperClass(getApplicationContext());
         mSQLdata = mHelper.getWritableDatabase();
         contentValues = new ContentValues();
+
+
         mBtnColorPicker = (ImageButton)findViewById(R.id.pickerColor) ;
         mColorSelected = (ImageView)findViewById(R.id.colorSelected);
         mBtnColorPicker.setOnClickListener(new View.OnClickListener() {

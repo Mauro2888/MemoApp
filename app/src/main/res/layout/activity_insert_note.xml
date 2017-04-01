@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:padding="20dp"
     android:id="@+id/activity_note"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
     tools:context="app.memo.com.memoapp.InsertNoteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <ImageView
-            android:visibility="invisible"
             android:id="@+id/colorSelected"
             android:layout_width="10dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
 
         <TextView
-            android:layout_marginLeft="@dimen/TextSpace"
-            android:layout_marginTop="15dp"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/TextSpace"
+            android:layout_marginTop="15dp"
             android:layout_weight="0.9"
             android:text="@string/choose_color"
             android:textStyle="italic" />
@@ -39,17 +38,19 @@
     </LinearLayout>
 
     <EditText
-        android:inputType="textCapSentences"
         android:id="@+id/ins_title"
-        android:hint="@string/ins_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="@string/ins_title"
+        android:inputType="textCapSentences|textMultiLine" />
 
     <EditText
-        android:inputType="textCapSentences"
         android:id="@+id/ins_nota"
-        android:hint="@string/ins_note"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="@string/ins_note"
+        android:inputType="textCapSentences|textMultiLine"
+        android:isScrollContainer="true" />
+
 
 </LinearLayout>

@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="20dp"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <EditText
-        android:inputType="textCapSentences"
         android:id="@+id/ins_title"
-        android:hint="@string/ins_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="@string/ins_title"
+        android:inputType="textCapSentences|textMultiLine" />
 
     <EditText
-        android:inputType="textCapSentences"
         android:id="@+id/ins_nota"
-        android:hint="@string/ins_note"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="@string/ins_note"
+        android:inputType="textCapSentences|textMultiLine" />
 
 
 </LinearLayout>

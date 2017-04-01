@@ -3,17 +3,13 @@ package app.memo.com.memoapp;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import app.memo.com.memoapp.MemoUtils.MemoUtils;
 import app.memo.com.memoapp.database.ClickItem;
 import app.memo.com.memoapp.database.ContractMemoApp;
 
@@ -27,12 +23,12 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
     Cursor mCursor;
     ClickItem mClickItem;
 
-    public void setmClickItem(ClickItem mClickItem) {
-        this.mClickItem = mClickItem;
-    }
-
     public CursorAdapterMemo(Context context) {
         this.mContext = context;
+    }
+
+    public void setmClickItem(ClickItem mClickItem) {
+        this.mClickItem = mClickItem;
     }
 
     @Override
@@ -66,6 +62,8 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         holder.mDateBox.setText(dateNote);
         holder.mColorBox1.setBackgroundColor(colorNote);
         holder.mColorBox2.setBackgroundColor(colorNote);
+
+
     }
 
     @Override
@@ -95,8 +93,9 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         TextView mTitleNote;
         TextView mNoteText;
         TextView mDateBox;
-        TextView mColorBox1;
+        ImageButton mColorBox1;
         TextView mColorBox2;
+
 
         public ViewHolderMemo(View itemView) {
             super(itemView);
@@ -104,8 +103,9 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             mTitleNote = (TextView)itemView.findViewById(R.id.noteTitle);
             mNoteText = (TextView)itemView.findViewById(R.id.noteText);
             mDateBox = (TextView)itemView.findViewById(R.id.timebox);
-            mColorBox1 = (TextView)itemView.findViewById(R.id.colorBarMain);
+            mColorBox1 = (ImageButton) itemView.findViewById(R.id.colorBarMain);
             mColorBox2 = (TextView)itemView.findViewById(R.id.colorBarMain2);
+            mNoteText.setMovementMethod(new ScrollingMovementMethod());
         }
 
         @Override
@@ -113,7 +113,6 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             if (mClickItem != null){
                 mClickItem.OnclickItem(view,getAdapterPosition());
             }
-
         }
     }
 }
