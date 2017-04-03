@@ -8,11 +8,28 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppThemeSize" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarSize">45dp</item>
+
+    <style name="AppThemeBarSize" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarSize">50dp</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="EditTextStyleNote" parent="Widget.AppCompat.EditText">
+        <item name="android:padding">20dp</item>
+        <item name="background">@null</item>
+        <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
+    </style>
+
+    <style name="TextViewStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:padding">16dp</item>
+        <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
+    </style>
+
+    <style name="CustomAlert" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/shape_alert</item>
+    </style>
+
 
 </resources>

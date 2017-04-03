@@ -1,4 +1,4 @@
-package app.memo.com.memoapp;
+package app.memo.com.memoapp.Database;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import app.memo.com.memoapp.database.ClickItem;
-import app.memo.com.memoapp.database.ContractMemoApp;
+import app.memo.com.memoapp.R;
 
 /**
  * Created by Msi-Locale on 26/03/2017.
@@ -106,6 +105,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             mColorBox1 = (ImageButton) itemView.findViewById(R.id.colorBarMain);
             mColorBox2 = (TextView)itemView.findViewById(R.id.colorBarMain2);
             mNoteText.setMovementMethod(new ScrollingMovementMethod());
+
         }
 
         @Override

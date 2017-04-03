@@ -1,4 +1,4 @@
-package app.memo.com.memoapp;
+package app.memo.com.memoapp.UI;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -19,9 +19,10 @@ import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
+import app.memo.com.memoapp.Database.ContractMemoApp;
+import app.memo.com.memoapp.Database.HelperClass;
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
-import app.memo.com.memoapp.database.ContractMemoApp;
-import app.memo.com.memoapp.database.HelperClass;
+import app.memo.com.memoapp.R;
 
 public class InsertNoteActivity extends AppCompatActivity {
 
@@ -86,7 +87,6 @@ public class InsertNoteActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

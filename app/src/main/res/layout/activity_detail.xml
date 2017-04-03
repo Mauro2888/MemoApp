@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context="app.memo.com.memoapp.DetailActivity">
+    tools:context="app.memo.com.memoapp.UI.DetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,18 +14,16 @@
 
         <ImageView
             android:id="@+id/colorSelected"
-            android:layout_width="10dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/textView"
+            style="@style/TextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/TextSpace"
-            android:layout_marginTop="15dp"
             android:layout_weight="0.9"
-            android:text="@string/change_color"
-            android:textStyle="italic" />
+            android:text="@string/change_color" />
 
         <ImageButton
             android:id="@+id/pickerColor"
@@ -38,6 +36,7 @@
 
     <EditText
         android:id="@+id/ins_title_detail"
+        style="@style/EditTextStyleNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/ins_title"
@@ -45,8 +44,11 @@
 
     <EditText
         android:id="@+id/ins_nota_detail"
+        style="@style/EditTextStyleNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoLink="all"
+        android:background="@null"
         android:hint="@string/ins_note"
         android:inputType="textCapSentences|textMultiLine"
         android:isScrollContainer="true" />

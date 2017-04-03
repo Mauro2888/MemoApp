@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context="app.memo.com.memoapp.InsertNoteActivity">
+    tools:context="app.memo.com.memoapp.UI.InsertNoteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,30 +15,30 @@
 
         <ImageView
             android:id="@+id/colorSelected"
-            android:layout_width="10dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textView"
+            style="@style/TextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/TextSpace"
-            android:layout_marginTop="15dp"
             android:layout_weight="0.9"
-            android:text="@string/choose_color"
-            android:textStyle="italic" />
+            android:text="@string/choose_color" />
 
         <ImageButton
             android:id="@+id/pickerColor"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/ic_color_palette" />
+            android:background="@drawable/ic_color_palette"
+            android:paddingTop="16dp" />
 
     </LinearLayout>
 
     <EditText
         android:id="@+id/ins_title"
+        style="@style/EditTextStyleNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/ins_title"
@@ -46,8 +46,12 @@
 
     <EditText
         android:id="@+id/ins_nota"
+        style="@style/EditTextStyleNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoLink="all"
+        android:background="@null"
+        android:gravity="center_vertical|start"
         android:hint="@string/ins_note"
         android:inputType="textCapSentences|textMultiLine"
         android:isScrollContainer="true" />

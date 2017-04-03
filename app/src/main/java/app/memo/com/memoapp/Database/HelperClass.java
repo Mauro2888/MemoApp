@@ -1,4 +1,4 @@
-package app.memo.com.memoapp.database;
+package app.memo.com.memoapp.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

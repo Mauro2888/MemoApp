@@ -1,4 +1,4 @@
-package app.memo.com.memoapp.database;
+package app.memo.com.memoapp.Database;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import static android.R.attr.id;
 
 /**
  * Created by Msi-Locale on 27/03/2017.

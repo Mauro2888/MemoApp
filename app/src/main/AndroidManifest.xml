@@ -7,9 +7,9 @@
         android:icon="@mipmap/ic_launcher_app"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeSize">
+        android:theme="@style/AppThemeBarSize">
         <activity
-            android:name=".MainActivityMemo"
+            android:name=".UI.MainActivityMemo"
             android:configChanges="keyboardHidden|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,12 +20,12 @@
         </activity>
 
         <provider
-            android:name=".database.ContentProvider"
+            android:name=".Database.ContentProvider"
             android:authorities="app.memo.com.memoapp"
             android:exported="true" />
 
-        <activity android:name=".InsertNoteActivity" />
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".UI.InsertNoteActivity" />
+        <activity android:name=".UI.DetailActivity"></activity>
     </application>
 
 </manifest>

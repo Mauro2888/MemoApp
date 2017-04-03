@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">MemoApp</string>
-    <string name="ins_title">Title</string>
-    <string name="ins_note">Note</string>
-    <string name="insert_note_title">Insert Memo</string>
+    <string name="ins_title">Insert Title</string>
+    <string name="ins_note">Insert Note</string>
+    <string name="insert_note_title">New Memo</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="memo">Memo</string>
@@ -13,4 +13,10 @@
     <string name="vocal_note">Vocal Note</string>
     <string name="choose_color">Choose Note color :</string>
     <string name="change_color">Change Note color :</string>
+    <string name="delete_note_alert">This reminder will be deleted</string>
+    <string name="delete_btn">Delete</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="discard_btn">Discard</string>
+    <string name="save_btn">Save</string>
+    <string name="alert_discard_message">Save the changes or discard them?</string>
 </resources>

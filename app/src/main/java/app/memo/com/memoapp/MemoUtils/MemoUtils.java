@@ -5,10 +5,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
@@ -19,9 +15,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
-
-import app.memo.com.memoapp.InsertNoteActivity;
-import app.memo.com.memoapp.R;
 
 
 /**
@@ -84,5 +77,6 @@ public class MemoUtils {
         int colorRandom = Color.argb(255, random.nextInt(256),random.nextInt(256),random.nextInt(256));
         return colorRandom;
     }
+
 
 }

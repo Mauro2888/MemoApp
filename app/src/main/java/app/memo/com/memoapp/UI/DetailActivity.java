@@ -1,4 +1,4 @@
-package app.memo.com.memoapp;
+package app.memo.com.memoapp.UI;
 
 
 import android.content.ContentValues;
@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,13 +29,15 @@ import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
+import app.memo.com.memoapp.Database.ContractMemoApp;
+import app.memo.com.memoapp.Database.HelperClass;
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
-import app.memo.com.memoapp.database.ContractMemoApp;
-import app.memo.com.memoapp.database.HelperClass;
+import app.memo.com.memoapp.R;
 
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     public SQLiteDatabase mSQLdata;
+    public boolean mTouched = false;
     Uri mContentUri;
     ContentValues contentValues;
     private EditText mTitleEdit;
@@ -42,8 +46,15 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private HelperClass  mHelper;
     private ImageButton mBtnColorPicker;
     private ImageView mColorSelected;
+    private View.OnTouchListener mOnTouchItems = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mTouched = true;
+            return false;
+        }
+    };
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
@@ -53,11 +64,15 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mTitleEdit.setTypeface(null, Typeface.BOLD);
         mNoteEdit = (EditText) findViewById(R.id.ins_nota_detail);
         mLastEdit = (TextView)findViewById(R.id.last_edit_txt);
+
+        mTitleEdit.setOnTouchListener(mOnTouchItems);
+        mNoteEdit.setOnTouchListener(mOnTouchItems);
         Intent getData = getIntent();
         mContentUri = getData.getData();
         mHelper = new HelperClass(getApplicationContext());
         mSQLdata = mHelper.getReadableDatabase();
         getSupportLoaderManager().initLoader(0,null,this);
+
 
         mBtnColorPicker = (ImageButton) findViewById(R.id.pickerColor);
         mColorSelected = (ImageView) findViewById(R.id.colorSelected);
@@ -152,13 +167,80 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             case R.id.ins_note_menu:
                 InsertNote();
                 break;
+            case R.id.delete_note_menu:
+                DeleteNote();
+                break;
+            case android.R.id.home:
+                if (!mTouched) {
+                    DiscartAlert();
+                }
+                break;
+
+
         }
         return super.onOptionsItemSelected(item);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if (!mTouched) {
+            super.onBackPressed();
+            return;
+        }
+        DiscartAlert();
+    }
+
+    protected void DeleteNote() {
+        final AlertDialog.Builder alertDelete = new AlertDialog.Builder(this, R.style.CustomAlert);
+        alertDelete.setMessage(R.string.delete_note_alert)
+                .setCancelable(false)
+                .setPositiveButton(R.string.delete_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getContentResolver().delete(mContentUri, null, null);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Nothing
+                    }
+                }).create().show();
+
+    }
+
+    protected void DiscartAlert() {
+        final AlertDialog.Builder alertDiscard = new AlertDialog.Builder(this);
+        alertDiscard.setMessage(R.string.alert_discard_message)
+                .setCancelable(false)
+                .setNeutralButton(R.string.discard_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(DetailActivity.this, "ANnulla", Toast.LENGTH_SHORT).show();
+                    }
+                }).setPositiveButton(R.string.save_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //SALVO
+                InsertNote();
+                finish();
+
+            }
+        }).create().show();
+    }
+
     public void InsertNote(){
         String TitleControl = mTitleEdit.getText().toString();
         String NoteControl = mNoteEdit.getText().toString();
+        int Color = new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0);
         if (TitleControl.isEmpty() && NoteControl.isEmpty()){
             Toast.makeText(this, "Please Insert a Note", Toast.LENGTH_SHORT).show();
         }else{
@@ -166,7 +248,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mTitleEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mNoteEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE, new MemoUtils().GetDate());
-            contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR, new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+            contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR, Color);
             getContentResolver().update(mContentUri,contentValues,null,null);
             finish();
         }

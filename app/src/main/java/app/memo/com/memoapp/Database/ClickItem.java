@@ -1,6 +1,5 @@
-package app.memo.com.memoapp.database;
+package app.memo.com.memoapp.Database;
 
-import android.database.Cursor;
 import android.view.View;
 
 /**

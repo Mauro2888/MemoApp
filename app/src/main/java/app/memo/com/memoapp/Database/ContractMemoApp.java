@@ -1,10 +1,7 @@
-package app.memo.com.memoapp.database;
+package app.memo.com.memoapp.Database;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
-
-import java.net.URI;
-import java.util.Arrays;
 
 /**
  * Created by Msi-Locale on 27/03/2017.

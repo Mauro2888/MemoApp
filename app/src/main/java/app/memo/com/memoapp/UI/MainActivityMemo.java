@@ -1,4 +1,4 @@
-package app.memo.com.memoapp;
+package app.memo.com.memoapp.UI;
 
 import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
@@ -28,11 +28,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import app.memo.com.memoapp.Database.ClickItem;
+import app.memo.com.memoapp.Database.CursorAdapterMemo;
+import app.memo.com.memoapp.Database.HelperClass;
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
-import app.memo.com.memoapp.database.ClickItem;
-import app.memo.com.memoapp.database.HelperClass;
+import app.memo.com.memoapp.R;
 
-import static app.memo.com.memoapp.database.ContractMemoApp.MemoAppContract.URI_CONTENT;
+import static app.memo.com.memoapp.Database.ContractMemoApp.MemoAppContract.URI_CONTENT;
 
 public class MainActivityMemo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,ClickItem {
 
@@ -49,6 +51,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private EditText mInsNota;
     private EditText mInsTitle;
     private ContentValues contentValues;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mSQLdata = mHelper.getWritableDatabase();
         contentValues = new ContentValues();
 
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -89,13 +93,14 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
             }
         }).attachToRecyclerView(mRecyclerMemo);
 
+        //FAB OPTION-------------------------------------------
+
         mFloatAddNoteReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SpeechToText();
             }
         });
-
 
 
         mFloatAddNote.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +114,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mFloatAddNoteFast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivityMemo.this);
+                final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivityMemo.this, R.style.CustomAlert);
                 final View alertView = getLayoutInflater().inflate(R.layout.alertdialog_layout,null);
                 mInsNota = (EditText)alertView.findViewById(R.id.ins_nota);
                 mInsTitle = (EditText)alertView.findViewById(R.id.ins_title);
