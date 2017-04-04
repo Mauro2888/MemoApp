@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -35,14 +37,27 @@ public class InsertNoteActivity extends AppCompatActivity {
     private HelperClass mHelper;
     private ImageButton mBtnColorPicker;
     private ImageView mColorSelected;
+    boolean mTouch = false;
+    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mTouch = true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_note);
         setTitle(R.string.memo);
+
         mInsTitle = (EditText)findViewById(R.id.ins_title);
         mInsTitle.setTypeface(null, Typeface.BOLD);
+
+//        //FILTER MAX WORD
+//        int maxLengthTitle = 20 ;
+//        mInsTitle.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLengthTitle)});
 
         mInsNote = (EditText)findViewById(R.id.ins_nota);
         mMemoDate = new MemoUtils().GetDate();
@@ -54,43 +69,23 @@ public class InsertNoteActivity extends AppCompatActivity {
 
         mBtnColorPicker = (ImageButton)findViewById(R.id.pickerColor) ;
         mColorSelected = (ImageView)findViewById(R.id.colorSelected);
+        mBtnColorPicker.setOnTouchListener(mOnTouchListener);
+
         mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ColorPickerDialogBuilder
-                        .with(InsertNoteActivity.this)
-                        .setTitle("Choose color")
-                        .initialColor(0xffffffff)
-                        .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                        .density(12)
-                        .setOnColorChangedListener(new OnColorChangedListener() {
-                            @Override
-                            public void onColorChanged(int selectedColor) {
-                            }
-                        })
-                        .setPositiveButton("ok", new ColorPickerClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int selectedColor, Integer[] selectedColors) {
-                                new MemoUtils().PreferenceSave(InsertNoteActivity.this,"colorSaved",selectedColor);
-                                mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
-                                mColorSelected.setVisibility(View.VISIBLE);
-                            }
-                        })
-                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        })
-                        .build()
-                        .show();
+                new MemoUtils().GetRandomMaterialColor(InsertNoteActivity.this, "");
+                new MemoUtils().PreferenceSave(InsertNoteActivity.this, "colorSaved", new MemoUtils().GetRandomMaterialColor(InsertNoteActivity.this, "A100"));
+                mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                mColorSelected.setVisibility(View.VISIBLE);
             }
         });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_option,menu);
+        getMenuInflater().inflate(R.menu.menu_ins_note,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -110,12 +105,17 @@ public class InsertNoteActivity extends AppCompatActivity {
         String TitleControl = mInsTitle.getText().toString();
         String NoteControl = mInsNote.getText().toString();
         if (TitleControl.isEmpty() && NoteControl.isEmpty()){
-            Toast.makeText(this, "Please Insert a Note", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.alert_pls_ins_note, Toast.LENGTH_SHORT).show();
         }else{
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mInsTitle.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mInsNote.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE,mMemoDate);
-            contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(InsertNoteActivity.this,"colorSaved",0));
+            if (!mTouch){
+                contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().random());
+            }else {
+                contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+            }
+
             getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
             finish();
         }

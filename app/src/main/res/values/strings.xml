@@ -2,8 +2,8 @@
     <string name="app_name">MemoApp</string>
     <string name="ins_title">Insert Title</string>
     <string name="ins_note">Insert Note</string>
-    <string name="insert_note_title">New Memo</string>
-    <string name="ok">Ok</string>
+    <string name="insert_alert_note_title">Add new Memo</string>
+    <string name="save_alert">Save</string>
     <string name="cancel">Cancel</string>
     <string name="memo">Memo</string>
     <string name="memo_detail">Detail Memo</string>
@@ -19,4 +19,6 @@
     <string name="discard_btn">Discard</string>
     <string name="save_btn">Save</string>
     <string name="alert_discard_message">Save the changes or discard them?</string>
+    <string name="alert_pls_ins_note">Please Insert a Note</string>
+    <string name="memo_deleted">Memo deleted</string>
 </resources>

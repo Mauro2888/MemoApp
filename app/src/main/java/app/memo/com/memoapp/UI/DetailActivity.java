@@ -2,6 +2,7 @@ package app.memo.com.memoapp.UI;
 
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -46,6 +47,17 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private HelperClass  mHelper;
     private ImageButton mBtnColorPicker;
     private ImageView mColorSelected;
+    public int colorValue;
+    private boolean mTouchedColor = false;
+
+    private View.OnTouchListener mTouchColor = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mTouchedColor = true;
+            return false;
+        }
+    };
+
     private View.OnTouchListener mOnTouchItems = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -64,50 +76,29 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mTitleEdit.setTypeface(null, Typeface.BOLD);
         mNoteEdit = (EditText) findViewById(R.id.ins_nota_detail);
         mLastEdit = (TextView)findViewById(R.id.last_edit_txt);
+        mBtnColorPicker = (ImageButton) findViewById(R.id.pickerColor);
+        mColorSelected = (ImageView) findViewById(R.id.colorSelected);
 
-        mTitleEdit.setOnTouchListener(mOnTouchItems);
-        mNoteEdit.setOnTouchListener(mOnTouchItems);
+        mTitleEdit.setTypeface(null, Typeface.BOLD);
+
         Intent getData = getIntent();
         mContentUri = getData.getData();
         mHelper = new HelperClass(getApplicationContext());
         mSQLdata = mHelper.getReadableDatabase();
         getSupportLoaderManager().initLoader(0,null,this);
 
+        mTitleEdit.setOnTouchListener(mOnTouchItems);
+        mNoteEdit.setOnTouchListener(mOnTouchItems);
+        mBtnColorPicker.setOnTouchListener(mTouchColor);
 
-        mBtnColorPicker = (ImageButton) findViewById(R.id.pickerColor);
-        mColorSelected = (ImageView) findViewById(R.id.colorSelected);
         mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ColorPickerDialogBuilder
-                        .with(DetailActivity.this)
-                        .setTitle("Choose color")
-                        .initialColor(0xffffffff)
-                        .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                        .density(12)
-                        .setOnColorChangedListener(new OnColorChangedListener() {
-                            @Override
-                            public void onColorChanged(int selectedColor) {
-                            }
-                        })
-                        .setPositiveButton("ok", new ColorPickerClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int selectedColor, Integer[] selectedColors) {
-                                new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", selectedColor);
-                                mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
-                            }
-                        })
-                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        })
-                        .build()
-                        .show();
-            }
+                new MemoUtils().GetRandomMaterialColor(DetailActivity.this, "");
+                new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", new MemoUtils().GetRandomMaterialColor(DetailActivity.this, "A100"));
+                mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                }
         });
-
     }
 
 
@@ -139,15 +130,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             String titleTxt = data.getString(title);
             String noteTxt = data.getString(note);
             String dateTxt = data.getString(date);
-            int colorValue = data.getInt(color);
+            colorValue = data.getInt(color);
 
             mTitleEdit.setText(titleTxt);
             mNoteEdit.setText(noteTxt);
             mLastEdit.setText("Last edit : " + dateTxt);
             mColorSelected.setBackgroundColor(colorValue);
-
         }
-
     }
 
     @Override
@@ -157,7 +146,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_option,menu);
+        getMenuInflater().inflate(R.menu.menu_detail,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -175,8 +164,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                     DiscartAlert();
                 }
                 break;
-
-
         }
         return super.onOptionsItemSelected(item);
 
@@ -224,13 +211,14 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(DetailActivity.this, "ANnulla", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this, R.string.discard_btn, Toast.LENGTH_SHORT).show();
                     }
                 }).setPositiveButton(R.string.save_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //SALVO
                 InsertNote();
+                Toast.makeText(DetailActivity.this, R.string.save_btn, Toast.LENGTH_SHORT).show();
                 finish();
 
             }
@@ -240,7 +228,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public void InsertNote(){
         String TitleControl = mTitleEdit.getText().toString();
         String NoteControl = mNoteEdit.getText().toString();
-        int Color = new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0);
         if (TitleControl.isEmpty() && NoteControl.isEmpty()){
             Toast.makeText(this, "Please Insert a Note", Toast.LENGTH_SHORT).show();
         }else{
@@ -248,7 +235,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mTitleEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mNoteEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE, new MemoUtils().GetDate());
-            contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR, Color);
+            if (!mTouchedColor){
+                contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,colorValue);
+            }else {
+                contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+            }
             getContentResolver().update(mContentUri,contentValues,null,null);
             finish();
         }

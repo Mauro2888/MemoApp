@@ -3,9 +3,19 @@ package app.memo.com.memoapp.MemoUtils;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.media.ThumbnailUtils;
 import android.preference.PreferenceManager;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
@@ -33,32 +43,8 @@ public class MemoUtils {
     }
 
     public void ColorPicker(final Context context){
+        GetRandomMaterialColor(context,"A100");
 
-        ColorPickerDialogBuilder
-                .with(context)
-                .setTitle("Choose color")
-                .initialColor(0xffffffff)
-                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                .density(12)
-                .setOnColorChangedListener(new OnColorChangedListener() {
-                    @Override
-                    public void onColorChanged(int selectedColor) {
-                    }
-                })
-            .setPositiveButton("ok", new ColorPickerClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int selectedColor, Integer[] selectedColors) {
-                        PreferenceSave(context,"colorSaved",selectedColor);
-                    }
-                })
-            .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            })
-                .build()
-                .show();
     }
     public void PreferenceSave(Context context, String key,int value){
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
@@ -78,5 +64,17 @@ public class MemoUtils {
         return colorRandom;
     }
 
+    public int GetRandomMaterialColor(Context context, String colorType){
+        int returnColor = Color.BLACK;
+        int arrayId = context.getResources().getIdentifier("mdcolor_"+ colorType, "array",context.getPackageName());
+
+        if (arrayId != 0){
+            TypedArray colors = context.getResources().obtainTypedArray(arrayId);
+            int index = (int)(Math.random() * colors.length());
+            returnColor = colors.getColor(index,Color.BLACK);
+            colors.recycle();
+        }
+        return returnColor;
+    }
 
 }

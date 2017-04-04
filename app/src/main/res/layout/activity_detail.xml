@@ -33,7 +33,6 @@
 
     </LinearLayout>
 
-
     <EditText
         android:id="@+id/ins_title_detail"
         style="@style/EditTextStyleNote"

@@ -2,8 +2,11 @@ package app.memo.com.memoapp.Database;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +90,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
     }
 
 
-    public class ViewHolderMemo extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolderMemo extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
 
         TextView mTitleNote;
         TextView mNoteText;
@@ -105,6 +108,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             mColorBox1 = (ImageButton) itemView.findViewById(R.id.colorBarMain);
             mColorBox2 = (TextView)itemView.findViewById(R.id.colorBarMain2);
             mNoteText.setMovementMethod(new ScrollingMovementMethod());
+            itemView.setOnCreateContextMenuListener(this);
 
         }
 
@@ -113,6 +117,13 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             if (mClickItem != null){
                 mClickItem.OnclickItem(view,getAdapterPosition());
             }
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.setHeaderTitle("Select Action");
+            contextMenu.add(0,view.getId(),0,"call me");
+            contextMenu.add(0,view.getId(),0,"sms");
         }
     }
 }

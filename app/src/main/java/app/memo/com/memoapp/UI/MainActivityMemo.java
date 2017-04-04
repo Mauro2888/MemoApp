@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -22,6 +24,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -52,7 +55,6 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private EditText mInsTitle;
     private ContentValues contentValues;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,6 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mRecyclerMemo.setLayoutManager(mLayoutManager);
         mAdapterMemo = new CursorAdapterMemo(this);
         mRecyclerMemo.setAdapter(mAdapterMemo);
-
         mAdapterMemo.setmClickItem(MainActivityMemo.this);
 
         mHelper = new HelperClass(this);
@@ -87,11 +88,12 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = (int) viewHolder.itemView.getTag();
-                Uri Uri = URI_CONTENT.buildUpon().appendPath(String.valueOf(pos)).build();
-                getContentResolver().delete(Uri,null,null);
-
+                final Uri Uri = URI_CONTENT.buildUpon().appendPath(String.valueOf(pos)).build();
+                SwiperDeleteAlert(Uri);
             }
         }).attachToRecyclerView(mRecyclerMemo);
+
+
 
         //FAB OPTION-------------------------------------------
 
@@ -118,11 +120,12 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 final View alertView = getLayoutInflater().inflate(R.layout.alertdialog_layout,null);
                 mInsNota = (EditText)alertView.findViewById(R.id.ins_nota);
                 mInsTitle = (EditText)alertView.findViewById(R.id.ins_title);
+                mInsTitle.setTypeface(null, Typeface.BOLD);
 
                 alert.setView(alertView);
                 alert.setCancelable(false);
-                alert.setTitle(R.string.insert_note_title);
-                alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                alert.setTitle(R.string.insert_alert_note_title);
+                alert.setPositiveButton(R.string.save_alert, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Empty
@@ -146,7 +149,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                             contentValues.put("title",mInsTitle.getText().toString());
                             contentValues.put("note",mInsNota.getText().toString());
                             contentValues.put("date",new MemoUtils().GetDate());
-                            contentValues.put("color",new MemoUtils().random());
+                            contentValues.put("color",new MemoUtils().GetRandomMaterialColor(MainActivityMemo.this,"A100"));
                             alertView.getContext().getContentResolver().insert(URI_CONTENT,contentValues);
                             dialog.dismiss();
                             mSQLdata.close();
@@ -168,6 +171,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         DetailActivity.setData(Uri);
         startActivity(DetailActivity);
     }
+
+
 
     @Override
     protected void onResume() {
@@ -249,5 +254,26 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 }
                 break;
         }
+    }
+
+    private void SwiperDeleteAlert(final Uri uriContent){
+        AlertDialog.Builder alertDelete = new AlertDialog.Builder(MainActivityMemo.this, R.style.CustomAlert);
+        alertDelete.setMessage(R.string.delete_note_alert)
+                .setCancelable(false)
+                .setPositiveButton(R.string.delete_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(MainActivityMemo.this, R.string.memo_deleted, Toast.LENGTH_SHORT).show();
+                        getContentResolver().delete(uriContent, null, null);
+                    }
+                })
+                .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Nothing
+                        getSupportLoaderManager().restartLoader(LOADER_ID,null,MainActivityMemo.this);
+                    }
+                }).create().show();
+
     }
 }

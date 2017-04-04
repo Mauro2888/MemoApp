@@ -9,8 +9,9 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="@dimen/cardHeight"
-        android:background="@color/colorDateBar"
         android:innerRadius="0dp"
+        app:cardCornerRadius="2dp"
+        android:foreground="?android:attr/selectableItemBackground"
         app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
 
@@ -54,34 +55,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences|textMultiLine"
-                android:padding="@dimen/paddingLeft"
+                android:paddingLeft="@dimen/paddingCard"
+                android:paddingRight="@dimen/paddingCard"
+                android:paddingTop="@dimen/paddingCard"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="@dimen/textSizeTitleCard"
                 tools:text="@string/ins_title" />
 
             <TextView
                 android:id="@+id/noteText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/TextSpace"
-                android:layout_marginRight="@dimen/TextSpace"
-                android:autoLink="all"
                 android:inputType="textCapSentences|textMultiLine"
                 android:maxLines="2"
-                android:scrollbars="vertical"
+                android:paddingBottom="@dimen/paddingCard"
+                android:paddingLeft="@dimen/paddingCard"
+                android:paddingRight="@dimen/paddingCard"
+                android:textSize="@dimen/textSizeCardNote"
                 tools:text="@string/ins_note" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/colorBarMain"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_margin="@dimen/paddingShapeCircle"
+            android:background="@null" />
 
-            <ImageButton
-                android:id="@+id/colorBarMain"
-                android:layout_width="15dp"
-                android:layout_height="150dp"
-                android:layout_gravity="bottom"
-                android:background="@color/colorDateBar" />
-        </LinearLayout>
+
     </android.support.v7.widget.CardView>
 </LinearLayout>
