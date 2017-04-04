@@ -1,12 +1,10 @@
 package app.memo.com.memoapp.UI;
 
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -15,11 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorChangedListener;
-import com.flask.colorpicker.builder.ColorPickerClickListener;
-import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 import app.memo.com.memoapp.Database.ContractMemoApp;
 import app.memo.com.memoapp.Database.HelperClass;
@@ -32,12 +25,12 @@ public class InsertNoteActivity extends AppCompatActivity {
     public SQLiteDatabase  mSQLdata;
     String mMemoDate;
     ContentValues contentValues;
+    boolean mTouch = false;
     private EditText mInsTitle;
     private EditText mInsNote;
     private HelperClass mHelper;
     private ImageButton mBtnColorPicker;
     private ImageView mColorSelected;
-    boolean mTouch = false;
     private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {

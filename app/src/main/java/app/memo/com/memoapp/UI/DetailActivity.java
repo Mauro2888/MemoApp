@@ -2,7 +2,6 @@ package app.memo.com.memoapp.UI;
 
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,11 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorChangedListener;
-import com.flask.colorpicker.builder.ColorPickerClickListener;
-import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-
 import app.memo.com.memoapp.Database.ContractMemoApp;
 import app.memo.com.memoapp.Database.HelperClass;
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
@@ -39,6 +33,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     public SQLiteDatabase mSQLdata;
     public boolean mTouched = false;
+    public int colorValue;
     Uri mContentUri;
     ContentValues contentValues;
     private EditText mTitleEdit;
@@ -47,7 +42,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private HelperClass  mHelper;
     private ImageButton mBtnColorPicker;
     private ImageView mColorSelected;
-    public int colorValue;
     private boolean mTouchedColor = false;
 
     private View.OnTouchListener mTouchColor = new View.OnTouchListener() {
