@@ -1,4 +1,4 @@
-# MemoApp
+# MemoRemember
 Color Memo application 
 - Now Alpha stage 0.2
 
@@ -8,6 +8,6 @@ Color Memo application
 - Added Speech to Text function (Basic)
 
 Version 0.2
-- Added Material guideines
+- Material Design
 - Fews Bugs
 - CardView Improvements
