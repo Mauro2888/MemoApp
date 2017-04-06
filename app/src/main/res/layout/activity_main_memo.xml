@@ -32,6 +32,7 @@
             android:layout_marginTop="10dp"
             app:menu_colorNormal="@color/colorPrimary"
             app:menu_colorPressed="@color/colorPressedFab"
+            app:menu_icon="@drawable/ic_action_add_note"
             app:menu_openDirection="up">
 
             <com.github.clans.fab.FloatingActionButton

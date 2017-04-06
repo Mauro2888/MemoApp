@@ -2,17 +2,15 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_note"
+    android:id="@+id/layoutTools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="app.memo.com.memoapp.UI.InsertNoteActivity">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="wrap_content"
         android:layout_height="170dp"
-        android:elevation="2dp"
+        android:elevation="5dp"
         android:fitsSystemWindows="true"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -20,7 +18,7 @@
             android:id="@+id/collapsToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="2dp"
+            android:elevation="5dp"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -32,13 +30,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_assignment" />
+                android:src="@drawable/ic_mode_edit" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:elevation="2dp"
+                android:elevation="5dp"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></android.support.v7.widget.Toolbar>
 
@@ -57,15 +55,22 @@
             android:orientation="vertical"
             android:padding="15dp">
 
-            <ImageButton
-                android:id="@+id/pickerColor"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/last_edit_txt"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_color_lens"
-                android:paddingTop="16dp" />
+                android:layout_weight="8.59"
+                android:drawableLeft="@drawable/ic_action_calendar_month"
+                android:drawablePadding="10dp"
+                android:gravity="bottom"
+                android:inputType="textCapSentences"
+                android:textSize="@dimen/LastDate"
+                android:textStyle="italic"
+                tools:ignore="RtlCompat"
+                tools:text="last edit" />
 
             <EditText
-                android:id="@+id/ins_title"
+                android:id="@+id/ins_title_detail"
                 style="@style/EditTextStyleNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,13 +78,11 @@
                 android:inputType="textCapSentences|textMultiLine" />
 
             <EditText
-                android:id="@+id/ins_nota"
+                android:id="@+id/ins_nota_detail"
                 style="@style/EditTextStyleNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="all"
-                android:background="@null"
-                android:gravity="center_vertical|start"
                 android:hint="@string/ins_note"
                 android:inputType="textCapSentences|textMultiLine"
                 android:isScrollContainer="true" />
@@ -87,8 +90,7 @@
             <ImageView
                 android:id="@+id/colorSelected"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:visibility="invisible" />
+                android:layout_height="20dp"></ImageView>
 
         </LinearLayout>
 
@@ -100,13 +102,8 @@
         android:layout_marginRight="16dp"
         android:clickable="true"
         android:src="@drawable/ic_grade"
-        app:elevation="5dp"
+        app:elevation="3dp"
         app:fabSize="normal"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end" />
-
 </android.support.design.widget.CoordinatorLayout>
-
-
-
-

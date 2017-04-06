@@ -10,4 +10,5 @@
     <color name="colorDateBar">#B2DFDB</color>
     <color name="colorTextDate">#7b353535</color>
     <color name="colorBtnRecord">#D42626</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

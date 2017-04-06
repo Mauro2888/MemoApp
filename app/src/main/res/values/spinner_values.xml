@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="spinner_array">
+        <item>All Memo</item>
+        <item>Favourite</item>
+    </array>
+</resources>

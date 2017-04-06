@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardViewId"
         android:layout_width="match_parent"
         android:layout_height="@dimen/cardHeight"
         android:foreground="?android:attr/selectableItemBackground"
@@ -48,10 +49,13 @@
             android:layout_marginLeft="@dimen/TextSpace"
             android:orientation="vertical">
 
+
             <TextView
                 android:id="@+id/noteTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_assignment_black"
+                android:drawablePadding="10dp"
                 android:inputType="textCapSentences|textMultiLine"
                 android:paddingLeft="@dimen/paddingCard"
                 android:paddingRight="@dimen/paddingCard"
@@ -81,7 +85,5 @@
             android:layout_gravity="start"
             android:layout_margin="@dimen/paddingShapeCircle"
             android:background="@null" />
-
-
     </android.support.v7.widget.CardView>
 </LinearLayout>

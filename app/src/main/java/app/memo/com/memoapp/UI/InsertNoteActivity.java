@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,16 +22,16 @@ import app.memo.com.memoapp.R;
 
 public class InsertNoteActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE = 1022;
     public SQLiteDatabase  mSQLdata;
-    String mMemoDate;
     ContentValues contentValues;
     boolean mTouch = false;
+    private String mMemoDate;
     private EditText mInsTitle;
     private EditText mInsNote;
     private HelperClass mHelper;
     private ImageButton mBtnColorPicker;
     private ImageView mColorSelected;
+    private CollapsingToolbarLayout mCoolapsToolbar;
     private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -45,6 +46,8 @@ public class InsertNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_insert_note);
         setTitle(R.string.memo);
 
+        mCoolapsToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
+        mCoolapsToolbar.setTitle("Insert Memo");
         mInsTitle = (EditText)findViewById(R.id.ins_title);
         mInsTitle.setTypeface(null, Typeface.BOLD);
 
@@ -54,7 +57,10 @@ public class InsertNoteActivity extends AppCompatActivity {
 
         mInsNote = (EditText)findViewById(R.id.ins_nota);
         mMemoDate = new MemoUtils().GetDate();
+
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mHelper = new HelperClass(getApplicationContext());
         mSQLdata = mHelper.getWritableDatabase();
         contentValues = new ContentValues();

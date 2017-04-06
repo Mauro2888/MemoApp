@@ -1,14 +1,11 @@
 package app.memo.com.memoapp.UI;
 
-import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,11 +17,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -199,31 +194,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     }
 
     @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
-        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
-        if (searchView != null){
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-                @Override
-                public boolean onClose() {
-                    return false;
-                }
-            });
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    return false;
-                }
-            });
-
-        }
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -249,7 +221,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                     contentValues.put("title","Vocal Memo");
                     contentValues.put("note",result.get(0).toString());
                     contentValues.put("date",new MemoUtils().GetDate());
-                    contentValues.put("color",new MemoUtils().random());
+                    contentValues.put("color", new MemoUtils().GetRandomMaterialColor(MainActivityMemo.this, "A100"));
                     getContentResolver().insert(URI_CONTENT,contentValues);
                 }
                 break;
@@ -276,4 +248,5 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 }).create().show();
 
     }
+
 }

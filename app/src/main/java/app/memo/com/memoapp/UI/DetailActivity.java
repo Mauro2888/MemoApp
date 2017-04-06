@@ -8,12 +8,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,6 +26,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +42,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public int colorValue;
     Uri mContentUri;
     ContentValues contentValues;
+    CoordinatorLayout mCoordinatorLayout;
     private EditText mTitleEdit;
     private EditText mNoteEdit;
     private TextView mLastEdit;
@@ -43,6 +50,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private ImageButton mBtnColorPicker;
     private ImageView mColorSelected;
     private boolean mTouchedColor = false;
+    private PopupWindow mPopMenu;
+    private CollapsingToolbarLayout mCollapsToolBar;
 
     private View.OnTouchListener mTouchColor = new View.OnTouchListener() {
         @Override
@@ -60,17 +69,20 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
     };
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        setTitle(R.string.memo_detail);
+        setContentView(R.layout.activity_edit_memo);
+        setTitle("");
+
+
+        mCollapsToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
+        mCollapsToolBar.setTitle("Memo detail");
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutTools);
 
         mTitleEdit = (EditText) findViewById(R.id.ins_title_detail);
         mTitleEdit.setTypeface(null, Typeface.BOLD);
         mNoteEdit = (EditText) findViewById(R.id.ins_nota_detail);
         mLastEdit = (TextView)findViewById(R.id.last_edit_txt);
-        mBtnColorPicker = (ImageButton) findViewById(R.id.pickerColor);
         mColorSelected = (ImageView) findViewById(R.id.colorSelected);
 
         mTitleEdit.setTypeface(null, Typeface.BOLD);
@@ -83,15 +95,37 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
         mTitleEdit.setOnTouchListener(mOnTouchItems);
         mNoteEdit.setOnTouchListener(mOnTouchItems);
-        mBtnColorPicker.setOnTouchListener(mTouchColor);
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
+
+        mCoordinatorLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                new MemoUtils().GetRandomMaterialColor(DetailActivity.this, "");
-                new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", new MemoUtils().GetRandomMaterialColor(DetailActivity.this, "A100"));
-                mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                View custom = getLayoutInflater().inflate(R.layout.action_bar_detail, null);
+                mPopMenu = new PopupWindow(
+                        custom,
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.WRAP_CONTENT);
+
+                if (Build.VERSION.SDK_INT >= 21) {
+                    mPopMenu.setElevation(2.0f);
                 }
+
+
+                mBtnColorPicker = (ImageButton) custom.findViewById(R.id.pickerColorTools);
+                mBtnColorPicker.setOnTouchListener(mTouchColor);
+                mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().GetRandomMaterialColor(DetailActivity.this, "");
+                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", new MemoUtils().GetRandomMaterialColor(DetailActivity.this, "A100"));
+                        mColorSelected.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                    }
+                });
+                mPopMenu.showAtLocation(mCoordinatorLayout, Gravity.LEFT | Gravity.TOP, 50, 0);
+                return false;
+            }
         });
     }
 
@@ -128,7 +162,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
             mTitleEdit.setText(titleTxt);
             mNoteEdit.setText(noteTxt);
-            mLastEdit.setText("Last edit : " + dateTxt);
+            mLastEdit.setText(dateTxt);
             mColorSelected.setBackgroundColor(colorValue);
         }
     }
@@ -156,6 +190,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             case android.R.id.home:
                 if (!mTouched) {
                     DiscartAlert();
+                } else {
+                    onBackPressed();
                 }
                 break;
         }
