@@ -10,10 +10,26 @@
 
 
     <style name="AppThemeBarSize" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarSize">60dp</item>
+        <item name="actionBarSize">50dp</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MemoText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#6c6c6c</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="MemoTitleText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#0a0a0a</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">sans</item>
     </style>
 
     <style name="EditTextStyleNote" parent="Widget.AppCompat.EditText">

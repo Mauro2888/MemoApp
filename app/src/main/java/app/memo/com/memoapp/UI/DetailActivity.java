@@ -196,7 +196,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 break;
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override

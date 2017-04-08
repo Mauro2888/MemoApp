@@ -13,7 +13,7 @@
             android:configChanges="keyboardHidden|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.SEARCH"></action>
+                <action android:name="android.intent.action.SEARCH" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -25,7 +25,8 @@
             android:exported="true" />
 
         <activity android:name=".UI.InsertNoteActivity" />
-        <activity android:name=".UI.DetailActivity"></activity>
+        <activity android:name=".UI.DetailActivity" />
+        <activity android:name=".UI.FavouriteActivity"></activity>
     </application>
 
 </manifest>

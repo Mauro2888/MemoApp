@@ -3,7 +3,6 @@ package app.memo.com.memoapp.Database;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
     Context mContext;
     Cursor mCursor;
     ClickItem mClickItem;
+
 
     public CursorAdapterMemo(Context context) {
         this.mContext = context;
@@ -47,12 +47,15 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         int note = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT);
         int date = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_DATE);
         int color = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_COLOR);
+
         mCursor.moveToPosition(position);
 
         String titleNote = mCursor.getString(title);
         String noteTxt = mCursor.getString(note);
         String dateNote = mCursor.getString(date);
         int colorNote = mCursor.getInt(color);
+
+
         int posId = mCursor.getInt(id);
 
         holder.itemView.setTag(posId);
@@ -104,7 +107,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             mDateBox = (TextView)itemView.findViewById(R.id.timebox);
             mColorBox1 = (ImageButton) itemView.findViewById(R.id.colorBarMain);
             mColorBox2 = (TextView)itemView.findViewById(R.id.colorBarMain2);
-            mNoteText.setMovementMethod(new ScrollingMovementMethod());
+
         }
 
         @Override

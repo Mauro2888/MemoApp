@@ -21,7 +21,6 @@ public class ContractMemoApp {
 
         public static final Uri URI_CONTENT = Uri.withAppendedPath(URI_BASE,PATH_TABLE);
 
-
         public static final String TABLE_NAME = "memo";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_NOTETXT = "note";

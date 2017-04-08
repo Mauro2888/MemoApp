@@ -3,7 +3,7 @@
     <dimen name="dateBoxText">11sp</dimen>
     <dimen name="TextSpace">12dp</dimen>
     <dimen name="dateBoxSize">4dp</dimen>
-    <dimen name="cardHeight">135dp</dimen>
+    <dimen name="cardHeight">140dp</dimen>
     <dimen name="paddingLeft">7dp</dimen>
     <dimen name="LastDate">13sp</dimen>
     <dimen name="paddingDate">4dp</dimen>

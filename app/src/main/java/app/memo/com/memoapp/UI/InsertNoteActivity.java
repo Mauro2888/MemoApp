@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import app.memo.com.memoapp.R;
 public class InsertNoteActivity extends AppCompatActivity {
 
     public SQLiteDatabase  mSQLdata;
+    public CoordinatorLayout mCoordinatorLayout;
     ContentValues contentValues;
     boolean mTouch = false;
     private String mMemoDate;
@@ -46,6 +48,7 @@ public class InsertNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_insert_note);
         setTitle(R.string.memo);
 
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_note);
         mCoolapsToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
         mCoolapsToolbar.setTitle("Insert Memo");
         mInsTitle = (EditText)findViewById(R.id.ins_title);
@@ -69,6 +72,7 @@ public class InsertNoteActivity extends AppCompatActivity {
         mBtnColorPicker = (ImageButton)findViewById(R.id.pickerColor) ;
         mColorSelected = (ImageView)findViewById(R.id.colorSelected);
         mBtnColorPicker.setOnTouchListener(mOnTouchListener);
+
 
         mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +118,6 @@ public class InsertNoteActivity extends AppCompatActivity {
             }else {
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
             }
-
             getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
             finish();
         }

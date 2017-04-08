@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MemoApp</string>
-    <string name="ins_title">Insert Title</string>
-    <string name="ins_note">Insert Note</string>
+    <string name="ins_title">Note Title</string>
+    <string name="ins_note">Write something here.....</string>
     <string name="insert_alert_note_title">Add new Memo</string>
     <string name="save_alert">Save</string>
     <string name="cancel">Cancel</string>

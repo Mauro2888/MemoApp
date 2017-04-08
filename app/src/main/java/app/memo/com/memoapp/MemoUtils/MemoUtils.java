@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -60,6 +63,18 @@ public class MemoUtils {
             colors.recycle();
         }
         return returnColor;
+    }
+
+    public void SnackBar(CoordinatorLayout coordinatorLayout, int charSequence) {
+        Snackbar mSnackBarSave = Snackbar.make(coordinatorLayout, charSequence, Snackbar.LENGTH_LONG);
+        View viewSnack = mSnackBarSave.getView();
+        viewSnack.setBackgroundColor(Color.DKGRAY);
+        mSnackBarSave.setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        }).show();
     }
 
 }

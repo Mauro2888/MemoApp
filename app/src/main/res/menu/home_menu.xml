@@ -6,4 +6,8 @@
         android:id="@+id/setting_menu"
         android:title="Settings"
         app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/favouriteMemo"
+        android:title="Favourite"></item>
 </menu>

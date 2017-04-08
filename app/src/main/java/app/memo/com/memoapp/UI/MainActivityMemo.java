@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -19,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -49,18 +51,20 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private EditText mInsNota;
     private EditText mInsTitle;
     private ContentValues contentValues;
+    private CoordinatorLayout mCoordinatorLayoutMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_memo);
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
-        setTitle("Memo List");
 
         mRecyclerMemo = (RecyclerView)findViewById(R.id.recyclerMemo);
         mFloatAddNote = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAdd);
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
         mFloatAddNoteReg = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddReg);
+        mCoordinatorLayoutMain = (CoordinatorLayout) findViewById(R.id.mainCoordinatorLayout);
+
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerMemo.setHasFixedSize(true);
@@ -199,6 +203,17 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.favouriteMemo:
+                Intent favourite = new Intent(MainActivityMemo.this, FavouriteActivity.class);
+                startActivity(favourite);
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void SpeechToText(){
         Intent speech = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speech.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -235,7 +250,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 .setPositiveButton(R.string.delete_btn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(MainActivityMemo.this, R.string.memo_deleted, Toast.LENGTH_SHORT).show();
+                        new MemoUtils().SnackBar(mCoordinatorLayoutMain, R.string.memo_deleted);
                         getContentResolver().delete(uriContent, null, null);
                     }
                 })
