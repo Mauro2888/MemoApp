@@ -14,10 +14,13 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,18 +55,28 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private EditText mInsTitle;
     private ContentValues contentValues;
     private CoordinatorLayout mCoordinatorLayoutMain;
+    private DrawerLayout mDrawer;
+    private ActionBarDrawerToggle mToogle;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_memo);
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
+        setTitle(R.string.home);
 
         mRecyclerMemo = (RecyclerView)findViewById(R.id.recyclerMemo);
         mFloatAddNote = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAdd);
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
         mFloatAddNoteReg = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddReg);
         mCoordinatorLayoutMain = (CoordinatorLayout) findViewById(R.id.mainCoordinatorLayout);
+
+        mDrawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mToogle = new ActionBarDrawerToggle(this, mDrawer, R.string.open, R.string.close);
+        mDrawer.addDrawerListener(mToogle);
+        mToogle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -205,10 +218,16 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mToogle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         switch (item.getItemId()) {
             case R.id.favouriteMemo:
                 Intent favourite = new Intent(MainActivityMemo.this, FavouriteActivity.class);
                 startActivity(favourite);
+                break;
 
         }
         return super.onOptionsItemSelected(item);

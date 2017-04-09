@@ -10,7 +10,7 @@
 
 
     <style name="AppThemeBarSize" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarSize">50dp</item>
+        <item name="actionBarSize">56dp</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
