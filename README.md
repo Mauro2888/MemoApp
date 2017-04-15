@@ -11,3 +11,4 @@ Version 0.2
 - Material Design
 - Fews Bugs
 - CardView Improvements
+- Favourite Database
