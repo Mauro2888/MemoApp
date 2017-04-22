@@ -118,6 +118,7 @@ public class InsertNoteActivity extends AppCompatActivity {
                         mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
@@ -130,6 +131,7 @@ public class InsertNoteActivity extends AppCompatActivity {
                         mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
@@ -141,6 +143,7 @@ public class InsertNoteActivity extends AppCompatActivity {
                         mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
@@ -153,6 +156,7 @@ public class InsertNoteActivity extends AppCompatActivity {
                         mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
@@ -164,6 +168,7 @@ public class InsertNoteActivity extends AppCompatActivity {
                         mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
 
                     }
@@ -175,6 +180,7 @@ public class InsertNoteActivity extends AppCompatActivity {
                         mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });

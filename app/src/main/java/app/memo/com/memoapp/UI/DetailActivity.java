@@ -73,7 +73,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_memo);
-        setTitle("Edit Memo");
+        setTitle("");
 
         mCollapsToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutTools);
@@ -130,6 +130,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
@@ -142,6 +143,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
@@ -153,6 +155,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
@@ -165,6 +168,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
@@ -176,6 +180,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
 
                     }
@@ -187,18 +192,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         popWindowColor.dismiss();
                     }
                 });
             }
         });
-//                mHelper = new HelperClass(getApplicationContext());
-//                mSQLdata = mHelper.getWritableDatabase();
-//                contentValuesFav = new ContentValues();
-//                contentValuesFav.put(ContractMemoApp.MemoAppContract.COLUMN_FAV_TITLE, mTitleEdit.getText().toString());
-//                contentValuesFav.put(ContractMemoApp.MemoAppContract.COLUMN_FAV_NOTETXT, mNoteEdit.getText().toString());
-//                getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT_FAV, contentValuesFav);
-//                new MemoUtils().SnackBar(mCoordinatorLayout, R.string.addedFav);
+//
     }
 
     @Override
@@ -234,17 +234,19 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             colorValue = data.getInt(color);
             String uriData = data.getString(imageUriGet);
 
-            //retore color for entire activity
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(colorValue));
-            mCollapsToolBar.setBackgroundColor(colorValue);
-            getWindow().setStatusBarColor(colorValue);
+
 
             mTitleEdit.setText(titleTxt);
             mNoteEdit.setText(noteTxt);
             mLastEdit.setText(dateTxt);
             Log.d("TAG IMAGE", "" + uriData);
-
             Glide.with(DetailActivity.this).load(uriData).into(mImageViewAddImage);
+
+            //retore color for entire activity
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(colorValue));
+            mCollapsToolBar.setBackgroundColor(colorValue);
+            getWindow().setStatusBarColor(colorValue);
+            getWindow().setNavigationBarColor(colorValue);
 
 
             //get data for widget
@@ -293,6 +295,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 addImage.setType("image/*");
                 startActivityForResult(Intent.createChooser(addImage, "Select Image"), 12);
                 break;
+            case R.id.addFavouriteBtn:
+                addFav();
+                item.setIcon(R.drawable.ic_fav_full);
+                new MemoUtils().SnackBar(mCoordinatorLayout, R.string.addedFav);
+                break;
             case android.R.id.home:
                 if (mTouched) {
                     DiscartAlert();
@@ -310,6 +317,16 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         } else {
             finish();
         }
+    }
+
+    public void addFav() {
+        mHelper = new HelperClass(getApplicationContext());
+        mSQLdata = mHelper.getWritableDatabase();
+        ContentValues contentValuesFav = new ContentValues();
+        contentValuesFav.put(ContractMemoApp.MemoAppContract.COLUMN_FAV_TITLE, mTitleEdit.getText().toString());
+        contentValuesFav.put(ContractMemoApp.MemoAppContract.COLUMN_FAV_NOTETXT, mNoteEdit.getText().toString());
+        contentValuesFav.put(ContractMemoApp.MemoAppContract.COlUMN_FAV_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
+        getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT_FAV, contentValuesFav);
     }
 
     protected void DeleteNote() {
@@ -352,6 +369,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             public void onClick(DialogInterface dialogInterface, int i) {
                 //SALVO
                 InsertNote();
+                addFav();
                 Toast.makeText(DetailActivity.this, R.string.save_btn, Toast.LENGTH_SHORT).show();
                 finish();
 
@@ -362,6 +380,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public void InsertNote(){
         String TitleControl = mTitleEdit.getText().toString();
         String NoteControl = mNoteEdit.getText().toString();
+        addFav();
         if (TitleControl.isEmpty() && NoteControl.isEmpty()){
             Toast.makeText(this, "Please Insert a Note", Toast.LENGTH_SHORT).show();
         }else{
@@ -370,7 +389,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mNoteEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE, new MemoUtils().GetDate());
 
-            if (!mTouched) {
+            if (mTouched) {
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,colorValue);
                 contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
             }else {
@@ -401,7 +420,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             Uri uriImage = data.getData();
             if (uriImage != null) {
                 new MemoUtils().PreferenceSaveImageUri(DetailActivity.this, "UriImageSave", uriImage.toString());
-                mImageViewAddImage.setVisibility(View.VISIBLE);
                 Glide.with(DetailActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
             } else return;
 

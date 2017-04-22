@@ -35,6 +35,7 @@ public class ContractMemoApp {
         public static final String COLUMN_FAV_NOTETXT = "notefav";
         public static final String COLUMN_FAV_DATE = "datefav";
         public static final String COLUMN_FAV_COLOR = "colorfav";
+        public static final String COlUMN_FAV_IMAGE_URI = "imageurifav";
 
     }
 }

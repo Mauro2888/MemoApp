@@ -39,7 +39,8 @@ public class HelperClass extends SQLiteOpenHelper {
                 ContractMemoApp.MemoAppContract.COLUMN_FAV_TITLE + " TEXT UNIQUE, " +
                 ContractMemoApp.MemoAppContract.COLUMN_FAV_NOTETXT + " TEXT NOT NULL, " +
                 ContractMemoApp.MemoAppContract.COLUMN_FAV_DATE + " TEXT, " +
-                ContractMemoApp.MemoAppContract.COLUMN_FAV_COLOR + " INTEGER " +
+                ContractMemoApp.MemoAppContract.COLUMN_FAV_COLOR + " INTEGER, " +
+                ContractMemoApp.MemoAppContract.COlUMN_FAV_IMAGE_URI + " TEXT " +
                 ")";
         sqLiteDatabase.execSQL(create_database_favourite);
 
