@@ -68,16 +68,14 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private EditText mNoteEdit;
     private TextView mLastEdit;
     private HelperClass  mHelper;
-    private boolean mTouchedColor = false;
     private CollapsingToolbarLayout mCollapsToolBar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_memo);
-        setTitle("");
+        setTitle("Edit Memo");
 
         mCollapsToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
-        mCollapsToolBar.setTitle(getResources().getString(R.string.memoEdit));
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutTools);
         mfavBtn = (FloatingActionButton) findViewById(R.id.addFavouriteBtn);
         mTitleEdit = (EditText) findViewById(R.id.ins_title_detail);
@@ -100,7 +98,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mTitleEdit.setOnTouchListener(mTouchedListener);
         mNoteEdit.setOnTouchListener(mTouchedListener);
         mfavBtn.setOnTouchListener(mTouchedListener);
-
 
         mfavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,17 +234,17 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             colorValue = data.getInt(color);
             String uriData = data.getString(imageUriGet);
 
-            mTitleEdit.setText(titleTxt);
-            mNoteEdit.setText(noteTxt);
-            mLastEdit.setText(dateTxt);
-            Log.d("TAG IMAGE", "" + uriData);
-            Glide.with(DetailActivity.this).load(uriData).into(mImageViewAddImage);
-
-
             //retore color for entire activity
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(colorValue));
             mCollapsToolBar.setBackgroundColor(colorValue);
             getWindow().setStatusBarColor(colorValue);
+
+            mTitleEdit.setText(titleTxt);
+            mNoteEdit.setText(noteTxt);
+            mLastEdit.setText(dateTxt);
+            Log.d("TAG IMAGE", "" + uriData);
+
+            Glide.with(DetailActivity.this).load(uriData).into(mImageViewAddImage);
 
 
             //get data for widget
@@ -259,11 +256,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             editorManager.commit();
 
 
-            //load Tools menu
-            startToolsbarEdit();
-
-            mNoteLength = mNoteEdit.getText().toString().trim().length();
-            mTitleLength = mTitleEdit.getText().toString().trim().length();
+            mNoteLength = mNoteEdit.getText().length();
+            mTitleLength = mTitleEdit.getText().length();
             Log.d("TAG", "length " + mNoteLength);
         }
     }
@@ -405,8 +399,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 12 && resultCode == RESULT_OK) {
             Uri uriImage = data.getData();
-            new MemoUtils().PreferenceSaveImageUri(DetailActivity.this, "UriImageSave", uriImage.toString());
-            Glide.with(DetailActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
+            if (uriImage != null) {
+                new MemoUtils().PreferenceSaveImageUri(DetailActivity.this, "UriImageSave", uriImage.toString());
+                mImageViewAddImage.setVisibility(View.VISIBLE);
+                Glide.with(DetailActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
+            } else return;
+
         }
         super.onActivityResult(requestCode, resultCode, data);
 
