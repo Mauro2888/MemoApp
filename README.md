@@ -11,3 +11,9 @@ Version 0.2
 - Material Design
 - Fews Bugs
 - CardView Improvements
+- Favourite Database
+
+Version 0.5
+- Design improvements with Material Color
+- Widget Support and Share content
+- Access with NavMenu
