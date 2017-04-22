@@ -1,4 +1,4 @@
-# MemoRemember
+# MemoMaterial
 Color Memo application 
 - Now Alpha stage 0.5
 <p align="center">
