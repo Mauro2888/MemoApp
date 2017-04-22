@@ -2,13 +2,20 @@
 <resources>
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#009688</color>
-    <color name="colorAccent">#fd9647</color>
-    <color name="colorBtnFast">#4DB6AC</color>
+    <color name="colorAccent">#FF5722</color>
+    <color name="colorBtnFast">#B2DFDB</color>
     <color name="colorBtnNormal">#B2DFDB</color>
-    <color name="backGroundMain">#dae2e2</color>
-    <color name="colorPressedFab">#004D40</color>
-    <color name="colorDateBar">#B2DFDB</color>
+    <color name="backGroundMain">#feeceded</color>
+    <color name="colorPressedFab">#FFECB3</color>
+    <color name="colorDateBar">#FFECB3</color>
     <color name="colorTextDate">#7b353535</color>
     <color name="colorBtnRecord">#D42626</color>
     <color name="colorWhite">#ffffff</color>
+
+    <color name="materialGreen">#009688</color>
+    <color name="materialRed">#f36c60</color>
+    <color name="materialBlue">#80d8ff</color>
+    <color name="materialOrange">#ffb74d</color>
+    <color name="materialPink">#ff80ab</color>
+    <color name="materialGray">#90a4ae</color>
 </resources>

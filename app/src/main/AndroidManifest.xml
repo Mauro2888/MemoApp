@@ -26,7 +26,17 @@
 
         <activity android:name=".UI.InsertNoteActivity" />
         <activity android:name=".UI.DetailActivity" />
-        <activity android:name=".UI.FavouriteActivity"></activity>
+        <activity android:name=".UI.FavouriteActivity" />
+
+        <receiver android:name=".NoteAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/note_app_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

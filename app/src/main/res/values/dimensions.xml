@@ -5,12 +5,12 @@
     <dimen name="dateBoxSize">4dp</dimen>
     <dimen name="cardHeight">140dp</dimen>
     <dimen name="paddingLeft">7dp</dimen>
-    <dimen name="LastDate">13sp</dimen>
+    <dimen name="LastDate">11sp</dimen>
     <dimen name="paddingDate">4dp</dimen>
     <dimen name="textSizeTitleCard">24sp</dimen>
     <dimen name="textSizeCardNote">14sp</dimen>
-    <dimen name="paddingCard">16dp</dimen>
-    <dimen name="paddindDate">8dp</dimen>
-    <dimen name="paddingShapeCircle">6dp</dimen>
+    <dimen name="paddingCard">11dp</dimen>
+    <dimen name="paddindDate">5dp</dimen>
+    <dimen name="paddingShapeCircle">4dp</dimen>
 
 </resources>

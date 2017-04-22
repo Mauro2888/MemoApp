@@ -1,39 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardViewId"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardViewId"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/cardHeight"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:innerRadius="0dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
-        app:cardUseCompatPadding="true">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/timebox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="@dimen/TextSpace"
-                android:gravity="end"
-                android:hint="date"
-                android:padding="@dimen/paddingDate"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorTextDate"
-                android:textSize="@dimen/dateBoxText"
-                android:textStyle="italic" />
-        </LinearLayout>
+    android:descendantFocusability="blocksDescendants"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:innerRadius="0dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
 
         <TextView
             android:id="@+id/colorBarMain2"
@@ -49,47 +27,78 @@
             android:layout_marginLeft="@dimen/TextSpace"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/noteTitle"
-                style="@style/MemoTitleText"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_assignment_black"
-                android:drawablePadding="7dp"
-                android:paddingLeft="@dimen/paddingCard"
-                android:paddingRight="@dimen/paddingCard"
-                android:paddingTop="@dimen/paddingCard"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                tools:text="@string/ins_title" />
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/noteTitle"
+                        style="@style/MemoTitleText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:drawableLeft="@drawable/ic_assignment_black"
+                        android:drawablePadding="7dp"
+                        android:paddingLeft="@dimen/paddingCard"
+                        android:paddingRight="@dimen/paddingCard"
+                        android:paddingTop="@dimen/paddingCard"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        tools:text="@string/ins_title" />
+
+                    <ImageView
+                        android:id="@+id/imageview_cursor"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:scaleType="fitStart" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/noteTextCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="10"
+                    android:paddingLeft="@dimen/paddingCard"
+                    android:paddingRight="@dimen/paddingCard"
+                    android:textColor="#6c6c6c"
+                    android:textSize="12sp"
+                    android:typeface="sans"
+                    tools:text="@string/ins_note" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:divider="@drawable/divider"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:showDividers="beginning">
 
                 <TextView
-                    android:id="@+id/noteText"
-                    style="@style/MemoText"
-                    android:layout_width="match_parent"
+                    android:id="@+id/timebox"
+                    style="@style/MemoDateText"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
-                    android:inputType="textCapSentences|textMultiLine"
-                    android:maxLines="2"
-                    android:paddingBottom="@dimen/paddingCard"
-                    android:paddingLeft="@dimen/paddingCard"
-                    android:paddingRight="@dimen/paddingCard"
-                    tools:text="@string/ins_note" />
-
+                    android:layout_gravity="left"
+                    android:hint="date"
+                    android:padding="@dimen/paddindDate" />
 
             </LinearLayout>
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/colorBarMain"
-            android:layout_width="15dp"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:layout_margin="@dimen/paddingShapeCircle"
             android:background="@null" />
     </android.support.v7.widget.CardView>
-</LinearLayout>

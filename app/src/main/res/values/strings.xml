@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">MemoApp</string>
+    <string name="app_name">Memo</string>
+    <string name="addedFav">Added to Favourite</string>
+    <string name="allNotes">All Notes</string>
     <string name="home">Home Memo</string>
     <string name="ins_title">Note Title</string>
     <string name="ins_note">Write something here.....</string>
@@ -24,5 +26,9 @@
     <string name="memo_deleted">Memo deleted</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="lastEdit">Last Edit:</string>
     <string name="favourite">Favourite</string>
+    <string name="memoEdit">Memo Edit</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

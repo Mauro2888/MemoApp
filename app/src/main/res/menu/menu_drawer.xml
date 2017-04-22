@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Notes">
 
-    <item android:title="@string/favourite"></item>
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/favouriteNotes"
+                    android:icon="@drawable/ic_grade"
+                    android:title="@string/favourite"></item>
+
+                <item
+                    android:id="@+id/allNotes"
+                    android:icon="@drawable/ic_assignment_black"
+                    android:title="@string/allNotes"></item>
+
+            </group>
+        </menu>
+
+
+    </item>
+
 
 </menu>

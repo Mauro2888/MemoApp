@@ -18,11 +18,17 @@ public class ContentProvider extends android.content.ContentProvider {
     public static final int ALL_ROW = 100;
     public static  final int SELECT_ROW = 101;
 
+    public static final int ALL_ROW_FAV = 200;
+    public static final int SELECT_ROW_FAV = 201;
+
     public static final UriMatcher sUriMatcher = new UriMatcher(android.content.UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(ContractMemoApp.AUTHORITY,ContractMemoApp.PATH_TABLE,ALL_ROW);
         sUriMatcher.addURI(ContractMemoApp.AUTHORITY,ContractMemoApp.PATH_TABLE + "/#",SELECT_ROW);
+
+        sUriMatcher.addURI(ContractMemoApp.AUTHORITY, ContractMemoApp.PATH_TABLE_PREFERENCES, ALL_ROW_FAV);
+        sUriMatcher.addURI(ContractMemoApp.AUTHORITY, ContractMemoApp.PATH_TABLE_PREFERENCES + "/#", SELECT_ROW_FAV);
     }
 
     private HelperClass mHelper;
@@ -40,20 +46,28 @@ public class ContentProvider extends android.content.ContentProvider {
         Uri returnUri;
         mSQLite = mHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
-        long id;
         switch (match){
             case ALL_ROW:
-                id = mSQLite.insertOrThrow(ContractMemoApp.MemoAppContract.TABLE_NAME,null,contentValues);
+                long id = mSQLite.insertOrThrow(ContractMemoApp.MemoAppContract.TABLE_NAME, null, contentValues);
                 if (id  > 0){
                     returnUri = ContentUris.withAppendedId(ContractMemoApp.MemoAppContract.URI_CONTENT,id);
+                    getContext().getContentResolver().notifyChange(returnUri, null);
                 }else {
                     throw new IllegalArgumentException("Errore" + uri);
+                }
+                break;
+            case ALL_ROW_FAV:
+                long id2 = mSQLite.insertWithOnConflict(ContractMemoApp.MemoAppContract.TABLE_NAME_FAV, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE);
+                if (id2 > 0) {
+                    returnUri = ContentUris.withAppendedId(ContractMemoApp.MemoAppContract.URI_CONTENT_FAV, id2);
+                    getContext().getContentResolver().notifyChange(returnUri, null);
+                } else {
+                    throw new IllegalArgumentException("Error add Fav" + uri);
                 }
                 break;
             default:
                 throw new IllegalArgumentException("Error Insert " + uri);
         }
-        getContext().getContentResolver().notifyChange(returnUri,null);
         return returnUri;
     }
 

@@ -10,17 +10,20 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import app.memo.com.memoapp.Database.ClickItem;
+import app.memo.com.memoapp.Database.ContractMemoApp;
 import app.memo.com.memoapp.Database.CursorAdapterMemo;
 import app.memo.com.memoapp.Database.HelperClass;
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
@@ -39,10 +43,11 @@ import app.memo.com.memoapp.R;
 
 import static app.memo.com.memoapp.Database.ContractMemoApp.MemoAppContract.URI_CONTENT;
 
-public class MainActivityMemo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,ClickItem {
+public class MainActivityMemo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, ClickItem {
 
     public static final int LOADER_ID = 111;
     private static final int REQUEST_CODE = 1022;
+    Uri Uri;
     HelperClass mHelper;
     SQLiteDatabase mSQLdata;
     private RecyclerView mRecyclerMemo ;
@@ -57,7 +62,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private CoordinatorLayout mCoordinatorLayoutMain;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToogle;
-    private Toolbar mToolbar;
+    private NavigationView mNavView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +77,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
         mFloatAddNoteReg = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddReg);
         mCoordinatorLayoutMain = (CoordinatorLayout) findViewById(R.id.mainCoordinatorLayout);
-
+        mNavView = (NavigationView) findViewById(R.id.navMenu);
         mDrawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         mToogle = new ActionBarDrawerToggle(this, mDrawer, R.string.open, R.string.close);
         mDrawer.addDrawerListener(mToogle);
@@ -79,9 +85,10 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerMemo.setHasFixedSize(true);
+        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerMemo.setLayoutManager(mLayoutManager);
+        mRecyclerMemo.setHasFixedSize(true);
+        mRecyclerMemo.setItemAnimator(new DefaultItemAnimator());
         mAdapterMemo = new CursorAdapterMemo(this);
         mRecyclerMemo.setAdapter(mAdapterMemo);
         mAdapterMemo.setmClickItem(MainActivityMemo.this);
@@ -100,12 +107,28 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int pos = (int) viewHolder.itemView.getTag();
-                final Uri Uri = URI_CONTENT.buildUpon().appendPath(String.valueOf(pos)).build();
+                Uri = URI_CONTENT.buildUpon().appendPath(String.valueOf(pos)).build();
                 SwiperDeleteAlert(Uri);
             }
         }).attachToRecyclerView(mRecyclerMemo);
 
 
+        mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.favouriteNotes:
+                        Intent favourite = new Intent(MainActivityMemo.this, FavouriteActivity.class);
+                        startActivity(favourite);
+                        break;
+                    case R.id.allNotes:
+                        getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivityMemo.this);
+                        break;
+                }
+                mDrawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
 
         //FAB OPTION-------------------------------------------
 
@@ -177,20 +200,20 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
     @Override
     public void OnclickItem(View view, int pos) {
-        Intent DetailActivity = new Intent(MainActivityMemo.this, DetailActivity.class);
+        Intent DetailActivity = new Intent(view.getContext(), DetailActivity.class);
         pos = (int) view.getTag();
         Uri Uri = android.net.Uri.withAppendedPath(URI_CONTENT, String.valueOf(pos));
         DetailActivity.setData(Uri);
         startActivity(DetailActivity);
     }
 
-
-
+    //CURSOR SUPPORT-------------------------------------------------------------
     @Override
     protected void onResume() {
         super.onResume();
         getSupportLoaderManager().restartLoader(LOADER_ID,null,this);
     }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -202,13 +225,14 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         mAdapterMemo.swapCursor(cursor);
-
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapterMemo.swapCursor(null);
     }
+
+    //-------------------------------------------------------------------------------------
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -224,9 +248,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         }
 
         switch (item.getItemId()) {
-            case R.id.favouriteMemo:
-                Intent favourite = new Intent(MainActivityMemo.this, FavouriteActivity.class);
-                startActivity(favourite);
+            case R.id.about:
                 break;
 
         }
@@ -255,8 +277,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                     contentValues.put("title","Vocal Memo");
                     contentValues.put("note",result.get(0).toString());
                     contentValues.put("date",new MemoUtils().GetDate());
-                    contentValues.put("color", new MemoUtils().GetRandomMaterialColor(MainActivityMemo.this, "A100"));
-                    getContentResolver().insert(URI_CONTENT,contentValues);
+                    contentValues.put("color", new MemoUtils().GetRandomMaterialColor(MainActivityMemo.this, "A300"));
+                    getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT, contentValues);
                 }
                 break;
         }
@@ -282,5 +304,6 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 }).create().show();
 
     }
+
 
 }

@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp"
     android:scrollbarAlwaysDrawVerticalTrack="true"
     tools:context="app.memo.com.memoapp.UI.MainActivityMemo">
 
@@ -14,6 +13,7 @@
         android:id="@+id/recyclerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/mainCoordinatorLayout"
@@ -39,8 +39,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 app:menu_colorNormal="@color/colorPrimary"
-                app:menu_colorPressed="@color/colorPressedFab"
-                app:menu_icon="@drawable/ic_action_add_note"
+                app:menu_colorPressed="@color/colorBtnRecord"
                 app:menu_openDirection="up">
 
                 <com.github.clans.fab.FloatingActionButton

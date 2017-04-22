@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="2dp"
-            app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
@@ -31,8 +30,10 @@
                 android:id="@+id/app_bar_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_assignment" />
+                android:src="@drawable/ic_assignment"
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_ins"
@@ -47,11 +48,12 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/pickerColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_grade"
+        android:src="@drawable/ic_color_lens"
         app:elevation="5dp"
         app:fabSize="normal"
         app:layout_anchor="@id/appbar"
@@ -67,18 +69,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="15dp">
-
-            <ImageButton
-                android:id="@+id/pickerColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_color_lens" />
-
-            <ImageView
-                android:id="@+id/colorSelected"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/ins_title"
@@ -98,7 +88,6 @@
                 android:hint="@string/ins_note"
                 android:inputType="textCapSentences|textMultiLine"
                 android:isScrollContainer="true" />
-
 
         </LinearLayout>
 

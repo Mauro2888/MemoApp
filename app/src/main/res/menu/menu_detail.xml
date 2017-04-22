@@ -17,6 +17,8 @@
         app:showAsAction="always"></item>
 
     <item
+
+        android:id="@+id/shareNote"
         android:foreground="?android:attr/selectableItemBackground"
         android:icon="@drawable/ic_share"
         android:title="share"

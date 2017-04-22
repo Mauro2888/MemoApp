@@ -46,6 +46,20 @@ public class MemoUtils {
         return resoreInt;
     }
 
+
+    public void PreferenceSaveImageUri(Context context, String key, String value) {
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public String PreferenceRestoreUriImage(Context context, String key) {
+        SharedPreferences restore = PreferenceManager.getDefaultSharedPreferences(context);
+        String resoreInt = restore.getString(key, null);
+        return resoreInt;
+    }
+
     public int random(){
         Random random = new Random();
         int colorRandom = Color.argb(255, random.nextInt(256),random.nextInt(256),random.nextInt(256));
@@ -76,5 +90,4 @@ public class MemoUtils {
             }
         }).show();
     }
-
 }

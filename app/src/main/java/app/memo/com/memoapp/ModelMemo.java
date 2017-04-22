@@ -1,7 +1,5 @@
 package app.memo.com.memoapp;
 
-import android.widget.TextView;
-
 import java.io.Serializable;
 
 /**
