@@ -29,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToogle;
     private NavigationView mNavView;
+    private RelativeLayout mEmptyView;
 
 
     @Override
@@ -72,6 +74,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
         setTitle(R.string.home);
 
+        mEmptyView = (RelativeLayout) findViewById(R.id.emptyView);
         mRecyclerMemo = (RecyclerView)findViewById(R.id.recyclerMemo);
         mFloatAddNote = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAdd);
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
@@ -225,6 +228,9 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         mAdapterMemo.swapCursor(cursor);
+        if (mAdapterMemo.getItemCount() <= 0) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else mEmptyView.setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".UI.DetailActivity">
+
+    <item
+        android:id="@+id/btnAddImage"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:icon="@drawable/ic_photo"
+        android:title="Image"
+        app:showAsAction="always|withText"></item>
+
+    <item
+        android:id="@+id/shareNote"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:icon="@drawable/ic_share"
+        android:title="share"
+        app:showAsAction="always"></item>
 
     <item
         android:id="@+id/ins_note_menu"
         android:foreground="?android:attr/selectableItemBackground"
-        android:icon="@drawable/ic_action_tick"
         android:title="Save"
         app:showAsAction="always"></item>
 
@@ -14,14 +29,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:icon="@drawable/ic_delete"
         android:title="delete"
-        app:showAsAction="always"></item>
+        app:showAsAction="never"></item>
 
-    <item
-
-        android:id="@+id/shareNote"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:icon="@drawable/ic_share"
-        android:title="share"
-        app:showAsAction="always"></item>
 
 </menu>

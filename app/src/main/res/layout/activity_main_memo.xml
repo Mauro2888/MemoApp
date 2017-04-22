@@ -18,7 +18,10 @@
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/mainCoordinatorLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerMemo"
@@ -38,7 +41,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                app:menu_colorNormal="@color/colorPrimary"
+                android:elevation="5dp"
+                app:menu_colorNormal="@color/colorDarkFab"
                 app:menu_colorPressed="@color/colorBtnRecord"
                 app:menu_openDirection="up">
 
@@ -47,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add"
-                    app:fab_colorNormal="@color/colorBtnNormal"
+                    app:fab_colorNormal="@color/materialOrange"
                     app:fab_label="@string/normal_note"
                     app:fab_size="mini" />
 
@@ -56,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add"
-                    app:fab_colorNormal="@color/colorBtnFast"
+                    app:fab_colorNormal="@color/materialBlue"
                     app:fab_label="@string/fast_note"
                     app:fab_size="mini" />
 
@@ -65,11 +69,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_keyboard_voice"
-                    app:fab_colorNormal="@color/colorBtnRecord"
+                    app:fab_colorNormal="@color/materialRed"
                     app:fab_label="@string/record_note"
                     app:fab_size="mini" />
 
             </com.github.clans.fab.FloatingActionMenu>
+
+            <RelativeLayout
+                android:id="@+id/emptyView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="0dp">
+
+
+                <ImageView
+                    android:id="@+id/imageviewEmpty"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:padding="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/app_icon_memo" />
+
+                <TextView
+                    android:id="@+id/textEmpty1"
+                    style="@style/MemoEmptyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageviewEmpty"
+                    android:layout_centerHorizontal="true"
+                    android:text="It's empty here !" />
+
+                <TextView
+                    android:id="@+id/textEmpty2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textEmpty1"
+                    android:text="Press + to add new Notes"
+                    android:textColor="#936c6c6c" />
+
+
+            </RelativeLayout>
 
         </android.support.design.widget.CoordinatorLayout>
 

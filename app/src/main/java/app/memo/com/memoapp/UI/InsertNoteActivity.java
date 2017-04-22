@@ -2,9 +2,11 @@ package app.memo.com.memoapp.UI;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,8 +23,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import app.memo.com.memoapp.Database.ContractMemoApp;
 import app.memo.com.memoapp.Database.HelperClass;
@@ -38,6 +43,7 @@ public class InsertNoteActivity extends AppCompatActivity {
     private String mMemoDate;
     private EditText mInsTitle;
     private EditText mInsNote;
+    private ImageView mImageViewAddImage;
     private HelperClass mHelper;
     private FloatingActionButton mBtnColorPicker;
     private CollapsingToolbarLayout mCoolapsToolbar;
@@ -56,6 +62,7 @@ public class InsertNoteActivity extends AppCompatActivity {
         setTitle("");
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_note);
         mCoolapsToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
+        mImageViewAddImage = (ImageView) findViewById(R.id.imageViewAdd);
         mCoolapsToolbar.setTitle("Insert Memo");
         mInsTitle = (EditText)findViewById(R.id.ins_title);
         mInsTitle.setTypeface(null, Typeface.BOLD);
@@ -75,6 +82,8 @@ public class InsertNoteActivity extends AppCompatActivity {
         mBtnColorPicker = (FloatingActionButton) findViewById(R.id.pickerColor);
         mInsTitle.setOnTouchListener(mOnTouchListener);
         mInsNote.setOnTouchListener(mOnTouchListener);
+        mBtnColorPicker.setOnTouchListener(mOnTouchListener);
+        new MemoUtils().PreferenceSave(InsertNoteActivity.this, "colorSaved", ContextCompat.getColor(InsertNoteActivity.this, R.color.materialBlue));
 
 
         mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
@@ -182,9 +191,15 @@ public class InsertNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
+
         switch (item.getItemId()){
             case R.id.ins_note_menu:
                InsertNote();
+                break;
+            case R.id.btnAddImage:
+                Intent addImage = new Intent(Intent.ACTION_GET_CONTENT);
+                addImage.setType("image/*");
+                startActivityForResult(Intent.createChooser(addImage, "Select Image"), 12);
                 break;
             case android.R.id.home:
                 if (mTouch || mInsTitle.length() > 0 || mInsNote.length() > 0) {
@@ -242,13 +257,27 @@ public class InsertNoteActivity extends AppCompatActivity {
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mInsNote.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE,mMemoDate);
             if (!mTouch){
-                contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR, new MemoUtils().GetRandomMaterialColor(InsertNoteActivity.this, "A160"));
+                contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR, ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
             }else {
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
             }
             getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT,contentValues);
             finish();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 12 && resultCode == RESULT_OK) {
+            Uri uriImage = data.getData();
+            if (uriImage != null) {
+                new MemoUtils().PreferenceSaveImageUri(InsertNoteActivity.this, "UriImageSave", uriImage.toString());
+                Glide.with(InsertNoteActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
+                contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(InsertNoteActivity.this, "UriImageSave"));
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
 }

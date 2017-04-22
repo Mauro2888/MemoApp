@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#009688</color>
+    <color name="colorPrimary">#16b0bf</color>
+    <color name="colorPrimaryDark">#16b0bf</color>
     <color name="colorAccent">#FF5722</color>
     <color name="colorBtnFast">#B2DFDB</color>
     <color name="colorBtnNormal">#B2DFDB</color>
@@ -11,10 +11,11 @@
     <color name="colorTextDate">#7b353535</color>
     <color name="colorBtnRecord">#D42626</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorDarkFab">#FFC107</color>
 
     <color name="materialGreen">#009688</color>
     <color name="materialRed">#f36c60</color>
-    <color name="materialBlue">#80d8ff</color>
+    <color name="materialBlue">#16b0bf</color>
     <color name="materialOrange">#ffb74d</color>
     <color name="materialPink">#ff80ab</color>
     <color name="materialGray">#90a4ae</color>

@@ -16,10 +16,13 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.transition.AutoTransition;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,7 +30,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,7 +53,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     Uri mContentUri;
     ContentValues contentValues;
     CoordinatorLayout mCoordinatorLayout;
-    ContentValues contentValuesFav;
     View.OnTouchListener mTouchedListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -60,7 +61,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
     };
     private FloatingActionButton mfavBtn;
-    private PopupWindow popupWindowTools;
+    private Toolbar bottomTools;
     private int mNoteLength;
     private int mTitleLength;
     private EditText mTitleEdit;
@@ -95,54 +96,112 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         mTitleEdit.setOnTouchListener(mTouchedListener);
         mNoteEdit.setOnTouchListener(mTouchedListener);
-
-
-        mNoteEdit.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                LayoutInflater inflaterPopWindow = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View viewInfalter = inflaterPopWindow.inflate(R.layout.popwindow_tools, null);
-
-                popupWindowTools = new PopupWindow(viewInfalter,
-                        CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT,
-                        CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT);
-
-                popupWindowTools.showAtLocation(mfavBtn, Gravity.TOP | Gravity.LEFT, 10, 100);
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-
-                ImageButton mBtnAddImage = (ImageButton) viewInfalter.findViewById(R.id.btnAddImage);
-
-                mBtnAddImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent addImage = new Intent(Intent.ACTION_GET_CONTENT);
-                        addImage.setType("image/*");
-                        startActivityForResult(Intent.createChooser(addImage, "pick image"), 12);
-                    }
-                });
-
-
-                return false;
-            }
-        });
+        mfavBtn.setOnTouchListener(mTouchedListener);
 
 
         mfavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mHelper = new HelperClass(getApplicationContext());
-                mSQLdata = mHelper.getWritableDatabase();
-                contentValuesFav = new ContentValues();
-                contentValuesFav.put(ContractMemoApp.MemoAppContract.COLUMN_FAV_TITLE, mTitleEdit.getText().toString());
-                contentValuesFav.put(ContractMemoApp.MemoAppContract.COLUMN_FAV_NOTETXT, mNoteEdit.getText().toString());
-                getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT_FAV, contentValuesFav);
-                new MemoUtils().SnackBar(mCoordinatorLayout, R.string.addedFav);
+                LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View viewColor = inflater.inflate(R.layout.popwindow_color, null);
 
+
+                final PopupWindow popWindowColor = new PopupWindow(viewColor,
+                        CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT,
+                        CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT);
+
+                popWindowColor.setFocusable(true);
+                popWindowColor.setOutsideTouchable(true);
+                popWindowColor.setEnterTransition(new AutoTransition());
+                popWindowColor.showAtLocation(mfavBtn, Gravity.CENTER_HORIZONTAL, 0, 0);
+
+                ImageButton mBtnBlue = (ImageButton) viewColor.findViewById(R.id.btnBlue);
+                ImageButton mBtnRed = (ImageButton) viewColor.findViewById(R.id.btnRed);
+                ImageButton mBtnGreen = (ImageButton) viewColor.findViewById(R.id.btnGreen);
+                ImageButton mBtOrange = (ImageButton) viewColor.findViewById(R.id.btnOrange);
+                ImageButton mBtnPink = (ImageButton) viewColor.findViewById(R.id.btnPink);
+                ImageButton mBtnGray = (ImageButton) viewColor.findViewById(R.id.btnGray);
+
+
+                mBtnGray.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialGray));
+                        mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
+                        getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        popWindowColor.dismiss();
+                    }
+                });
+
+
+                mBtOrange.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialOrange));
+                        mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
+                        getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        popWindowColor.dismiss();
+                    }
+                });
+
+                mBtnPink.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialPink));
+                        mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
+                        getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        popWindowColor.dismiss();
+                    }
+                });
+
+
+                mBtnGreen.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialGreen));
+                        mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
+                        getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        popWindowColor.dismiss();
+                    }
+                });
+
+                mBtnRed.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialRed));
+                        mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
+                        getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        popWindowColor.dismiss();
+
+                    }
+                });
+                mBtnBlue.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
+                        mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
+                        getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        popWindowColor.dismiss();
+                    }
+                });
             }
         });
+//                mHelper = new HelperClass(getApplicationContext());
+//                mSQLdata = mHelper.getWritableDatabase();
+//                contentValuesFav = new ContentValues();
+//                contentValuesFav.put(ContractMemoApp.MemoAppContract.COLUMN_FAV_TITLE, mTitleEdit.getText().toString());
+//                contentValuesFav.put(ContractMemoApp.MemoAppContract.COLUMN_FAV_NOTETXT, mNoteEdit.getText().toString());
+//                getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT_FAV, contentValuesFav);
+//                new MemoUtils().SnackBar(mCoordinatorLayout, R.string.addedFav);
     }
 
     @Override
@@ -184,17 +243,24 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             Log.d("TAG IMAGE", "" + uriData);
             Glide.with(DetailActivity.this).load(uriData).into(mImageViewAddImage);
 
+
             //retore color for entire activity
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(colorValue));
             mCollapsToolBar.setBackgroundColor(colorValue);
             getWindow().setStatusBarColor(colorValue);
 
+
+            //get data for widget
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editorManager = sharedPreferences.edit();
             editorManager.putString("title", titleTxt);
             editorManager.putString("note", noteTxt);
             editorManager.putInt("color", colorValue);
             editorManager.commit();
+
+
+            //load Tools menu
+            startToolsbarEdit();
 
             mNoteLength = mNoteEdit.getText().toString().trim().length();
             mTitleLength = mTitleEdit.getText().toString().trim().length();
@@ -227,6 +293,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 shareIntent.putExtra(Intent.EXTRA_TEXT, mNoteEdit.getText().toString());
                 shareIntent.setType("text/plain");
                 startActivity(Intent.createChooser(shareIntent, "Share note with..."));
+                break;
+            case R.id.btnAddImage:
+                Intent addImage = new Intent(Intent.ACTION_GET_CONTENT);
+                addImage.setType("image/*");
+                startActivityForResult(Intent.createChooser(addImage, "Select Image"), 12);
                 break;
             case android.R.id.home:
                 if (mTouched) {
@@ -304,17 +375,30 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mTitleEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mNoteEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE, new MemoUtils().GetDate());
-            contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
 
-            if (!mTouchedColor){
+            if (!mTouched) {
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,colorValue);
+                contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
             }else {
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
             }
             getContentResolver().update(mContentUri,contentValues,null,null);
-            popupWindowTools.dismiss();
             finish();
         }
+    }
+
+    private void startToolsbarEdit() {
+        bottomTools = (Toolbar) findViewById(R.id.toolbar_bottom);
+        bottomTools.setBackgroundColor(colorValue);
+        bottomTools.inflateMenu(R.menu.tools_menu);
+        bottomTools.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -323,9 +407,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             Uri uriImage = data.getData();
             new MemoUtils().PreferenceSaveImageUri(DetailActivity.this, "UriImageSave", uriImage.toString());
             Glide.with(DetailActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
-            popupWindowTools.dismiss();
         }
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
 }

@@ -72,8 +72,12 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         holder.mDateBox.setText(dateNote);
         holder.mColorBox1.setBackgroundColor(colorNote);
         holder.mColorBox2.setBackgroundColor(colorNote);
-        Glide.with(mContext).load(R.drawable.ic_photo).into(holder.mImageView);
-        Log.d("TAG URI IMAGE", "" + uriImage);
+
+        if (uriImage != null) {
+            Glide.with(mContext).load(R.drawable.ic_attach_file_card).into(holder.mImageView);
+            Log.d("TAG URI IMAGE", "" + uriImage);
+        } else return;
+
     }
 
     @Override

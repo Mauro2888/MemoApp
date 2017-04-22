@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></android.support.v7.widget.Toolbar>
 
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -27,6 +28,18 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addFavouriteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_color_lens"
+        app:fabSize="normal"
+        app:fab_elevationCompat="5dp"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom|right|end" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -72,7 +85,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_weight="8.59"
                 android:drawableLeft="@drawable/ic_action_calendar_month"
                 android:drawablePadding="10dp"
                 android:gravity="center"
@@ -80,20 +92,20 @@
                 android:textSize="@dimen/LastDate"
                 android:textStyle="italic"
                 tools:text="last edit" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"></android.support.v7.widget.Toolbar>
+            </RelativeLayout>
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addFavouriteBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:clickable="true"
-        android:src="@drawable/ic_grade"
-        app:fabSize="normal"
-        app:fab_elevationCompat="5dp"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right|end" />
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

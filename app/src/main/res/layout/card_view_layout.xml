@@ -55,6 +55,7 @@
                         android:id="@+id/imageview_cursor"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_margin="10dp"
                         android:layout_marginLeft="10dp"
                         android:scaleType="fitStart" />
 
@@ -68,7 +69,7 @@
                     android:paddingLeft="@dimen/paddingCard"
                     android:paddingRight="@dimen/paddingCard"
                     android:textColor="#6c6c6c"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/textSizeCardNote"
                     android:typeface="sans"
                     tools:text="@string/ins_note" />
 
