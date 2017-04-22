@@ -114,7 +114,7 @@ public class InsertNoteActivity extends AppCompatActivity {
                 mBtnGray.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new MemoUtils().PreferenceSave(InsertNoteActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialGray));
+                        new MemoUtils().PreferenceSave(InsertNoteActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialDarkPink));
                         mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));

@@ -60,7 +60,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             return false;
         }
     };
-    private FloatingActionButton mfavBtn;
+    private FloatingActionButton mChangeColorBtn;
     private Toolbar bottomTools;
     private int mNoteLength;
     private int mTitleLength;
@@ -77,7 +77,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
         mCollapsToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutTools);
-        mfavBtn = (FloatingActionButton) findViewById(R.id.addFavouriteBtn);
+        mChangeColorBtn = (FloatingActionButton) findViewById(R.id.changeColorBtn);
         mTitleEdit = (EditText) findViewById(R.id.ins_title_detail);
         mTitleEdit.setTypeface(null, Typeface.BOLD);
         mNoteEdit = (EditText) findViewById(R.id.ins_nota_detail);
@@ -97,9 +97,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
         mTitleEdit.setOnTouchListener(mTouchedListener);
         mNoteEdit.setOnTouchListener(mTouchedListener);
-        mfavBtn.setOnTouchListener(mTouchedListener);
+        mChangeColorBtn.setOnTouchListener(mTouchedListener);
 
-        mfavBtn.setOnClickListener(new View.OnClickListener() {
+        mChangeColorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -113,7 +113,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 popWindowColor.setFocusable(true);
                 popWindowColor.setOutsideTouchable(true);
                 popWindowColor.setEnterTransition(new AutoTransition());
-                popWindowColor.showAtLocation(mfavBtn, Gravity.CENTER_HORIZONTAL, 0, 0);
+                popWindowColor.showAtLocation(mChangeColorBtn, Gravity.CENTER_HORIZONTAL, 0, 0);
 
                 ImageButton mBtnBlue = (ImageButton) viewColor.findViewById(R.id.btnBlue);
                 ImageButton mBtnRed = (ImageButton) viewColor.findViewById(R.id.btnRed);
@@ -126,7 +126,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 mBtnGray.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialGray));
+                        new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialDarkPink));
                         mCollapsToolBar.setBackgroundColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
@@ -388,10 +388,10 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mTitleEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mNoteEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE, new MemoUtils().GetDate());
+            contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
 
-            if (mTouched) {
+            if (!mTouched) {
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,colorValue);
-                contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
             }else {
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
             }

@@ -51,7 +51,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="5dp"
-            android:background="@color/materialGray" />
+            android:background="@color/materialDarkPink" />
 
         <ImageButton
             android:id="@+id/btnRed"

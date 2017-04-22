@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
@@ -283,7 +284,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                     contentValues.put("title","Vocal Memo");
                     contentValues.put("note",result.get(0).toString());
                     contentValues.put("date",new MemoUtils().GetDate());
-                    contentValues.put("color", new MemoUtils().GetRandomMaterialColor(MainActivityMemo.this, "A300"));
+                    contentValues.put("color", ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
                     getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT, contentValues);
                 }
                 break;
