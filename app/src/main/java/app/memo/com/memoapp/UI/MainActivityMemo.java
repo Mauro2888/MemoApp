@@ -33,6 +33,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionMenu;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -66,6 +68,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private ActionBarDrawerToggle mToogle;
     private NavigationView mNavView;
     private RelativeLayout mEmptyView;
+    private FloatingActionMenu mFabMenu;
+
 
 
     @Override
@@ -75,6 +79,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
         setTitle(R.string.home);
 
+        mFabMenu = (FloatingActionMenu) findViewById(R.id.fabMenu);
         mEmptyView = (RelativeLayout) findViewById(R.id.emptyView);
         mRecyclerMemo = (RecyclerView)findViewById(R.id.recyclerMemo);
         mFloatAddNote = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAdd);
@@ -101,7 +106,24 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mSQLdata = mHelper.getWritableDatabase();
         contentValues = new ContentValues();
 
+        //FAV animation
 
+        mRecyclerMemo.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 1) {
+
+                    mFabMenu.hideMenuButton(true);
+                } else {
+
+                    mFabMenu.showMenuButton(true);
+                }
+            }
+        });
+
+
+        //SWIPE DELETE
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -113,6 +135,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 int pos = (int) viewHolder.itemView.getTag();
                 Uri = URI_CONTENT.buildUpon().appendPath(String.valueOf(pos)).build();
                 SwiperDeleteAlert(Uri);
+
             }
         }).attachToRecyclerView(mRecyclerMemo);
 

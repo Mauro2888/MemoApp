@@ -30,14 +30,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import app.memo.com.memoapp.Database.ContractMemoApp;
 import app.memo.com.memoapp.Database.HelperClass;
@@ -48,8 +52,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     public SQLiteDatabase mSQLdata;
     public boolean mTouched = false;
-    public int colorValue;
-    ImageView mImageViewAddImage;
+    String uriData;
     Uri mContentUri;
     ContentValues contentValues;
     CoordinatorLayout mCoordinatorLayout;
@@ -61,6 +64,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
     };
     private FloatingActionButton mChangeColorBtn;
+    private LinearLayout mLinear;
     private Toolbar bottomTools;
     private int mNoteLength;
     private int mTitleLength;
@@ -68,13 +72,16 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private EditText mNoteEdit;
     private TextView mLastEdit;
     private HelperClass  mHelper;
+    private PopupWindow popWindowColor;
     private CollapsingToolbarLayout mCollapsToolBar;
+    private ImageView mImageViewAdd;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_memo);
         setTitle("");
 
+        mLinear = (LinearLayout) findViewById(R.id.linearLayout_editBox);
         mCollapsToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.layoutTools);
         mChangeColorBtn = (FloatingActionButton) findViewById(R.id.changeColorBtn);
@@ -83,7 +90,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mNoteEdit = (EditText) findViewById(R.id.ins_nota_detail);
         mLastEdit = (TextView)findViewById(R.id.last_edit_txt);
         mTitleEdit.setTypeface(null, Typeface.BOLD);
-        mImageViewAddImage = (ImageView) findViewById(R.id.imageViewAdd);
+        mImageViewAdd = (ImageView) findViewById(R.id.imageViewAdd);
 
         Intent UriData = getIntent();
         mContentUri = UriData.getData();
@@ -97,7 +104,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
         mTitleEdit.setOnTouchListener(mTouchedListener);
         mNoteEdit.setOnTouchListener(mTouchedListener);
-        mChangeColorBtn.setOnTouchListener(mTouchedListener);
+
 
         mChangeColorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +113,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 View viewColor = inflater.inflate(R.layout.popwindow_color, null);
 
 
-                final PopupWindow popWindowColor = new PopupWindow(viewColor,
+                popWindowColor = new PopupWindow(viewColor,
                         CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT,
                         CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT);
 
@@ -114,6 +121,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 popWindowColor.setOutsideTouchable(true);
                 popWindowColor.setEnterTransition(new AutoTransition());
                 popWindowColor.showAtLocation(mChangeColorBtn, Gravity.CENTER_HORIZONTAL, 0, 0);
+
 
                 ImageButton mBtnBlue = (ImageButton) viewColor.findViewById(R.id.btnBlue);
                 ImageButton mBtnRed = (ImageButton) viewColor.findViewById(R.id.btnRed);
@@ -131,6 +139,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        insColor();
                         popWindowColor.dismiss();
                     }
                 });
@@ -144,6 +153,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+
+                        insColor();
+
                         popWindowColor.dismiss();
                     }
                 });
@@ -156,6 +168,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        insColor();
+
+
                         popWindowColor.dismiss();
                     }
                 });
@@ -169,6 +184,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        insColor();
                         popWindowColor.dismiss();
                     }
                 });
@@ -181,6 +197,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        insColor();
                         popWindowColor.dismiss();
 
                     }
@@ -193,6 +210,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+                        insColor();
                         popWindowColor.dismiss();
                     }
                 });
@@ -226,21 +244,28 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             int note = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT);
             int date = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_DATE);
             int color = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_COLOR);
-            int imageUriGet = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI);
+            int getImageUri = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI);
 
             String titleTxt = data.getString(title);
             String noteTxt = data.getString(note);
             String dateTxt = data.getString(date);
-            colorValue = data.getInt(color);
-            String uriData = data.getString(imageUriGet);
-
+            int colorValue = data.getInt(color);
+            uriData = data.getString(getImageUri);
 
 
             mTitleEdit.setText(titleTxt);
             mNoteEdit.setText(noteTxt);
             mLastEdit.setText(dateTxt);
             Log.d("TAG IMAGE", "" + uriData);
-            Glide.with(DetailActivity.this).load(uriData).into(mImageViewAddImage);
+
+
+            if (uriData != null) {
+                mImageViewAdd.setVisibility(View.VISIBLE);
+                Glide.with(DetailActivity.this).load(uriData).into(mImageViewAdd);
+            } else mImageViewAdd.setVisibility(View.GONE);
+
+
+
 
             //retore color for entire activity
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(colorValue));
@@ -258,6 +283,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             editorManager.commit();
 
 
+            //get lenght for edit Text
             mNoteLength = mNoteEdit.getText().length();
             mTitleLength = mTitleEdit.getText().length();
             Log.d("TAG", "length " + mNoteLength);
@@ -268,6 +294,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -378,36 +405,29 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     public void InsertNote(){
+        contentValues = new ContentValues();
         String TitleControl = mTitleEdit.getText().toString();
         String NoteControl = mNoteEdit.getText().toString();
-        addFav();
         if (TitleControl.isEmpty() && NoteControl.isEmpty()){
             Toast.makeText(this, "Please Insert a Note", Toast.LENGTH_SHORT).show();
         }else{
-            contentValues = new ContentValues();
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mTitleEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mNoteEdit.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE, new MemoUtils().GetDate());
-            contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
-
-            if (!mTouched) {
-                contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,colorValue);
-            }else {
-                contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR,new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
-            }
-            getContentResolver().update(mContentUri,contentValues,null,null);
-            finish();
         }
+        getContentResolver().update(mContentUri, contentValues, null, null);
+        finish();
     }
 
-    private void startToolsbarEdit() {
+    private void StartToolsbarEdit() {
         bottomTools = (Toolbar) findViewById(R.id.toolbar_bottom);
-        bottomTools.setBackgroundColor(colorValue);
+        bottomTools.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
         bottomTools.inflateMenu(R.menu.tools_menu);
         bottomTools.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    //Elements inside toolbar
                 }
                 return true;
             }
@@ -416,16 +436,36 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == 12 && resultCode == RESULT_OK) {
             Uri uriImage = data.getData();
             if (uriImage != null) {
                 new MemoUtils().PreferenceSaveImageUri(DetailActivity.this, "UriImageSave", uriImage.toString());
-                Glide.with(DetailActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
-            } else return;
-
+                insImage();
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    public void insImage() {
+        contentValues = new ContentValues();
+        contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
+        getContentResolver().update(mContentUri, contentValues, null, null);
+    }
+
+    public void insColor() {
+        contentValues = new ContentValues();
+        contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR, new MemoUtils().PreferenceRestore(DetailActivity.this, "colorSaved", 0));
+        getContentResolver().update(mContentUri, contentValues, null, null);
+    }
+
+    public void createNewImageView(String UriDataImage) {
+        ImageView imageView = new ImageView(getApplicationContext());
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(500, ViewGroup.LayoutParams.WRAP_CONTENT);
+        imageView.setLayoutParams(layoutParams);
+        mLinear.addView(imageView);
+        Glide.with(DetailActivity.this).load(UriDataImage).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
     }
 
 }
