@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ins_title"
-                android:inputType="textCapSentences|textMultiLine" />
+                android:inputType="textCapSentences|textMultiLine|textPhonetic" />
 
             <EditText
                 android:id="@+id/ins_nota"
@@ -86,7 +86,7 @@
                 android:autoLink="all"
                 android:background="@null"
                 android:hint="@string/ins_note"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textPhonetic"
                 android:isScrollContainer="true" />
 
             <ImageView

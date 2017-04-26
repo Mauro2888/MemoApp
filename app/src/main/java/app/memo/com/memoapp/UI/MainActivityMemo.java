@@ -71,13 +71,13 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private FloatingActionMenu mFabMenu;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_memo);
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
         setTitle(R.string.home);
+
 
         mFabMenu = (FloatingActionMenu) findViewById(R.id.fabMenu);
         mEmptyView = (RelativeLayout) findViewById(R.id.emptyView);
@@ -334,6 +334,5 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 }).create().show();
 
     }
-
 
 }

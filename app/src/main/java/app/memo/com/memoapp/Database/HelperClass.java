@@ -28,7 +28,8 @@ public class HelperClass extends SQLiteOpenHelper {
                 ContractMemoApp.MemoAppContract.COLUMN_NOTETXT + " TEXT NOT NULL, " +
                 ContractMemoApp.MemoAppContract.COLUMN_DATE + " TEXT, " +
                 ContractMemoApp.MemoAppContract.COLUMN_COLOR + " INTEGER, " +
-                ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI + " TEXT " +
+                ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI + " TEXT, " +
+                ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO + " TEXT " +
                 ")";
         sqLiteDatabase.execSQL(create_dataBase);
 

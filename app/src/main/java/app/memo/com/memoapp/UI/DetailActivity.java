@@ -9,9 +9,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +27,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.AutoTransition;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -43,6 +47,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.File;
+import java.io.IOException;
+
 import app.memo.com.memoapp.Database.ContractMemoApp;
 import app.memo.com.memoapp.Database.HelperClass;
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
@@ -50,6 +57,7 @@ import app.memo.com.memoapp.R;
 
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
+    private static final int REQUEST_PERMISSION_ID = 201;
     public SQLiteDatabase mSQLdata;
     public boolean mTouched = false;
     String uriData;
@@ -63,6 +71,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             return false;
         }
     };
+    //variable record
+    Uri mAudioUri;
+    String uriREC;
+    int recTime;
+    String[] permission = {"android.permission.RECORD_AUDIO", "android.permission.WRITE_EXTERNAL_STORAGE"};
     private FloatingActionButton mChangeColorBtn;
     private LinearLayout mLinear;
     private Toolbar bottomTools;
@@ -75,11 +88,17 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private PopupWindow popWindowColor;
     private CollapsingToolbarLayout mCollapsToolBar;
     private ImageView mImageViewAdd;
+    private File fileAudio = null;
+    private MediaRecorder mMediaRecord;
+    //getPermission
+    private boolean requestRecordAudioPermission = false;
+    private boolean requestWriteExternalStorage = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_memo);
         setTitle("");
+
 
         mLinear = (LinearLayout) findViewById(R.id.linearLayout_editBox);
         mCollapsToolBar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
@@ -91,6 +110,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mLastEdit = (TextView)findViewById(R.id.last_edit_txt);
         mTitleEdit.setTypeface(null, Typeface.BOLD);
         mImageViewAdd = (ImageView) findViewById(R.id.imageViewAdd);
+        bottomTools = (Toolbar) findViewById(R.id.toolbar_bottom);
+        bottomTools.setVisibility(View.INVISIBLE);
 
         Intent UriData = getIntent();
         mContentUri = UriData.getData();
@@ -119,7 +140,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
                 popWindowColor.setFocusable(true);
                 popWindowColor.setOutsideTouchable(true);
-                popWindowColor.setEnterTransition(new AutoTransition());
+
                 popWindowColor.showAtLocation(mChangeColorBtn, Gravity.CENTER_HORIZONTAL, 0, 0);
 
 
@@ -226,7 +247,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,
                 ContractMemoApp.MemoAppContract.COLUMN_DATE,
                 ContractMemoApp.MemoAppContract.COLUMN_COLOR,
-                ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI
+                ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI,
+                ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO
         };
         CursorLoader cursorLoader = new CursorLoader(this,mContentUri,projector,null,null,null);
         return cursorLoader;
@@ -245,12 +267,20 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             int date = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_DATE);
             int color = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_COLOR);
             int getImageUri = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI);
+            int uriRecord = data.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO);
+
 
             String titleTxt = data.getString(title);
             String noteTxt = data.getString(note);
             String dateTxt = data.getString(date);
             int colorValue = data.getInt(color);
             uriData = data.getString(getImageUri);
+            uriREC = data.getString(uriRecord);
+
+            if (uriREC != null) {
+                bottomTools.setVisibility(View.VISIBLE);
+                RecordToolbar();
+            } else bottomTools.setVisibility(View.GONE);
 
 
             mTitleEdit.setText(titleTxt);
@@ -333,6 +363,15 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 } else {
                     onBackPressed();
                 }
+                break;
+            case R.id.recordMenu:
+                //request method
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(permission, REQUEST_PERMISSION_ID);
+                }
+
+                RecordToolbar();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -419,20 +458,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         finish();
     }
 
-    private void StartToolsbarEdit() {
-        bottomTools = (Toolbar) findViewById(R.id.toolbar_bottom);
-        bottomTools.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
-        bottomTools.inflateMenu(R.menu.tools_menu);
-        bottomTools.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    //Elements inside toolbar
-                }
-                return true;
-            }
-        });
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -466,6 +491,104 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         imageView.setLayoutParams(layoutParams);
         mLinear.addView(imageView);
         Glide.with(DetailActivity.this).load(UriDataImage).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
+    }
+
+    private void RecordToolbar() {
+        bottomTools.setVisibility(View.VISIBLE);
+        ImageButton mBtnRec = (ImageButton) findViewById(R.id.btnRecordVoice);
+        final ImageButton mBtnStop = (ImageButton) findViewById(R.id.btnStopRecord);
+        final ImageButton mBtnPlay = (ImageButton) findViewById(R.id.btnPlayRecord);
+        ImageButton mBtnDelete = (ImageButton) findViewById(R.id.btnDeleteRecord);
+
+        if (uriREC != null) {
+            mBtnPlay.setEnabled(true);
+            mBtnRec.setEnabled(false);
+            mBtnStop.setEnabled(false);
+            mBtnDelete.setVisibility(View.VISIBLE);
+        }
+
+        mBtnRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fileAudio = null;
+                File audioDir = Environment.getExternalStorageDirectory();
+
+                try {
+                    fileAudio = File.createTempFile("recordMemo", ".3gp", audioDir);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mMediaRecord = new MediaRecorder();
+                mMediaRecord.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mMediaRecord.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                mMediaRecord.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                mMediaRecord.setOutputFile(fileAudio.getPath());
+                try {
+                    mMediaRecord.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mMediaRecord.start();
+
+                Toast.makeText(DetailActivity.this, "Start Record" + fileAudio, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mBtnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMediaRecord.stop();
+                mMediaRecord.release();
+                addRecordToDatabase();
+                Toast.makeText(DetailActivity.this, "Stop Recording", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mBtnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MediaPlayer mPlayAudio = new MediaPlayer();
+
+                try {
+                    mPlayAudio.setDataSource(DetailActivity.this, Uri.parse(uriREC));
+                    mPlayAudio.prepare();
+                    mPlayAudio.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        mBtnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DetailActivity.this, "Delete", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void addRecordToDatabase() {
+        contentValues = new ContentValues();
+        contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO, fileAudio.getAbsolutePath());
+        new MemoUtils().PreferenceSaveRecord(DetailActivity.this, "audioFileRecord", fileAudio.getAbsolutePath());
+        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(new MemoUtils().PreferenceRestoreRecord(DetailActivity.this, "audioFileRecord", null))));
+        getContentResolver().update(mContentUri, contentValues, null, null);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case REQUEST_PERMISSION_ID:
+                requestRecordAudioPermission = grantResults[0] == getPackageManager().PERMISSION_GRANTED;
+                requestWriteExternalStorage = grantResults[1] == getPackageManager().PERMISSION_GRANTED;
+                break;
+        }
+        if (!requestRecordAudioPermission) finish();
+        if (!requestWriteExternalStorage) finish();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 }

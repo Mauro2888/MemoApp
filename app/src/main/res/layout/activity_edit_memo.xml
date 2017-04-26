@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ins_title"
-                android:inputType="textCapSentences|textMultiLine" />
+                android:inputType="textCapSentences|textMultiLine|textPhonetic" />
 
             <EditText
                 android:id="@+id/ins_nota_detail"
@@ -70,15 +70,92 @@
                 android:autoLink="all"
                 android:background="@null"
                 android:hint="@string/ins_note"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textPhonetic"
                 android:isScrollContainer="true" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_bottom"
+
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="top|start"
+                android:background="@null">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnRecordVoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/shape_btn"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:src="@drawable/ic_fiber_manual_record"
+                        android:tint="@color/colorBtnRecord" />
+
+
+                    <ImageButton
+                        android:id="@+id/btnPlayRecord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_toEndOf="@+id/btnRecordVoice"
+                        android:layout_toRightOf="@+id/btnRecordVoice"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/shape_btn"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/ic_play_arrow" />
+
+                    <ImageButton
+                        android:id="@+id/btnStopRecord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginStart="18dp"
+                        android:layout_toEndOf="@+id/btnPlayRecord"
+                        android:layout_toRightOf="@+id/btnPlayRecord"
+                        android:background="@drawable/shape_btn"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:src="@drawable/ic_stop" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeleteRecord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/shape_btn"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:src="@drawable/ic_delete"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
 
 
             <LinearLayout
                 android:id="@+id/linearLayout_editBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/imageViewAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="300dp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/last_edit_txt"
@@ -89,28 +166,15 @@
                     android:drawableLeft="@drawable/ic_action_calendar_month"
                     android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:inputType="textCapSentences"
+                    android:inputType="textCapSentences|textNoSuggestions"
                     android:textSize="@dimen/LastDate"
                     android:textStyle="italic"
                     tools:text="last edit" />
 
-                <ImageView
-                    android:id="@+id/imageViewAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="300dp"
-                    android:visibility="gone" />
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar_bottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:visibility="gone">
-
-                </android.support.v7.widget.Toolbar>
             </LinearLayout>
-        </LinearLayout>
 
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

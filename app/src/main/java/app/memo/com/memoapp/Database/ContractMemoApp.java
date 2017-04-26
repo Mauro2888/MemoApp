@@ -29,6 +29,7 @@ public class ContractMemoApp {
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_COLOR = "color";
         public static final String COlUMN_IMAGE_URI = "imageuri";
+        public static final String COLUMN_RECORD_AUDIO = "record";
 
         public static final String TABLE_NAME_FAV = "memofav";
         public static final String COLUMN_FAV_TITLE = "titlefav";

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -54,6 +53,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         int date = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_DATE);
         int color = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_COLOR);
         int image = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI);
+        int record = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO);
 
         mCursor.moveToPosition(position);
 
@@ -62,6 +62,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         String dateNote = mCursor.getString(date);
         int colorNote = mCursor.getInt(color);
         String uriImage = mCursor.getString(image);
+        String uriRecord = mCursor.getString(record);
 
 
         int posId = mCursor.getInt(id);
@@ -73,10 +74,20 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         holder.mColorBox1.setBackgroundColor(colorNote);
         holder.mColorBox2.setBackgroundColor(colorNote);
 
+
+        if (uriRecord != null) {
+            holder.mImageViewRecordIcon.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load(R.drawable.ic_keyboard_voice).into(holder.mImageViewRecordIcon);
+        } else {
+            holder.mImageViewRecordIcon.setVisibility(View.INVISIBLE);
+        }
+
         if (uriImage != null) {
-            Glide.with(mContext).load(R.drawable.ic_attach_file_card).into(holder.mImageView);
-            Log.d("TAG URI IMAGE", "" + uriImage);
-        } else return;
+            holder.mImageViewAttachIcon.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load(R.drawable.ic_attach_file_card).into(holder.mImageViewAttachIcon);
+        } else {
+            holder.mImageViewAttachIcon.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -109,7 +120,8 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         TextView mDateBox;
         ImageButton mColorBox1;
         TextView mColorBox2;
-        ImageView mImageView;
+        ImageView mImageViewAttachIcon;
+        ImageView mImageViewRecordIcon;
 
         public ViewHolderMemo(View itemView) {
             super(itemView);
@@ -118,7 +130,8 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             mDateBox = (TextView)itemView.findViewById(R.id.timebox);
             mColorBox1 = (ImageButton) itemView.findViewById(R.id.colorBarMain);
             mColorBox2 = (TextView)itemView.findViewById(R.id.colorBarMain2);
-            mImageView = (ImageView) itemView.findViewById(R.id.imageview_cursor);
+            mImageViewAttachIcon = (ImageView) itemView.findViewById(R.id.imageview_cursor);
+            mImageViewRecordIcon = (ImageView) itemView.findViewById(R.id.imageview_cursor_record);
             itemView.setOnClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
         }

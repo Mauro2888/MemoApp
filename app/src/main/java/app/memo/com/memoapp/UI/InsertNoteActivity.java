@@ -14,7 +14,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.AutoTransition;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -100,7 +99,8 @@ public class InsertNoteActivity extends AppCompatActivity {
 
                 popWindowColor.setFocusable(true);
                 popWindowColor.setOutsideTouchable(true);
-                popWindowColor.setEnterTransition(new AutoTransition());
+
+
                 popWindowColor.showAtLocation(mBtnColorPicker, Gravity.CENTER_HORIZONTAL, 0, 0);
 
                 ImageButton mBtnBlue = (ImageButton) viewColor.findViewById(R.id.btnBlue);

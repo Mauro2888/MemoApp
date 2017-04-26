@@ -25,7 +25,7 @@ public class MemoUtils {
 
     }
     public String GetDate(){
-        DateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy , HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("EEE d MMM yyyy");
         String date = dateFormat.format(Calendar.getInstance().getTime());
         return date;
     }
@@ -89,5 +89,18 @@ public class MemoUtils {
 
             }
         }).show();
+    }
+
+    public void PreferenceSaveRecord(Context context, String key, String value) {
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public String PreferenceRestoreRecord(Context context, String key, String value) {
+        SharedPreferences restore = PreferenceManager.getDefaultSharedPreferences(context);
+        String resoreInt = restore.getString(key, value);
+        return resoreInt;
     }
 }

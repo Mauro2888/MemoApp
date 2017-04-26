@@ -18,4 +18,5 @@
     <color name="materialOrange">#ffb74d</color>
     <color name="materialPink">#ff80ab</color>
     <color name="materialDarkPink">#E91E63</color>
+    <color name="colorBtn">#90a4ae</color>
 </resources>

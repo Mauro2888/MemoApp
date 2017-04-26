@@ -23,6 +23,13 @@
         android:icon="@drawable/ic_fav_empty"
         android:title="@string/favourite"
         app:showAsAction="always"></item>
+    <item
+        android:id="@+id/recordMenu"
+        android:icon="@drawable/ic_keyboard_voice_white"
+        android:title="record"
+        app:showAsAction="always">
+
+    </item>
 
     <item
         android:id="@+id/ins_note_menu"
