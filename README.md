@@ -24,7 +24,6 @@ Issues with
 - Favourites notes
 - Widget support
 
-
 # License
 
 MIT License
