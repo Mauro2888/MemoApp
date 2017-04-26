@@ -26,3 +26,5 @@ Version 0.5
 - Design improvements with Material Color
 - Widget Support and Share content
 - Access with NavMenu
+
+MemoMaterial/LICENSE.txt
