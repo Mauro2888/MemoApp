@@ -30,10 +30,7 @@ public class MemoUtils {
         return date;
     }
 
-    public void ColorPicker(final Context context){
-        GetRandomMaterialColor(context,"A100");
 
-    }
     public void PreferenceSave(Context context, String key,int value){
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = shared.edit();
@@ -59,6 +56,20 @@ public class MemoUtils {
         String resoreInt = restore.getString(key, null);
         return resoreInt;
     }
+
+    public void PreferenceSaveOrder(Context context, String key, String value) {
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public String PreferenceRestoreOrder(Context context, String key) {
+        SharedPreferences restore = PreferenceManager.getDefaultSharedPreferences(context);
+        String resoreInt = restore.getString(key, null);
+        return resoreInt;
+    }
+
 
     public int random(){
         Random random = new Random();

@@ -59,8 +59,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="10"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="@dimen/paddingCard"
-                    android:paddingRight="@dimen/paddingCard"
+                    android:paddingTop="5dp"
                     android:textColor="#6c6c6c"
                     android:textSize="@dimen/textSizeCardNote"
                     android:typeface="sans"
@@ -83,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="5dp">
+                    android:padding="2dp">
 
                     <TextView
                         android:id="@+id/timebox"

@@ -129,16 +129,6 @@
                         android:foreground="?android:attr/selectableItemBackground"
                         android:src="@drawable/ic_stop" />
 
-                    <ImageButton
-                        android:id="@+id/btnDeleteRecord"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/shape_btn"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:src="@drawable/ic_delete"
-                        android:visibility="gone" />
                 </RelativeLayout>
 
             </android.support.v7.widget.Toolbar>
@@ -150,12 +140,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/imageViewAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="300dp"
-                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/last_edit_txt"

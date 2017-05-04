@@ -4,12 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".UI.DetailActivity">
 
-    <item
-        android:id="@+id/btnAddImage"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:icon="@drawable/ic_photo"
-        android:title="Image"
-        app:showAsAction="always|withText"></item>
+
+    <!--<item-->
+    <!--app:showAsAction="always"-->
+    <!--android:title="attach"-->
+    <!--android:id="@+id/btnAttachImageFile"-->
+    <!--android:icon="@drawable/ic_attach_file">-->
+    <!--</item>-->
+
+
+    <!--<item-->
+    <!--android:id="@+id/btnAddImage"-->
+    <!--android:foreground="?android:attr/selectableItemBackground"-->
+    <!--android:icon="@drawable/ic_photo"-->
+    <!--android:title="Image"-->
+    <!--app:showAsAction="always|withText"></item>-->
 
     <item
         android:id="@+id/shareNote"
@@ -18,18 +27,25 @@
         android:title="share"
         app:showAsAction="always"></item>
 
-    <item
-        android:id="@+id/addFavouriteBtn"
-        android:icon="@drawable/ic_fav_empty"
-        android:title="@string/favourite"
-        app:showAsAction="always"></item>
-    <item
-        android:id="@+id/recordMenu"
-        android:icon="@drawable/ic_keyboard_voice_white"
-        android:title="record"
-        app:showAsAction="always">
+    <!--<item-->
+    <!--android:id="@+id/addFavouriteBtn"-->
+    <!--android:icon="@drawable/ic_fav_empty"-->
+    <!--android:title="@string/favourite"-->
+    <!--app:showAsAction="always"></item>-->
 
-    </item>
+    <!--<item-->
+    <!--android:id="@+id/recordMenu"-->
+    <!--android:icon="@drawable/ic_keyboard_voice_white"-->
+    <!--android:title="record"-->
+    <!--app:showAsAction="always">-->
+    <!--</item>-->
+
+    <item
+        android:id="@+id/delete_note_menu"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:icon="@drawable/ic_action_name"
+        android:title="Delete"
+        app:showAsAction="always"></item>
 
     <item
         android:id="@+id/ins_note_menu"
@@ -38,12 +54,6 @@
         app:showAsAction="always"></item>
 
 
-    <item
-        android:id="@+id/delete_note_menu"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:icon="@drawable/ic_delete"
-        android:title="delete"
-        app:showAsAction="never"></item>
 
 
 </menu>

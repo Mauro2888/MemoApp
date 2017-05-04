@@ -1,22 +1,28 @@
 <resources>
-    <string name="app_name">Memo</string>
+    <string name="app_name">Note Material</string>
     <string name="addedFav">Added to Favourite</string>
     <string name="allNotes">All Notes</string>
     <string name="home">Home Memo</string>
+    <string name="addNotePlease">Please insert a Note</string>
     <string name="ins_title">Note Title</string>
     <string name="ins_note">Write something here.....</string>
     <string name="insert_alert_note_title">Add new Memo</string>
     <string name="save_alert">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="about_link"><a href="https://github.com/Mauro2888/MemoMaterial">source code</a></string>
     <string name="memo">Memo</string>
+    <string name="externalText">External text </string>
+    <string name="dismiss_btn">Dismiss</string>
     <string name="memo_detail">Detail Memo</string>
+    <string name="memo_saved">Memo Saved</string>
     <string name="record_note">Speech to Text</string>
     <string name="fast_note">Fast Note</string>
     <string name="normal_note">Note</string>
     <string name="vocal_note">Vocal Note</string>
-    <string name="choose_color">Choose Note color :</string>
+    <string name="ok_btn">Ok</string>
+    <string name="choose_color"> Choose color </string>
     <string name="change_color">Change Note color :</string>
-    <string name="delete_note_alert">This reminder will be deleted</string>
+    <string name="delete_note_alert">Are you sure you want to delete the note?</string>
     <string name="delete_btn">Delete</string>
     <string name="cancel_btn">Cancel</string>
     <string name="discard_btn">Discard</string>
@@ -29,6 +35,8 @@
     <string name="lastEdit">Last Edit:</string>
     <string name="favourite">Favourite</string>
     <string name="memoEdit">Memo Edit</string>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">Note Widget</string>
+    <string name="emptyText">It\'s empty here !</string>
     <string name="add_widget">Add widget</string>
+    <string name="emptysubTitle">Press + to add new Notes</string>
 </resources>

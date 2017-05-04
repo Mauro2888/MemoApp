@@ -52,7 +52,6 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         int note = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT);
         int date = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_DATE);
         int color = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_COLOR);
-        int image = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI);
         int record = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO);
 
         mCursor.moveToPosition(position);
@@ -61,7 +60,6 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         final String noteTxt = mCursor.getString(note);
         String dateNote = mCursor.getString(date);
         int colorNote = mCursor.getInt(color);
-        String uriImage = mCursor.getString(image);
         String uriRecord = mCursor.getString(record);
 
 
@@ -82,12 +80,6 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             holder.mImageViewRecordIcon.setVisibility(View.INVISIBLE);
         }
 
-        if (uriImage != null) {
-            holder.mImageViewAttachIcon.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(R.drawable.ic_attach_file_card).into(holder.mImageViewAttachIcon);
-        } else {
-            holder.mImageViewAttachIcon.setVisibility(View.INVISIBLE);
-        }
 
     }
 

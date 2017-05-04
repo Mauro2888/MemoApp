@@ -24,6 +24,15 @@
         <item name="android:typeface">sans</item>
     </style>
 
+    <style name="ColorDialog" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#6c6c6c</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:inputType">textPhonetic</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:capitalize">sentences</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
     <style name="MemoEmptyText" parent="@android:style/TextAppearance.Material">
         <item name="android:textColor">#6c6c6c</item>
         <item name="android:textSize">21sp</item>
@@ -65,6 +74,22 @@
 
     <style name="CustomAlert" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@drawable/shape_alert</item>
+    </style>
+
+    <style name="TextAlert" parent="@android:style/TextAppearance.Material">
+        <item name="android:textColor">#6c6c6c</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:capitalize">sentences</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="TextInsNotaAlert" parent="@android:style/TextAppearance.Material">
+        <item name="android:textColor">#6c6c6c</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:capitalize">sentences</item>
+        <item name="android:typeface">sans</item>
     </style>
 
     <style name="MyOverflowMenu" parent="Widget.AppCompat.Light.PopupMenu.Overflow">

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Note Material</string>
+    <string name="add_widget">Add widget</string>
+    <string name="addedFav">Added to Favourite</string>
+    <string name="alert_discard_message">Save the changes or discard them?</string>
+    <string name="alert_pls_ins_note">Please Insert a Note</string>
+    <string name="allNotes">All Notes</string>
+    <string name="appwidget_text">Note Widget</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="change_color">Change Note color :</string>
+    <string name="choose_color">Choose color</string>
+    <string name="close">close</string>
+    <string name="delete_btn">Delete</string>
+    <string name="delete_note_alert">Are you sure you want to delete the note?</string>
+    <string name="discard_btn">Discard</string>
+    <string name="dismiss_btn">Dismiss</string>
+    <string name="externalText">"External text "</string>
+    <string name="fast_note">Fast Note</string>
+    <string name="favourite">Favourite</string>
+    <string name="home">Home Memo</string>
+    <string name="ins_note">Write something here.....</string>
+    <string name="ins_title">Note Title</string>
+    <string name="insert_alert_note_title">Add new Memo</string>
+    <string name="lastEdit">Last Edit:</string>
+    <string name="memo">Memo</string>
+    <string name="memoEdit">Memo Edit</string>
+    <string name="memo_deleted">Memo deleted</string>
+    <string name="memo_detail">Detail Memo</string>
+    <string name="normal_note">Note</string>
+    <string name="ok_btn">Ok</string>
+    <string name="open">Open</string>
+    <string name="record_note">Speech to Text</string>
+    <string name="save_alert">Save</string>
+    <string name="save_btn">Save</string>
+    <string name="vocal_note">Vocal Note</string>
+    <string name="emptyText">It\'s empty here !</string>
+    <string name="emptysubTitle">Press + to add new Notes</string>
+    <string name="memo_saved">Memo Saved</string>
+    <string name="addNotePlease">Please insert a Note</string>
+    <string name="about_link"><a href="https://github.com/Mauro2888/MemoMaterial">source code</a></string>
+</resources>

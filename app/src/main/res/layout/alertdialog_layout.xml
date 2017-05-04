@@ -5,6 +5,16 @@
     android:orientation="vertical"
     android:padding="20dp">
 
+    <TextView
+        style="@style/TextInsNotaAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_create"
+        android:drawablePadding="5dp"
+        android:padding="10dp"
+        android:text="@string/insert_alert_note_title" />
+
+
     <EditText
         android:id="@+id/ins_title"
         style="@style/EditTextStyleNote"

@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class HelperClass extends SQLiteOpenHelper {
 
     public static String DATABASE_NAME = "memoapp.db";
-    public static int DATABASE_VERSION = 2;
+    public static int DATABASE_VERSION = 1;
 
 
     public HelperClass(Context context) {
@@ -28,7 +28,6 @@ public class HelperClass extends SQLiteOpenHelper {
                 ContractMemoApp.MemoAppContract.COLUMN_NOTETXT + " TEXT NOT NULL, " +
                 ContractMemoApp.MemoAppContract.COLUMN_DATE + " TEXT, " +
                 ContractMemoApp.MemoAppContract.COLUMN_COLOR + " INTEGER, " +
-                ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI + " TEXT, " +
                 ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO + " TEXT " +
                 ")";
         sqLiteDatabase.execSQL(create_dataBase);
@@ -38,13 +37,22 @@ public class HelperClass extends SQLiteOpenHelper {
                 ContractMemoApp.MemoAppContract.TABLE_NAME_FAV + "( " +
                 ContractMemoApp.MemoAppContract._ID + " INTEGER PRIMARY KEY, " +
                 ContractMemoApp.MemoAppContract.COLUMN_FAV_TITLE + " TEXT UNIQUE, " +
-                ContractMemoApp.MemoAppContract.COLUMN_FAV_NOTETXT + " TEXT NOT NULL, " +
+                ContractMemoApp.MemoAppContract.COLUMN_FAV_NOTETXT + " TEXT, " +
                 ContractMemoApp.MemoAppContract.COLUMN_FAV_DATE + " TEXT, " +
                 ContractMemoApp.MemoAppContract.COLUMN_FAV_COLOR + " INTEGER, " +
                 ContractMemoApp.MemoAppContract.COlUMN_FAV_IMAGE_URI + " TEXT " +
                 ")";
         sqLiteDatabase.execSQL(create_database_favourite);
 
+
+        String create_database_images = "CREATE TABLE IF NOT EXISTS " +
+                ContractMemoApp.MemoAppContract.TABLE_NAME_IMAGE + "( " +
+                ContractMemoApp.MemoAppContract._ID + " INTEGER PRIMARY KEY, " +
+                ContractMemoApp.MemoAppContract.COLUMN_ID_NOTE + " INTEGER, " +
+                ContractMemoApp.MemoAppContract.COlUMN_IMAGE_ID + " INTEGER, " +
+                ContractMemoApp.MemoAppContract.COLUMN_BLOB_DATA + " BLOB " +
+                ")";
+        sqLiteDatabase.execSQL(create_database_images);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class HelperClass extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContractMemoApp.MemoAppContract.TABLE_NAME);
         onCreate(sqLiteDatabase);
 
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContractMemoApp.MemoAppContract.TABLE_NAME_FAV);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContractMemoApp.MemoAppContract.TABLE_NAME_IMAGE);
         onCreate(sqLiteDatabase);
 
     }

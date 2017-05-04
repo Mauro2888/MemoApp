@@ -99,14 +99,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/imageviewEmpty"
                     android:layout_centerHorizontal="true"
-                    android:text="It's empty here !" />
+                    android:text="@string/emptyText" />
 
                 <TextView
                     android:id="@+id/textEmpty2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textEmpty1"
-                    android:text="Press + to add new Notes"
+                    android:text="@string/emptysubTitle"
                     android:textColor="#936c6c6c" />
 
 
@@ -117,12 +117,5 @@
 
     </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/header_drawer"
-        app:menu="@menu/menu_drawer"></android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

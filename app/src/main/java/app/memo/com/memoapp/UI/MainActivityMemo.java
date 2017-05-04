@@ -1,5 +1,6 @@
 package app.memo.com.memoapp.UI;
 
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -12,25 +13,24 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
@@ -51,9 +51,12 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
     public static final int LOADER_ID = 111;
     private static final int REQUEST_CODE = 1022;
-    Uri Uri;
+    private static final int REQUEST_CODE_PERMISSION = 2034;
     HelperClass mHelper;
     SQLiteDatabase mSQLdata;
+    boolean getAccessRecordAudio = false;
+    String[] persmissionArray = {"android.permission.RECORD_AUDIO"};
+    private Uri Uri;
     private RecyclerView mRecyclerMemo ;
     private RecyclerView.LayoutManager mLayoutManager;
     private CursorAdapterMemo mAdapterMemo;
@@ -64,12 +67,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private EditText mInsTitle;
     private ContentValues contentValues;
     private CoordinatorLayout mCoordinatorLayoutMain;
-    private DrawerLayout mDrawer;
-    private ActionBarDrawerToggle mToogle;
-    private NavigationView mNavView;
     private RelativeLayout mEmptyView;
     private FloatingActionMenu mFabMenu;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +76,23 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         setContentView(R.layout.activity_main_memo);
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
         setTitle(R.string.home);
+
+        requestPermissions(persmissionArray, REQUEST_CODE_PERMISSION);
+
+        //get data from other app-------------------
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+                Intent insertNote = new Intent(MainActivityMemo.this, InsertNoteActivity.class);
+                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                insertNote.putExtra("extratext", sharedText);
+                startActivity(insertNote);
+
+            }
+        }
 
 
         mFabMenu = (FloatingActionMenu) findViewById(R.id.fabMenu);
@@ -86,13 +102,6 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mFloatAddNoteFast = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddFast);
         mFloatAddNoteReg = (com.github.clans.fab.FloatingActionButton)findViewById(R.id.floatingActionButtonAddReg);
         mCoordinatorLayoutMain = (CoordinatorLayout) findViewById(R.id.mainCoordinatorLayout);
-        mNavView = (NavigationView) findViewById(R.id.navMenu);
-        mDrawer = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mToogle = new ActionBarDrawerToggle(this, mDrawer, R.string.open, R.string.close);
-        mDrawer.addDrawerListener(mToogle);
-        mToogle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerMemo.setLayoutManager(mLayoutManager);
@@ -105,6 +114,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         mHelper = new HelperClass(this);
         mSQLdata = mHelper.getWritableDatabase();
         contentValues = new ContentValues();
+        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
 
         //FAV animation
 
@@ -140,23 +150,6 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         }).attachToRecyclerView(mRecyclerMemo);
 
 
-        mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.favouriteNotes:
-                        Intent favourite = new Intent(MainActivityMemo.this, FavouriteActivity.class);
-                        startActivity(favourite);
-                        break;
-                    case R.id.allNotes:
-                        getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivityMemo.this);
-                        break;
-                }
-                mDrawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
-
         //FAB OPTION-------------------------------------------
 
         mFloatAddNoteReg.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +179,6 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
                 alert.setView(alertView);
                 alert.setCancelable(false);
-                alert.setTitle(R.string.insert_alert_note_title);
                 alert.setPositiveButton(R.string.save_alert, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -215,8 +207,9 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                             alertView.getContext().getContentResolver().insert(URI_CONTENT,contentValues);
                             dialog.dismiss();
                             mSQLdata.close();
+                            new MemoUtils().SnackBar(mCoordinatorLayoutMain, R.string.memo_saved);
                         }else {
-                            Toast.makeText(MainActivityMemo.this, "No Note", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivityMemo.this, R.string.addNotePlease, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -244,6 +237,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
         Uri Url = URI_CONTENT;
         CursorLoader cursorLoader = new CursorLoader(this,Url,null,null,null,null);
         return cursorLoader;
@@ -273,22 +267,40 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (mToogle.onOptionsItemSelected(item)) {
-            return true;
-        }
 
         switch (item.getItemId()) {
-            case R.id.about:
+            case R.id.contact_me:
+                Intent mailto = new Intent(Intent.ACTION_SEND);
+                mailto.setType("text/plain");
+                mailto.putExtra(Intent.EXTRA_EMAIL, "mauro.dev88@gmail.com");
+                mailto.putExtra(Intent.EXTRA_SUBJECT, "Memo Material Support");
+                startActivity(Intent.createChooser(mailto, "Send Email"));
                 break;
+            case R.id.about:
+                final Dialog about = new Dialog(MainActivityMemo.this);
+                about.setContentView(R.layout.about_layout);
 
+                Button closeAboutDialog = (Button) about.findViewById(R.id.close_about);
+                TextView linkAboutDialog = (TextView) about.findViewById(R.id.textLink);
+                if (linkAboutDialog != null) {
+                    linkAboutDialog.setMovementMethod(LinkMovementMethod.getInstance());
+                }
+                closeAboutDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        about.dismiss();
+                    }
+                });
+                about.show();
         }
         return super.onOptionsItemSelected(item);
     }
 
+
     public void SpeechToText(){
         Intent speech = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speech.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        speech.putExtra(RecognizerIntent.EXTRA_LANGUAGE,Locale.ITALIAN);
+        speech.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         speech.putExtra(RecognizerIntent.EXTRA_PROMPT,"Speak Something...");
         try {
             startActivityForResult(speech, REQUEST_CODE);
@@ -309,6 +321,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                     contentValues.put("date",new MemoUtils().GetDate());
                     contentValues.put("color", ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
                     getContentResolver().insert(ContractMemoApp.MemoAppContract.URI_CONTENT, contentValues);
+                    new MemoUtils().SnackBar(mCoordinatorLayoutMain, R.string.memo_saved);
                 }
                 break;
         }
@@ -316,9 +329,10 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
     private void SwiperDeleteAlert(final Uri uriContent){
         AlertDialog.Builder alertDelete = new AlertDialog.Builder(MainActivityMemo.this, R.style.CustomAlert);
-        alertDelete.setMessage(R.string.delete_note_alert)
+        alertDelete.setView(R.layout.alertdialog_delete_layout);
+        alertDelete.setCancelable(false)
                 .setCancelable(false)
-                .setPositiveButton(R.string.delete_btn, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok_btn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         new MemoUtils().SnackBar(mCoordinatorLayoutMain, R.string.memo_deleted);
@@ -332,6 +346,18 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                         getSupportLoaderManager().restartLoader(LOADER_ID,null,MainActivityMemo.this);
                     }
                 }).create().show();
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case REQUEST_CODE_PERMISSION:
+                getAccessRecordAudio = grantResults[0] == getPackageManager().PERMISSION_GRANTED;
+        }
+        if (!getAccessRecordAudio) mFloatAddNoteReg.setEnabled(false);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }
 

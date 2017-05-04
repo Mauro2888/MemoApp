@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.memo.com.memoapp">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +19,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SEARCH" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,9 +28,15 @@
             android:authorities="app.memo.com.memoapp"
             android:exported="true" />
 
-        <activity android:name=".UI.InsertNoteActivity" />
+        <activity android:name=".UI.InsertNoteActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="android.intent.action.SEND" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".UI.DetailActivity" />
-        <activity android:name=".UI.FavouriteActivity" />
 
         <receiver android:name=".NoteAppWidget">
             <intent-filter>
@@ -41,6 +47,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/note_app_widget_info" />
         </receiver>
+
     </application>
 
 </manifest>

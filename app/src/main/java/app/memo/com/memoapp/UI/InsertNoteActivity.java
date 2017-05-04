@@ -1,5 +1,6 @@
 package app.memo.com.memoapp.UI;
 
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,16 +15,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -59,6 +56,13 @@ public class InsertNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_note);
         setTitle("");
+
+        //get data from other app-------------------
+        Intent intentextraText = getIntent();
+        String text = intentextraText.getStringExtra("extratext");
+
+
+
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_note);
         mCoolapsToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
         mImageViewAddImage = (ImageView) findViewById(R.id.imageViewAdd);
@@ -70,6 +74,7 @@ public class InsertNoteActivity extends AppCompatActivity {
 //        mInsTitle.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLengthTitle)});
 
         mInsNote = (EditText)findViewById(R.id.ins_nota);
+        mInsNote.setText(text);
         mMemoDate = new MemoUtils().GetDate();
 
         getSupportActionBar().setElevation(0);
@@ -89,29 +94,21 @@ public class InsertNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View viewColor = inflater.inflate(R.layout.popwindow_color, null);
+                final Dialog colorDialog = new Dialog(InsertNoteActivity.this);
+                colorDialog.setContentView(R.layout.color_dialog);
+                colorDialog.setTitle(R.string.choose_color);
+
+                final ImageView mBtnBlue = (ImageView) colorDialog.findViewById(R.id.btnBlue);
+                final ImageView mBtnRed = (ImageView) colorDialog.findViewById(R.id.btnRed);
+                final ImageView mBtnGreen = (ImageView) colorDialog.findViewById(R.id.btnGreen);
+                final ImageView mBtOrange = (ImageView) colorDialog.findViewById(R.id.btnOrange);
+                final ImageView mBtnPink = (ImageView) colorDialog.findViewById(R.id.btnPink);
+                final ImageView mBtnDarkPink = (ImageView) colorDialog.findViewById(R.id.btnGray);
+                final ImageView mBtnDarkIndigo = (ImageView) colorDialog.findViewById(R.id.btnIndigo);
+                final ImageView mBtnLightGreen = (ImageView) colorDialog.findViewById(R.id.btnLightGreen);
 
 
-                final PopupWindow popWindowColor = new PopupWindow(viewColor,
-                        CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT,
-                        CollapsingToolbarLayout.LayoutParams.WRAP_CONTENT);
-
-                popWindowColor.setFocusable(true);
-                popWindowColor.setOutsideTouchable(true);
-
-
-                popWindowColor.showAtLocation(mBtnColorPicker, Gravity.CENTER_HORIZONTAL, 0, 0);
-
-                ImageButton mBtnBlue = (ImageButton) viewColor.findViewById(R.id.btnBlue);
-                ImageButton mBtnRed = (ImageButton) viewColor.findViewById(R.id.btnRed);
-                ImageButton mBtnGreen = (ImageButton) viewColor.findViewById(R.id.btnGreen);
-                ImageButton mBtOrange = (ImageButton) viewColor.findViewById(R.id.btnOrange);
-                ImageButton mBtnPink = (ImageButton) viewColor.findViewById(R.id.btnPink);
-                ImageButton mBtnGray = (ImageButton) viewColor.findViewById(R.id.btnGray);
-
-
-                mBtnGray.setOnClickListener(new View.OnClickListener() {
+                mBtnDarkPink.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(InsertNoteActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialDarkPink));
@@ -119,10 +116,10 @@ public class InsertNoteActivity extends AppCompatActivity {
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
-                        popWindowColor.dismiss();
+                        colorDialog.dismiss();
                     }
-                });
 
+                });
 
                 mBtOrange.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -132,7 +129,8 @@ public class InsertNoteActivity extends AppCompatActivity {
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
-                        popWindowColor.dismiss();
+                        colorDialog.dismiss();
+
                     }
                 });
 
@@ -144,7 +142,34 @@ public class InsertNoteActivity extends AppCompatActivity {
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
-                        popWindowColor.dismiss();
+                        colorDialog.dismiss();
+
+                    }
+                });
+
+                mBtnDarkIndigo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().PreferenceSave(InsertNoteActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialIndigo));
+                        mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
+                        getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        colorDialog.dismiss();
+
+                    }
+                });
+
+                mBtnLightGreen.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MemoUtils().PreferenceSave(InsertNoteActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialLightGreen));
+                        mCoolapsToolbar.setBackgroundColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
+                        getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
+                        colorDialog.dismiss();
+
                     }
                 });
 
@@ -157,7 +182,9 @@ public class InsertNoteActivity extends AppCompatActivity {
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
-                        popWindowColor.dismiss();
+                        colorDialog.dismiss();
+
+
                     }
                 });
 
@@ -169,7 +196,8 @@ public class InsertNoteActivity extends AppCompatActivity {
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
-                        popWindowColor.dismiss();
+                        colorDialog.dismiss();
+
 
                     }
                 });
@@ -181,9 +209,12 @@ public class InsertNoteActivity extends AppCompatActivity {
                         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0)));
                         getWindow().setStatusBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
                         getWindow().setNavigationBarColor(new MemoUtils().PreferenceRestore(InsertNoteActivity.this, "colorSaved", 0));
-                        popWindowColor.dismiss();
+                        colorDialog.dismiss();
+
                     }
                 });
+
+                colorDialog.show();
             }
         });
 
@@ -202,11 +233,11 @@ public class InsertNoteActivity extends AppCompatActivity {
             case R.id.ins_note_menu:
                InsertNote();
                 break;
-            case R.id.btnAddImage:
-                Intent addImage = new Intent(Intent.ACTION_GET_CONTENT);
-                addImage.setType("image/*");
-                startActivityForResult(Intent.createChooser(addImage, "Select Image"), 12);
-                break;
+//            case R.id.btnAddImage:
+//                Intent addImage = new Intent(Intent.ACTION_GET_CONTENT);
+//                addImage.setType("image/*");
+//                startActivityForResult(Intent.createChooser(addImage, "Select Image"), 12);
+//                break;
             case android.R.id.home:
                 if (mTouch || mInsTitle.length() > 0 || mInsNote.length() > 0) {
                     DiscartAlert();
@@ -228,15 +259,15 @@ public class InsertNoteActivity extends AppCompatActivity {
 
     protected void DiscartAlert() {
         final AlertDialog.Builder alertDiscard = new AlertDialog.Builder(this);
-        alertDiscard.setMessage(R.string.alert_discard_message)
-                .setCancelable(false)
+        alertDiscard.setView(R.layout.alertdialog_layout_discard_save);
+        alertDiscard.setCancelable(false)
                 .setNeutralButton(R.string.discard_btn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
                     }
                 })
-                .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dismiss_btn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(InsertNoteActivity.this, R.string.discard_btn, Toast.LENGTH_SHORT).show();
@@ -279,7 +310,7 @@ public class InsertNoteActivity extends AppCompatActivity {
             if (uriImage != null) {
                 new MemoUtils().PreferenceSaveImageUri(InsertNoteActivity.this, "UriImageSave", uriImage.toString());
                 Glide.with(InsertNoteActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
-                contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_URI, new MemoUtils().PreferenceRestoreUriImage(InsertNoteActivity.this, "UriImageSave"));
+                contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_ID, new MemoUtils().PreferenceRestoreUriImage(InsertNoteActivity.this, "UriImageSave"));
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
