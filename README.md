@@ -17,7 +17,7 @@ Color Memo application
 - Database
 - Design improvements
 
-On develop
+# In development
 - Audio Recording
 - Image Loading
 - Favourites notes
