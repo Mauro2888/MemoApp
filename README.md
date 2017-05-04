@@ -13,7 +13,7 @@ Color Memo application
 
 # Features
 - Color Picker
-- Speech to Text function (Basic)
+- Speech to Text function
 - Material Design with color
 - Share note
 - Get Text from other apps
