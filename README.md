@@ -11,18 +11,15 @@ Color Memo application
   <img src="https://cloud.githubusercontent.com/assets/15950481/25306264/ea8df124-2789-11e7-9c7b-76b46add6887.png" width="250"/>
 </p>
 
- Version 0.1
+ Version 0.5
 - Added Color Picker
-- DetailActivity for modify Note
 - Added Speech to Text function (Basic)
-
-Version 0.2
 - Material Design
-- Fews Bugs
-- CardView Improvements
-- Favourite Database
+- Database
+- Design improvements
 
-Version 0.5
-- Design improvements with Material Color
-- Widget Support and Share content
-- Access with NavMenu
+Issues with
+- Audio Recording
+- Image Loading
+- Favourites notes
+- Widget support
