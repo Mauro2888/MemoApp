@@ -17,6 +17,7 @@ Color Memo application
 - Material Design with color
 - Share note
 - Get Text from other apps
+- Sort note By Date and alphabetically
 
 # In development
 - Audio Recording
