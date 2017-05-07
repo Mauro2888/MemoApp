@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static android.provider.BaseColumns._ID;
+
 /**
  * Created by Msi-Locale on 27/03/2017.
  */
@@ -23,36 +25,27 @@ public class HelperClass extends SQLiteOpenHelper {
 
         String create_dataBase = "CREATE TABLE IF NOT EXISTS " +
                 ContractMemoApp.MemoAppContract.TABLE_NAME + "( " +
-                ContractMemoApp.MemoAppContract._ID + " INTEGER PRIMARY KEY, " +
+                ContractMemoApp.MemoAppContract.ID_NOTE + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ContractMemoApp.MemoAppContract.COLUMN_TITLE + " TEXT NOT NULL, " +
                 ContractMemoApp.MemoAppContract.COLUMN_NOTETXT + " TEXT NOT NULL, " +
                 ContractMemoApp.MemoAppContract.COLUMN_DATE + " TEXT, " +
                 ContractMemoApp.MemoAppContract.COLUMN_COLOR + " INTEGER, " +
-                ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO + " TEXT " +
+                ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO + " TEXT, " +
+                ContractMemoApp.MemoAppContract.COLUMN_NOTA_ID_ATTACH + " INTEGER, " +
+                " FOREIGN KEY (" + ContractMemoApp.MemoAppContract.COlUMN_ATTACHMENT_ID + ") REFERENCES "
+                + ContractMemoApp.MemoAppContract.TABLE_NAME_IMAGE + _ID +
                 ")";
         sqLiteDatabase.execSQL(create_dataBase);
 
 
-        String create_database_favourite = "CREATE TABLE IF NOT EXISTS " +
-                ContractMemoApp.MemoAppContract.TABLE_NAME_FAV + "( " +
-                ContractMemoApp.MemoAppContract._ID + " INTEGER PRIMARY KEY, " +
-                ContractMemoApp.MemoAppContract.COLUMN_FAV_TITLE + " TEXT UNIQUE, " +
-                ContractMemoApp.MemoAppContract.COLUMN_FAV_NOTETXT + " TEXT, " +
-                ContractMemoApp.MemoAppContract.COLUMN_FAV_DATE + " TEXT, " +
-                ContractMemoApp.MemoAppContract.COLUMN_FAV_COLOR + " INTEGER, " +
-                ContractMemoApp.MemoAppContract.COlUMN_FAV_IMAGE_URI + " TEXT " +
-                ")";
-        sqLiteDatabase.execSQL(create_database_favourite);
-
-
         String create_database_images = "CREATE TABLE IF NOT EXISTS " +
                 ContractMemoApp.MemoAppContract.TABLE_NAME_IMAGE + "( " +
-                ContractMemoApp.MemoAppContract._ID + " INTEGER PRIMARY KEY, " +
-                ContractMemoApp.MemoAppContract.COLUMN_ID_NOTE + " INTEGER, " +
-                ContractMemoApp.MemoAppContract.COlUMN_IMAGE_ID + " INTEGER, " +
-                ContractMemoApp.MemoAppContract.COLUMN_BLOB_DATA + " BLOB " +
+                ContractMemoApp.MemoAppContract.COlUMN_ATTACHMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ContractMemoApp.MemoAppContract.COLUMN_URI_IMAGE + " TEXT " +
                 ")";
         sqLiteDatabase.execSQL(create_database_images);
+
+
     }
 
     @Override

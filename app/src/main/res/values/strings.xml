@@ -3,11 +3,17 @@
     <string name="addedFav">Added to Favourite</string>
     <string name="allNotes">All Notes</string>
     <string name="home">Home Memo</string>
+    <string name="most_recent">Date most recent</string>
+    <string name="most_old">Date most old</string>
+    <string name="alphabet">Alphabetically A - Z (title)</string>
     <string name="addNotePlease">Please insert a Note</string>
     <string name="ins_title">Note Title</string>
+    <string name="sortby">sortby</string>
     <string name="ins_note">Write something here.....</string>
     <string name="insert_alert_note_title">Add new Memo</string>
     <string name="save_alert">Save</string>
+    <string name="Save">Save</string>
+    <string name="about_link2"><a href="https://github.com/Clans/FloatingActionButton">Dmytro Tarianyk</a></string>
     <string name="cancel">Cancel</string>
     <string name="about_link"><a href="https://github.com/Mauro2888/MemoMaterial">source code</a></string>
     <string name="memo">Memo</string>
@@ -20,6 +26,7 @@
     <string name="normal_note">Note</string>
     <string name="vocal_note">Vocal Note</string>
     <string name="ok_btn">Ok</string>
+    <string name="themeChanger">Select color Theme</string>
     <string name="choose_color"> Choose color </string>
     <string name="change_color">Change Note color :</string>
     <string name="delete_note_alert">Are you sure you want to delete the note?</string>
@@ -39,4 +46,7 @@
     <string name="emptyText">It\'s empty here !</string>
     <string name="add_widget">Add widget</string>
     <string name="emptysubTitle">Press + to add new Notes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

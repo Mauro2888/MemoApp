@@ -8,6 +8,7 @@
     <string name="allNotes">All Notes</string>
     <string name="appwidget_text">Note Widget</string>
     <string name="cancel">Cancel</string>
+    <string name="themeChanger">Select color Theme</string>
     <string name="cancel_btn">Cancel</string>
     <string name="change_color">Change Note color :</string>
     <string name="choose_color">Choose color</string>
@@ -40,4 +41,10 @@
     <string name="memo_saved">Memo Saved</string>
     <string name="addNotePlease">Please insert a Note</string>
     <string name="about_link"><a href="https://github.com/Mauro2888/MemoMaterial">source code</a></string>
+    <string name="Save">Save</string>
+    <string name="about_link2"><a href="https://github.com/Clans/FloatingActionButton">Dmytro Tarianyk</a></string>
+    <string name="sortby">sortby</string>
+    <string name="most_old">Date most old</string>
+    <string name="most_recent">Date most recent</string>
+    <string name="alphabet">Alphabetically A - Z (title)</string>
 </resources>

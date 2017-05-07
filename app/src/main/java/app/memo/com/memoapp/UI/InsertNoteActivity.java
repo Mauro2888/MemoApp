@@ -15,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -42,6 +43,7 @@ public class InsertNoteActivity extends AppCompatActivity {
     private ImageView mImageViewAddImage;
     private HelperClass mHelper;
     private FloatingActionButton mBtnColorPicker;
+    private String mTextFromOtherApps;
     private CollapsingToolbarLayout mCoolapsToolbar;
     private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
         @Override
@@ -57,24 +59,29 @@ public class InsertNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_insert_note);
         setTitle("");
 
-        //get data from other app-------------------
-        Intent intentextraText = getIntent();
-        String text = intentextraText.getStringExtra("extratext");
-
-
-
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_note);
         mCoolapsToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
         mImageViewAddImage = (ImageView) findViewById(R.id.imageViewAdd);
         mCoolapsToolbar.setTitle("Insert Memo");
         mInsTitle = (EditText)findViewById(R.id.ins_title);
         mInsTitle.setTypeface(null, Typeface.BOLD);
-//        //FILTER MAX WORD
-//        int maxLengthTitle = 20 ;
-//        mInsTitle.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLengthTitle)});
-
         mInsNote = (EditText)findViewById(R.id.ins_nota);
-        mInsNote.setText(text);
+
+        //get data from other app-------------------
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if (sharedText != null) {
+                    mInsNote.setText(sharedText);
+                    Log.d("TEXTEXTRA", "" + sharedText);
+                }
+            }
+        }
+
         mMemoDate = new MemoUtils().GetDate();
 
         getSupportActionBar().setElevation(0);
@@ -310,7 +317,7 @@ public class InsertNoteActivity extends AppCompatActivity {
             if (uriImage != null) {
                 new MemoUtils().PreferenceSaveImageUri(InsertNoteActivity.this, "UriImageSave", uriImage.toString());
                 Glide.with(InsertNoteActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
-                contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_IMAGE_ID, new MemoUtils().PreferenceRestoreUriImage(InsertNoteActivity.this, "UriImageSave"));
+                contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_ATTACHMENT_ID, new MemoUtils().PreferenceRestoreUriImage(InsertNoteActivity.this, "UriImageSave"));
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

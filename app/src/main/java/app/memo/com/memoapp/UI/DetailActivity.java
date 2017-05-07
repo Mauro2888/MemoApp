@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
@@ -14,7 +13,6 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -129,7 +127,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 colorDialog.setContentView(R.layout.color_dialog);
                 colorDialog.setTitle(R.string.choose_color);
 
-
                 final ImageView mBtnBlue = (ImageView) colorDialog.findViewById(R.id.btnBlue);
                 final ImageView mBtnRed = (ImageView) colorDialog.findViewById(R.id.btnRed);
                 final ImageView mBtnGreen = (ImageView) colorDialog.findViewById(R.id.btnGreen);
@@ -138,7 +135,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 final ImageView mBtnDarkPink = (ImageView) colorDialog.findViewById(R.id.btnGray);
                 final ImageView mBtnDarkIndigo = (ImageView) colorDialog.findViewById(R.id.btnIndigo);
                 final ImageView mBtnLightGreen = (ImageView) colorDialog.findViewById(R.id.btnLightGreen);
-
 
                 mBtnDarkPink.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -181,7 +177,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
                     }
                 });
-
 
                 mBtnGreen.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -313,13 +308,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             getWindow().setStatusBarColor(colorValue);
             getWindow().setNavigationBarColor(colorValue);
 
-            //get data for widget
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editorManager = sharedPreferences.edit();
-            editorManager.putString("title", titleTxt);
-            editorManager.putString("note", noteTxt);
-            editorManager.putInt("color", colorValue);
-            editorManager.commit();
 
             //get lenght for edit Text
             mNoteLength = mNoteEdit.getText().length();

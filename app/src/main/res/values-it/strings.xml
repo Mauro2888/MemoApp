@@ -9,6 +9,7 @@
     <string name="cancel">Cancella</string>
     <string name="cancel_btn">Cancella</string>
     <string name="change_color">Colore Nota :</string>
+    <string name="themeChanger">Select color Theme</string>
     <string name="choose_color">Colore Nota</string>
     <string name="close">Chiudi</string>
     <string name="delete_btn">Cancella</string>
@@ -40,4 +41,10 @@
     <string name="memo_saved">Nota Salvata</string>
     <string name="addNotePlease">Inserisci del testo</string>
     <string name="about_link"><a href="https://github.com/Mauro2888/MemoMaterial">source code</a></string>
+    <string name="Save">Salva</string>
+    <string name="about_link2"><a href="https://github.com/Clans/FloatingActionButton">Dmytro Tarianyk</a></string>
+    <string name="most_old">Per Data (Meno recenti)</string>
+    <string name="most_recent">Per Data (Più Recenti)</string>
+    <string name="sortby">Ordina per</string>
+    <string name="alphabet">Alfabeticamente  A - Z (title)</string>
 </resources>

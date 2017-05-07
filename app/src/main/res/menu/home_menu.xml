@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sortOrder"
+        android:icon="@drawable/ic_sort"
+        android:title="Ordery by"
+        app:showAsAction="always"></item>
+
+    <item
+        android:id="@+id/settingMemo"
+        android:title="Settings"></item>
 
     <item
         android:id="@+id/contact_me"
@@ -9,5 +20,6 @@
     <item
         android:id="@+id/about"
         android:title="About Note Material"></item>
+
 
 </menu>

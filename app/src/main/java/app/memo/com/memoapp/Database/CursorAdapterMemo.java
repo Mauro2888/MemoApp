@@ -133,6 +133,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
             if (mClickItem != null){
                 mClickItem.OnclickItem(view,getAdapterPosition());
             }
+
         }
 
         @Override

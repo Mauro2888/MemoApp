@@ -18,11 +18,12 @@ public class ContentProvider extends android.content.ContentProvider {
     public static final int ALL_ROW = 100;
     public static  final int SELECT_ROW = 101;
 
-    public static final int ALL_ROW_IMAGE = 200;
-    public static final int SELECT_ROW_IMAGE = 201;
+    public static final int ALL_ROW_ATTACH = 200;
+    public static final int SELECT_ROW_ATTACH = 201;
 
     public static final int ALL_ROW_FAV = 300;
     public static final int SELECT_ROW_FAV = 301;
+    public static final int ROW_NOTE_AND_ID = 302;
 
 
 
@@ -32,13 +33,14 @@ public class ContentProvider extends android.content.ContentProvider {
         sUriMatcher.addURI(ContractMemoApp.AUTHORITY,ContractMemoApp.PATH_TABLE,ALL_ROW);
         sUriMatcher.addURI(ContractMemoApp.AUTHORITY,ContractMemoApp.PATH_TABLE + "/#",SELECT_ROW);
 
-        sUriMatcher.addURI(ContractMemoApp.AUTHORITY, ContractMemoApp.PATH_TABLE_IMAGE, ALL_ROW_IMAGE);
-        sUriMatcher.addURI(ContractMemoApp.AUTHORITY, ContractMemoApp.PATH_TABLE_IMAGE + "/#", SELECT_ROW_IMAGE);
+        sUriMatcher.addURI(ContractMemoApp.AUTHORITY, ContractMemoApp.PATH_TABLE_IMAGE, ALL_ROW_ATTACH);
+        sUriMatcher.addURI(ContractMemoApp.AUTHORITY, ContractMemoApp.PATH_TABLE_IMAGE + "/#", SELECT_ROW_ATTACH);
 
         sUriMatcher.addURI(ContractMemoApp.AUTHORITY, ContractMemoApp.PATH_TABLE_FAV, ALL_ROW_FAV);
         sUriMatcher.addURI(ContractMemoApp.AUTHORITY, ContractMemoApp.PATH_TABLE_FAV + "/#", SELECT_ROW_FAV);
 
     }
+
 
 
     private HelperClass mHelper;
@@ -94,7 +96,7 @@ public class ContentProvider extends android.content.ContentProvider {
                     throw new IllegalArgumentException("Errore" + uri);
                 }
                 break;
-            case ALL_ROW_IMAGE:
+            case ALL_ROW_ATTACH:
                 long id2 = mSQLite.insertOrThrow(ContractMemoApp.MemoAppContract.TABLE_NAME_IMAGE, null, contentValues);
                 if (id2 > 0) {
                     returnUri = ContentUris.withAppendedId(ContractMemoApp.MemoAppContract.URI_CONTENT_IMAGE, id2);
@@ -125,8 +127,6 @@ public class ContentProvider extends android.content.ContentProvider {
         mSQLite = mHelper.getReadableDatabase();
         Cursor cursor;
         int match = sUriMatcher.match(uri);
-        String sortOrder =
-                ContractMemoApp.MemoAppContract._ID + " DESC";
 
         switch (match){
             case ALL_ROW:
@@ -137,9 +137,9 @@ public class ContentProvider extends android.content.ContentProvider {
                     selectionArgs,
                     null,
                     null,
-                        sortOrder);
+                        sortOrds);
             break;
-            case ALL_ROW_IMAGE:
+            case ALL_ROW_ATTACH:
                 cursor = mSQLite.query(
                         ContractMemoApp.MemoAppContract.TABLE_NAME_IMAGE,
                         projector,
@@ -184,7 +184,7 @@ public class ContentProvider extends android.content.ContentProvider {
                         sortOrds);
                 break;
 
-            case SELECT_ROW_IMAGE:
+            case SELECT_ROW_ATTACH:
                 selection = ContractMemoApp.MemoAppContract._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = mSQLite.query(

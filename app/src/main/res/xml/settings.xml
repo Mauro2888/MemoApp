@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Note Settings">
+
+        <Preference
+            android:key="backup"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Backup notes to this path SD/noteMaterial/notes.txt"
+            android:title="Backup Local" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

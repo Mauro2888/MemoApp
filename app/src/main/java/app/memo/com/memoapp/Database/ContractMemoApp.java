@@ -26,11 +26,13 @@ public class ContractMemoApp {
         public static final Uri URI_CONTENT_IMAGE = Uri.withAppendedPath(URI_BASE, PATH_TABLE_IMAGE);
 
         public static final String TABLE_NAME = "memo";
+        public static final String ID_NOTE = _ID;
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_NOTETXT = "note";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_COLOR = "color";
         public static final String COLUMN_RECORD_AUDIO = "record";
+        public static final String COLUMN_NOTA_ID_ATTACH = "id_attachment";
 
         public static final String TABLE_NAME_FAV = "memofav";
         public static final String COLUMN_FAV_TITLE = "titlefav";
@@ -41,9 +43,8 @@ public class ContractMemoApp {
 
 
         public static final String TABLE_NAME_IMAGE = "memoimage";
-        public static final String COlUMN_IMAGE_ID = "imageuridata";
-        public static final String COLUMN_ID_NOTE = "idnote";
-        public static final String COLUMN_BLOB_DATA = "blob";
+        public static final String COlUMN_ATTACHMENT_ID = _ID;
+        public static final String COLUMN_URI_IMAGE = "urimage";
 
 
 

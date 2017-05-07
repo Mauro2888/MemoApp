@@ -23,6 +23,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SettingActivity">
+
+        </activity>
+
         <provider
             android:name=".Database.ContentProvider"
             android:authorities="app.memo.com.memoapp"
@@ -30,12 +34,11 @@
 
         <activity android:name=".UI.InsertNoteActivity">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.SEND" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
         <activity android:name=".UI.DetailActivity" />
 
         <receiver android:name=".NoteAppWidget">

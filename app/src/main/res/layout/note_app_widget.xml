@@ -2,44 +2,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearWidget"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/backGroundMain"
     android:orientation="vertical"
     android:padding="@dimen/widget_margin">
 
-
-    <TextView
-        android:id="@+id/noteTitle"
-        style="@style/MemoTitleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_assignment_black"
-        android:drawablePadding="7dp"
-        android:paddingLeft="@dimen/paddingCard"
-        android:paddingRight="@dimen/paddingCard"
-        android:paddingTop="@dimen/paddingCard"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        tools:text="@string/ins_title" />
-
-    <ImageButton
-        android:id="@+id/colorBarMain"
+    <Button
+        android:id="@+id/btnWidget"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_gravity="start"
-        android:layout_margin="@dimen/paddingShapeCircle"
-        android:background="@null" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="Toccate qui per aggiungere una nota"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10sp" />
 
-    <TextView
-        android:id="@+id/noteText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:maxLines="10"
-        android:paddingBottom="@dimen/paddingCard"
-        android:paddingLeft="@dimen/paddingCard"
-        android:paddingRight="@dimen/paddingCard"
-        android:textSize="15sp"
-        tools:text="@string/ins_note" />
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/noteTitle"
+            style="@style/MemoTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_assignment_black"
+            android:drawablePadding="7dp"
+            android:paddingLeft="@dimen/paddingCard"
+            android:paddingRight="@dimen/paddingCard"
+            android:paddingTop="@dimen/paddingCard"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="@string/ins_title" />
+
+        <ImageButton
+            android:id="@+id/colorBarMain"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_gravity="start"
+            android:layout_margin="@dimen/paddingShapeCircle"
+            android:background="@null" />
+
+        <TextView
+            android:id="@+id/noteText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:maxLines="10"
+            android:paddingBottom="@dimen/paddingCard"
+            android:paddingLeft="@dimen/paddingCard"
+            android:paddingRight="@dimen/paddingCard"
+            android:textSize="15sp"
+            tools:text="@string/ins_note" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

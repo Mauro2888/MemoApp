@@ -44,6 +44,7 @@ import app.memo.com.memoapp.Database.CursorAdapterMemo;
 import app.memo.com.memoapp.Database.HelperClass;
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
 import app.memo.com.memoapp.R;
+import app.memo.com.memoapp.SettingActivity;
 
 import static app.memo.com.memoapp.Database.ContractMemoApp.MemoAppContract.URI_CONTENT;
 
@@ -69,6 +70,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     private CoordinatorLayout mCoordinatorLayoutMain;
     private RelativeLayout mEmptyView;
     private FloatingActionMenu mFabMenu;
+    private String sortOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,22 +80,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         setTitle(R.string.home);
 
         requestPermissions(persmissionArray, REQUEST_CODE_PERMISSION);
-
-        //get data from other app-------------------
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-
-        if (Intent.ACTION_SEND.equals(action) && type != null) {
-            if ("text/plain".equals(type)) {
-                Intent insertNote = new Intent(MainActivityMemo.this, InsertNoteActivity.class);
-                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-                insertNote.putExtra("extratext", sharedText);
-                startActivity(insertNote);
-
-            }
-        }
-
+        new MemoUtils().PreferenceRestoreOrder(MainActivityMemo.this, "order");
 
         mFabMenu = (FloatingActionMenu) findViewById(R.id.fabMenu);
         mEmptyView = (RelativeLayout) findViewById(R.id.emptyView);
@@ -122,7 +109,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 1) {
+                if (dy > 0.8) {
 
                     mFabMenu.hideMenuButton(true);
                 } else {
@@ -224,6 +211,8 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         pos = (int) view.getTag();
         Uri Uri = android.net.Uri.withAppendedPath(URI_CONTENT, String.valueOf(pos));
         DetailActivity.setData(Uri);
+
+
         startActivity(DetailActivity);
     }
 
@@ -239,7 +228,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         Uri Url = URI_CONTENT;
-        CursorLoader cursorLoader = new CursorLoader(this,Url,null,null,null,null);
+        CursorLoader cursorLoader = new CursorLoader(this, Url, null, null, null, new MemoUtils().PreferenceRestoreOrder(MainActivityMemo.this, "order"));
         return cursorLoader;
     }
 
@@ -270,20 +259,24 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
 
         switch (item.getItemId()) {
             case R.id.contact_me:
-                Intent mailto = new Intent(Intent.ACTION_SEND);
+                Intent mailto = new Intent(Intent.ACTION_SENDTO);
                 mailto.setType("text/plain");
+                mailto.setData(android.net.Uri.parse("mailto:mauro.dev88@gmail.com"));
                 mailto.putExtra(Intent.EXTRA_EMAIL, "mauro.dev88@gmail.com");
                 mailto.putExtra(Intent.EXTRA_SUBJECT, "Memo Material Support");
                 startActivity(Intent.createChooser(mailto, "Send Email"));
                 break;
+
             case R.id.about:
                 final Dialog about = new Dialog(MainActivityMemo.this);
                 about.setContentView(R.layout.about_layout);
-
                 Button closeAboutDialog = (Button) about.findViewById(R.id.close_about);
                 TextView linkAboutDialog = (TextView) about.findViewById(R.id.textLink);
-                if (linkAboutDialog != null) {
+                TextView linkAboutDialog2 = (TextView) about.findViewById(R.id.textLink2);
+
+                if (linkAboutDialog != null && linkAboutDialog2 != null) {
                     linkAboutDialog.setMovementMethod(LinkMovementMethod.getInstance());
+                    linkAboutDialog2.setMovementMethod(LinkMovementMethod.getInstance());
                 }
                 closeAboutDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -292,8 +285,53 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                     }
                 });
                 about.show();
+                break;
+
+            case R.id.settingMemo:
+                Intent settingPreferences = new Intent(MainActivityMemo.this, SettingActivity.class);
+                startActivity(settingPreferences);
+                break;
+
+            case R.id.sortOrder:
+                final Dialog sortDialog = new Dialog(MainActivityMemo.this);
+                sortDialog.setContentView(R.layout.dialog_sort_note);
+                final TextView sortDesc = (TextView) sortDialog.findViewById(R.id.sortDesc);
+                sortDesc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sortOrder = ContractMemoApp.MemoAppContract._ID + " DESC";
+                        new MemoUtils().PreferenceSaveOrder(MainActivityMemo.this, "order", sortOrder);
+                        getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivityMemo.this);
+                        sortDialog.dismiss();
+                    }
+                });
+
+                TextView sortAsc = (TextView) sortDialog.findViewById(R.id.sortAsc);
+                sortAsc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sortOrder = ContractMemoApp.MemoAppContract._ID + " ASC";
+                        new MemoUtils().PreferenceSaveOrder(MainActivityMemo.this, "order", sortOrder);
+                        getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivityMemo.this);
+                        sortDialog.dismiss();
+                    }
+                });
+
+                TextView sortAZ = (TextView) sortDialog.findViewById(R.id.sortAZ);
+                sortAZ.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sortOrder = ContractMemoApp.MemoAppContract.COLUMN_TITLE + " ASC";
+                        new MemoUtils().PreferenceSaveOrder(MainActivityMemo.this, "order", sortOrder);
+                        getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivityMemo.this);
+                        sortDialog.dismiss();
+                    }
+                });
+
+                sortDialog.show();
         }
         return super.onOptionsItemSelected(item);
+
     }
 
 

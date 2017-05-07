@@ -4,22 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".UI.DetailActivity">
 
-
-    <!--<item-->
-    <!--app:showAsAction="always"-->
-    <!--android:title="attach"-->
-    <!--android:id="@+id/btnAttachImageFile"-->
-    <!--android:icon="@drawable/ic_attach_file">-->
-    <!--</item>-->
-
-
-    <!--<item-->
-    <!--android:id="@+id/btnAddImage"-->
-    <!--android:foreground="?android:attr/selectableItemBackground"-->
-    <!--android:icon="@drawable/ic_photo"-->
-    <!--android:title="Image"-->
-    <!--app:showAsAction="always|withText"></item>-->
-
     <item
         android:id="@+id/shareNote"
         android:foreground="?android:attr/selectableItemBackground"
@@ -27,11 +11,6 @@
         android:title="share"
         app:showAsAction="always"></item>
 
-    <!--<item-->
-    <!--android:id="@+id/addFavouriteBtn"-->
-    <!--android:icon="@drawable/ic_fav_empty"-->
-    <!--android:title="@string/favourite"-->
-    <!--app:showAsAction="always"></item>-->
 
     <!--<item-->
     <!--android:id="@+id/recordMenu"-->
@@ -43,14 +22,14 @@
     <item
         android:id="@+id/delete_note_menu"
         android:foreground="?android:attr/selectableItemBackground"
-        android:icon="@drawable/ic_action_name"
+        android:icon="@drawable/ic_delete_white"
         android:title="Delete"
         app:showAsAction="always"></item>
 
     <item
         android:id="@+id/ins_note_menu"
         android:foreground="?android:attr/selectableItemBackground"
-        android:title="Save"
+        android:title="@string/Save"
         app:showAsAction="always"></item>
 
 
