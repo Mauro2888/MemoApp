@@ -4,6 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".UI.DetailActivity">
 
+    <!--<item-->
+    <!--android:icon="@drawable/ic_add_a_photo"-->
+    <!--android:id="@+id/btnAddPhoto"-->
+    <!--android:title="addImage"-->
+    <!--app:showAsAction="always"></item>-->
+
+    <item
+        android:id="@+id/btnAddImage"
+        android:icon="@drawable/ic_insert_photo"
+        android:title="addImage"
+        app:showAsAction="always"></item>
+
     <item
         android:id="@+id/shareNote"
         android:foreground="?android:attr/selectableItemBackground"

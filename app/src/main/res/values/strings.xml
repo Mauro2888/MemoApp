@@ -8,6 +8,7 @@
     <string name="alphabet">Alphabetically A - Z (title)</string>
     <string name="addNotePlease">Please insert a Note</string>
     <string name="ins_title">Note Title</string>
+    <string name="Insert_Memo">Insert Memo</string>
     <string name="sortby">sortby</string>
     <string name="ins_note">Write something here.....</string>
     <string name="insert_alert_note_title">Add new Memo</string>
@@ -26,10 +27,12 @@
     <string name="normal_note">Note</string>
     <string name="vocal_note">Vocal Note</string>
     <string name="ok_btn">Ok</string>
+    <string name="areyousure">Are you Sure?</string>
     <string name="themeChanger">Select color Theme</string>
     <string name="choose_color"> Choose color </string>
     <string name="change_color">Change Note color :</string>
     <string name="delete_note_alert">Are you sure you want to delete the note?</string>
+    <string name="delete_image_note">Delete photo?</string>
     <string name="delete_btn">Delete</string>
     <string name="cancel_btn">Cancel</string>
     <string name="discard_btn">Discard</string>
@@ -39,7 +42,7 @@
     <string name="memo_deleted">Memo deleted</string>
     <string name="open">open</string>
     <string name="close">close</string>
-    <string name="lastEdit">Last Edit:</string>
+    <string name="lastEdit">Last Edit : </string>
     <string name="favourite">Favourite</string>
     <string name="memoEdit">Memo Edit</string>
     <string name="appwidget_text">Note Widget</string>

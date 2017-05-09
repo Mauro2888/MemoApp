@@ -43,7 +43,6 @@ public class InsertNoteActivity extends AppCompatActivity {
     private ImageView mImageViewAddImage;
     private HelperClass mHelper;
     private FloatingActionButton mBtnColorPicker;
-    private String mTextFromOtherApps;
     private CollapsingToolbarLayout mCoolapsToolbar;
     private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
         @Override
@@ -62,7 +61,7 @@ public class InsertNoteActivity extends AppCompatActivity {
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_note);
         mCoolapsToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsToolbar);
         mImageViewAddImage = (ImageView) findViewById(R.id.imageViewAdd);
-        mCoolapsToolbar.setTitle("Insert Memo");
+        mCoolapsToolbar.setTitle(getString(R.string.Insert_Memo));
         mInsTitle = (EditText)findViewById(R.id.ins_title);
         mInsTitle.setTypeface(null, Typeface.BOLD);
         mInsNote = (EditText)findViewById(R.id.ins_nota);
@@ -95,6 +94,7 @@ public class InsertNoteActivity extends AppCompatActivity {
         mInsNote.setOnTouchListener(mOnTouchListener);
         mBtnColorPicker.setOnTouchListener(mOnTouchListener);
         new MemoUtils().PreferenceSave(InsertNoteActivity.this, "colorSaved", ContextCompat.getColor(InsertNoteActivity.this, R.color.materialBlue));
+
 
 
         mBtnColorPicker.setOnClickListener(new View.OnClickListener() {
@@ -233,6 +233,7 @@ public class InsertNoteActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
@@ -240,11 +241,11 @@ public class InsertNoteActivity extends AppCompatActivity {
             case R.id.ins_note_menu:
                InsertNote();
                 break;
-//            case R.id.btnAddImage:
-//                Intent addImage = new Intent(Intent.ACTION_GET_CONTENT);
-//                addImage.setType("image/*");
-//                startActivityForResult(Intent.createChooser(addImage, "Select Image"), 12);
-//                break;
+            case R.id.btnAddImage:
+                Intent addImage = new Intent(Intent.ACTION_GET_CONTENT);
+                addImage.setType("image/*");
+                startActivityForResult(Intent.createChooser(addImage, "Select Image"), 12);
+                break;
             case android.R.id.home:
                 if (mTouch || mInsTitle.length() > 0 || mInsNote.length() > 0) {
                     DiscartAlert();
@@ -300,6 +301,7 @@ public class InsertNoteActivity extends AppCompatActivity {
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_TITLE,mInsTitle.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mInsNote.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE,mMemoDate);
+            contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_IMAGES, new MemoUtils().PreferenceRestoreUriImage(InsertNoteActivity.this, "UriImageSave"));
             if (!mTouch){
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR, ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
             }else {
@@ -316,8 +318,8 @@ public class InsertNoteActivity extends AppCompatActivity {
             Uri uriImage = data.getData();
             if (uriImage != null) {
                 new MemoUtils().PreferenceSaveImageUri(InsertNoteActivity.this, "UriImageSave", uriImage.toString());
-                Glide.with(InsertNoteActivity.this).load(uriImage).fitCenter().into(mImageViewAddImage);
-                contentValues.put(ContractMemoApp.MemoAppContract.COlUMN_ATTACHMENT_ID, new MemoUtils().PreferenceRestoreUriImage(InsertNoteActivity.this, "UriImageSave"));
+                mImageViewAddImage.setVisibility(View.VISIBLE);
+                Glide.with(InsertNoteActivity.this).load(uriImage).centerCrop().into(mImageViewAddImage);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

@@ -54,6 +54,30 @@
             android:orientation="vertical"
             android:padding="15dp">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageViewAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitStart"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:id="@+id/deleteImageBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/shape_delete_btn"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_cancel"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
             <EditText
                 android:id="@+id/ins_title_detail"
                 style="@style/EditTextStyleNote"
@@ -75,12 +99,12 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_bottom"
-
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="top|start"
-                android:background="@null">
+                android:background="@null"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"

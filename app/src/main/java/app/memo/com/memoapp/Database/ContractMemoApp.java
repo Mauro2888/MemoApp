@@ -32,7 +32,8 @@ public class ContractMemoApp {
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_COLOR = "color";
         public static final String COLUMN_RECORD_AUDIO = "record";
-        public static final String COLUMN_NOTA_ID_ATTACH = "id_attachment";
+        public static final String COLUMN_IMAGES = "images_uri";
+        public static final String COlUMN_ID_NOTE = "id_note";
 
         public static final String TABLE_NAME_FAV = "memofav";
         public static final String COLUMN_FAV_TITLE = "titlefav";
@@ -45,8 +46,6 @@ public class ContractMemoApp {
         public static final String TABLE_NAME_IMAGE = "memoimage";
         public static final String COlUMN_ATTACHMENT_ID = _ID;
         public static final String COLUMN_URI_IMAGE = "urimage";
-
-
 
 
     }

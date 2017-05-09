@@ -10,7 +10,7 @@
     <dimen name="textSizeTitleCard">24sp</dimen>
     <dimen name="textSizeCardNote">14sp</dimen>
     <dimen name="paddingCard">11dp</dimen>
-    <dimen name="paddindDate">5dp</dimen>
+    <dimen name="paddindDate">4dp</dimen>
     <dimen name="paddingShapeCircle">4dp</dimen>
 
 </resources>

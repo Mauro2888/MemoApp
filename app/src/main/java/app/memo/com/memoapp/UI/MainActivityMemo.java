@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
@@ -44,7 +45,6 @@ import app.memo.com.memoapp.Database.CursorAdapterMemo;
 import app.memo.com.memoapp.Database.HelperClass;
 import app.memo.com.memoapp.MemoUtils.MemoUtils;
 import app.memo.com.memoapp.R;
-import app.memo.com.memoapp.SettingActivity;
 
 import static app.memo.com.memoapp.Database.ContractMemoApp.MemoAppContract.URI_CONTENT;
 
@@ -76,10 +76,17 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_memo);
+
+        if (Build.VERSION.SDK_INT > 23) {
+            requestPermissions(persmissionArray, REQUEST_CODE_PERMISSION);
+        }
+
+
+
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
         setTitle(R.string.home);
 
-        requestPermissions(persmissionArray, REQUEST_CODE_PERMISSION);
+
         new MemoUtils().PreferenceRestoreOrder(MainActivityMemo.this, "order");
 
         mFabMenu = (FloatingActionMenu) findViewById(R.id.fabMenu);
@@ -211,8 +218,6 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         pos = (int) view.getTag();
         Uri Uri = android.net.Uri.withAppendedPath(URI_CONTENT, String.valueOf(pos));
         DetailActivity.setData(Uri);
-
-
         startActivity(DetailActivity);
     }
 
@@ -238,6 +243,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         if (mAdapterMemo.getItemCount() <= 0) {
             mEmptyView.setVisibility(View.VISIBLE);
         } else mEmptyView.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
@@ -287,10 +293,10 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                 about.show();
                 break;
 
-            case R.id.settingMemo:
-                Intent settingPreferences = new Intent(MainActivityMemo.this, SettingActivity.class);
-                startActivity(settingPreferences);
-                break;
+//            case R.id.settingMemo:
+//                Intent settingPreferences = new Intent(MainActivityMemo.this, SettingActivity.class);
+//                startActivity(settingPreferences);
+//                break;
 
             case R.id.sortOrder:
                 final Dialog sortDialog = new Dialog(MainActivityMemo.this);

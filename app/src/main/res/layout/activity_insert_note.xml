@@ -11,7 +11,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="wrap_content"
-        android:layout_height="192dp"
+        android:layout_height="140dp"
         android:elevation="2dp"
         android:fitsSystemWindows="true"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -70,6 +70,20 @@
             android:orientation="vertical"
             android:padding="15dp">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageViewAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitStart"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
             <EditText
                 android:id="@+id/ins_title"
                 style="@style/EditTextStyleNote"
@@ -88,12 +102,6 @@
                 android:hint="@string/ins_note"
                 android:inputType="textCapSentences|textMultiLine|textPhonetic"
                 android:isScrollContainer="true" />
-
-            <ImageView
-                android:id="@+id/imageViewAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp" />
-
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

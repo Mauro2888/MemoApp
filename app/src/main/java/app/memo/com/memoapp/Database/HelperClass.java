@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static android.provider.BaseColumns._ID;
-
 /**
  * Created by Msi-Locale on 27/03/2017.
  */
@@ -20,6 +18,7 @@ public class HelperClass extends SQLiteOpenHelper {
         super(context,DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
@@ -31,9 +30,7 @@ public class HelperClass extends SQLiteOpenHelper {
                 ContractMemoApp.MemoAppContract.COLUMN_DATE + " TEXT, " +
                 ContractMemoApp.MemoAppContract.COLUMN_COLOR + " INTEGER, " +
                 ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO + " TEXT, " +
-                ContractMemoApp.MemoAppContract.COLUMN_NOTA_ID_ATTACH + " INTEGER, " +
-                " FOREIGN KEY (" + ContractMemoApp.MemoAppContract.COlUMN_ATTACHMENT_ID + ") REFERENCES "
-                + ContractMemoApp.MemoAppContract.TABLE_NAME_IMAGE + _ID +
+                ContractMemoApp.MemoAppContract.COLUMN_IMAGES + " TEXT " +
                 ")";
         sqLiteDatabase.execSQL(create_dataBase);
 
@@ -41,7 +38,8 @@ public class HelperClass extends SQLiteOpenHelper {
         String create_database_images = "CREATE TABLE IF NOT EXISTS " +
                 ContractMemoApp.MemoAppContract.TABLE_NAME_IMAGE + "( " +
                 ContractMemoApp.MemoAppContract.COlUMN_ATTACHMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ContractMemoApp.MemoAppContract.COLUMN_URI_IMAGE + " TEXT " +
+                ContractMemoApp.MemoAppContract.COlUMN_ID_NOTE + " INTEGER NOT NULL, " +
+                ContractMemoApp.MemoAppContract.COLUMN_URI_IMAGE + " TEXT NOT NULL " +
                 ")";
         sqLiteDatabase.execSQL(create_database_images);
 

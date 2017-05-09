@@ -8,9 +8,9 @@
         android:title="Ordery by"
         app:showAsAction="always"></item>
 
-    <item
-        android:id="@+id/settingMemo"
-        android:title="Settings"></item>
+    <!--<item-->
+    <!--android:id="@+id/settingMemo"-->
+    <!--android:title="Settings"></item>-->
 
     <item
         android:id="@+id/contact_me"

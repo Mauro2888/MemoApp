@@ -61,6 +61,7 @@
                     android:maxLines="10"
                     android:paddingBottom="5dp"
                     android:paddingLeft="@dimen/paddingCard"
+                    android:paddingRight="@dimen/paddingCard"
                     android:paddingTop="5dp"
                     android:textColor="#6c6c6c"
                     android:textSize="@dimen/textSizeCardNote"
@@ -75,9 +76,7 @@
                 android:layout_height="wrap_content"
                 android:divider="@drawable/divider"
                 android:orientation="vertical"
-                android:paddingBottom="2dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:padding="@dimen/paddindDate"
                 android:showDividers="beginning">
 
                 <LinearLayout
@@ -96,16 +95,17 @@
 
                     <ImageView
                         android:id="@+id/imageview_cursor_record"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
-                        android:scaleType="center" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.3" />
 
                     <ImageView
                         android:id="@+id/imageview_cursor"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.3"
                         android:scaleType="center" />
 
                 </LinearLayout>

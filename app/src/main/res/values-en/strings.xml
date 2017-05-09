@@ -47,4 +47,7 @@
     <string name="most_old">Date most old</string>
     <string name="most_recent">Date most recent</string>
     <string name="alphabet">Alphabetically A - Z (title)</string>
+    <string name="Insert_Memo">New Note</string>
+    <string name="areyousure">Are you Sure?</string>
+    <string name="delete_image_note">Delete photo?</string>
 </resources>

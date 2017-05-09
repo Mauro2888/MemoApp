@@ -47,4 +47,7 @@
     <string name="most_recent">Per Data (Più Recenti)</string>
     <string name="sortby">Ordina per</string>
     <string name="alphabet">Alfabeticamente  A - Z (title)</string>
+    <string name="Insert_Memo">Nuova nota</string>
+    <string name="areyousure">Sei Sicuro?</string>
+    <string name="delete_image_note">Cancellare la foto?</string>
 </resources>

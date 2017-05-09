@@ -53,6 +53,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         int date = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_DATE);
         int color = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_COLOR);
         int record = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_RECORD_AUDIO);
+        int images = mCursor.getColumnIndexOrThrow(ContractMemoApp.MemoAppContract.COLUMN_IMAGES);
 
         mCursor.moveToPosition(position);
 
@@ -61,6 +62,7 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         String dateNote = mCursor.getString(date);
         int colorNote = mCursor.getInt(color);
         String uriRecord = mCursor.getString(record);
+        String uriImages = mCursor.getString(images);
 
 
         int posId = mCursor.getInt(id);
@@ -71,6 +73,13 @@ public class CursorAdapterMemo extends RecyclerView.Adapter<CursorAdapterMemo.Vi
         holder.mDateBox.setText(dateNote);
         holder.mColorBox1.setBackgroundColor(colorNote);
         holder.mColorBox2.setBackgroundColor(colorNote);
+
+        if (uriImages != null) {
+            holder.mImageViewAttachIcon.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load(R.drawable.ic_attach_file_card).into(holder.mImageViewAttachIcon);
+        } else {
+            holder.mImageViewAttachIcon.setVisibility(View.INVISIBLE);
+        }
 
 
         if (uriRecord != null) {

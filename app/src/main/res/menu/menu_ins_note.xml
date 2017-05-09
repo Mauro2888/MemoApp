@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--<item-->
-    <!--android:id="@+id/btnAddImage"-->
-    <!--android:foreground="?android:attr/selectableItemBackground"-->
-    <!--android:icon="@drawable/ic_photo"-->
-    <!--android:title="Image"-->
-    <!--app:showAsAction="always"></item>-->
+    <item
+        android:id="@+id/btnAddImage"
+        android:icon="@drawable/ic_insert_photo"
+        android:title="addImage"
+        app:showAsAction="always"></item>
+
 
     <item
         android:id="@+id/ins_note_menu"
