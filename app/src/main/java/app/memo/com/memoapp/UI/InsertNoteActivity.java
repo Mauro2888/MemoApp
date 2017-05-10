@@ -302,6 +302,7 @@ public class InsertNoteActivity extends AppCompatActivity {
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_NOTETXT,mInsNote.getText().toString());
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE,mMemoDate);
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_IMAGES, new MemoUtils().PreferenceRestoreUriImage(InsertNoteActivity.this, "UriImageSave"));
+            new MemoUtils().RemovePreferenceSharedString(InsertNoteActivity.this, "UriImageSave");
             if (!mTouch){
                 contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_COLOR, ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
             }else {

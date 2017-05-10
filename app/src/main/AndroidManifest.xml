@@ -19,13 +19,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SettingActivity">
-
-        </activity>
+        <activity android:name=".SettingActivity"></activity>
 
         <provider
             android:name=".Database.ContentProvider"
@@ -35,7 +33,9 @@
         <activity android:name=".UI.InsertNoteActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.intent.action.SEND" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
@@ -51,6 +51,7 @@
                 android:resource="@xml/note_app_widget_info" />
         </receiver>
 
+        <activity android:name=".UI.FullScreenImageActivity"></activity>
     </application>
 
 </manifest>

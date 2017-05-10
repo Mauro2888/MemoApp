@@ -51,6 +51,15 @@ public class MemoUtils {
         editor.commit();
     }
 
+
+    public void RemovePreferenceSharedString(Context context, String key) {
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.remove(key);
+        editor.commit();
+    }
+
+
     public String PreferenceRestoreUriImage(Context context, String key) {
         SharedPreferences restore = PreferenceManager.getDefaultSharedPreferences(context);
         String resoreInt = restore.getString(key, null);

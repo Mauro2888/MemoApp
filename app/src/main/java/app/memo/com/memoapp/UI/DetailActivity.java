@@ -55,7 +55,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private static final int LOADER_ID_DETAIL = 5043;
     public SQLiteDatabase mSQLdata;
     public boolean mTouched = false;
-    String uriData;
     Uri mContentUri;
     String dateTxt;
     int IDPosition;
@@ -125,6 +124,16 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mTitleEdit.setOnTouchListener(mTouchedListener);
         mNoteEdit.setOnTouchListener(mTouchedListener);
         mChangeColorBtn.setOnTouchListener(mTouchedListener);
+
+        mImageAdded.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent fullScreenImages = new Intent(DetailActivity.this, FullScreenImageActivity.class);
+                fullScreenImages.putExtra("uriFullScreen", new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
+                startActivity(fullScreenImages);
+            }
+        });
+
 
         mBtnDeleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -489,6 +498,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             contentValues.put(ContractMemoApp.MemoAppContract.COLUMN_DATE, new MemoUtils().GetDate());
         }
         getContentResolver().update(mContentUri, contentValues, null, null);
+        new MemoUtils().RemovePreferenceSharedString(DetailActivity.this, "UriImageSave");
         finish();
     }
 
@@ -497,12 +507,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 12 && resultCode == RESULT_OK) {
-            Uri uriImage = data.getData();
-            if (uriImage != null) {
-                new MemoUtils().PreferenceSaveImageUri(DetailActivity.this, "UriImageSave", uriImage.toString());
+            Uri uriDataImage = data.getData();
+            if (uriDataImage != null) {
+                new MemoUtils().PreferenceSaveImageUri(DetailActivity.this, "UriImageSave", uriDataImage.toString());
                 mSQLdata = mHelper.getWritableDatabase();
                 ContentValues images = new ContentValues();
-                images.put(ContractMemoApp.MemoAppContract.COLUMN_IMAGES, new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
+                images.put(ContractMemoApp.MemoAppContract.COLUMN_IMAGES, String.valueOf(uriDataImage));
                 getContentResolver().update(mContentUri, images, null, null);
             }
 
