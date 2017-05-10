@@ -1,6 +1,6 @@
 # MemoMaterial
 Color Memo application 
-- Now 0.9
+- Now 1.0
 <p align="center">
   <img src="https://cloud.githubusercontent.com/assets/15950481/25354952/42302490-2935-11e7-8e49-a39be8fa1607.gif" width="250"/>
   <img src="https://cloud.githubusercontent.com/assets/15950481/25355399/ca027386-2936-11e7-93d3-1ed395e946bd.gif" width="250" height="445"/>
@@ -12,6 +12,7 @@ Color Memo application
 </p>
 
 # Features
+- Add photo form Gallery
 - Color Picker
 - Speech to Text function
 - Material Design with color
@@ -21,6 +22,5 @@ Color Memo application
 
 # In development
 - Audio Recording
-- Image Loading
 - Favourites notes
 - Widget support
