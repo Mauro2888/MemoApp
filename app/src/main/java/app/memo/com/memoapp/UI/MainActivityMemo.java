@@ -5,12 +5,14 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,6 +23,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -86,7 +89,7 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(LOADER_ID,null,this);
         setTitle(R.string.home);
 
-
+        //Restore preference order from menu
         new MemoUtils().PreferenceRestoreOrder(MainActivityMemo.this, "order");
 
         mFabMenu = (FloatingActionMenu) findViewById(R.id.fabMenu);
@@ -291,6 +294,33 @@ public class MainActivityMemo extends AppCompatActivity implements LoaderManager
                     }
                 });
                 about.show();
+                break;
+            case R.id.cardStyle:
+                final Dialog styleDialog = new Dialog(MainActivityMemo.this);
+                styleDialog.setContentView(R.layout.card_style_layout);
+                final TextView normalStyle = (TextView) styleDialog.findViewById(R.id.normalStyle);
+                normalStyle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mLayoutManager = new LinearLayoutManager(MainActivityMemo.this);
+                        mRecyclerMemo.setLayoutManager(mLayoutManager);
+                        getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivityMemo.this);
+                        styleDialog.dismiss();
+                    }
+                });
+
+                TextView compactStyle = (TextView) styleDialog.findViewById(R.id.compactStyle);
+                compactStyle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        mRecyclerMemo.setLayoutManager(mLayoutManager);
+                        getSupportLoaderManager().restartLoader(LOADER_ID, null, MainActivityMemo.this);
+                        styleDialog.dismiss();
+                    }
+                });
+
+                styleDialog.show();
                 break;
 
 //            case R.id.settingMemo:

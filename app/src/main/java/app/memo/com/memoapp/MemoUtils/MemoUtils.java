@@ -31,6 +31,7 @@ public class MemoUtils {
     }
 
 
+
     public void PreferenceSave(Context context, String key,int value){
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = shared.edit();
@@ -41,6 +42,19 @@ public class MemoUtils {
         SharedPreferences restore = PreferenceManager.getDefaultSharedPreferences(context);
         int resoreInt = restore.getInt(key,value);
         return resoreInt;
+    }
+
+    public void saveBoolStatus(Context context,String key, Boolean value){
+        SharedPreferences saveBool = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = saveBool.edit();
+        editor.putBoolean(key,value);
+        editor.commit();
+    }
+
+    public Boolean restoreBoolStaus(Context context, String key){
+        SharedPreferences restore = PreferenceManager.getDefaultSharedPreferences(context);
+        Boolean resoreBool = restore.getBoolean(key,false);
+        return resoreBool;
     }
 
 
@@ -62,7 +76,7 @@ public class MemoUtils {
 
     public String PreferenceRestoreUriImage(Context context, String key) {
         SharedPreferences restore = PreferenceManager.getDefaultSharedPreferences(context);
-        String resoreInt = restore.getString(key, null);
+        String resoreInt = restore.getString(key,null);
         return resoreInt;
     }
 

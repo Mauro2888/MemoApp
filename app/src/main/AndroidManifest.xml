@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".UI.SettingActivity"></activity>
 
         <provider
             android:name=".Database.ContentProvider"
@@ -41,7 +41,7 @@
         </activity>
         <activity android:name=".UI.DetailActivity" />
 
-        <receiver android:name=".NoteAppWidget">
+        <receiver android:name=".UI.NoteAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

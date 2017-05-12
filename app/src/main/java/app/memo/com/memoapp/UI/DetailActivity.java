@@ -12,8 +12,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +26,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -54,6 +57,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private static final int REQUEST_PERMISSION_ID = 201;
     private static final int LOADER_ID_DETAIL = 5043;
     public SQLiteDatabase mSQLdata;
+    private HelperClass  mHelper;
     public boolean mTouched = false;
     Uri mContentUri;
     String dateTxt;
@@ -78,7 +82,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private EditText mTitleEdit;
     private EditText mNoteEdit;
     private TextView mLastEdit;
-    private HelperClass  mHelper;
     private ImageView mImageAdded;
     private CollapsingToolbarLayout mCollapsToolBar;
     private int colorValue;
@@ -129,8 +132,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onClick(View view) {
                 Intent fullScreenImages = new Intent(DetailActivity.this, FullScreenImageActivity.class);
-                fullScreenImages.putExtra("uriFullScreen", new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave"));
+                fullScreenImages.setData(mContentUri);
                 startActivity(fullScreenImages);
+                Log.d("URI"," " + new MemoUtils().PreferenceRestoreUriImage(DetailActivity.this, "UriImageSave") );
             }
         });
 
@@ -159,6 +163,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 final ImageView mBtnLightGreen = (ImageView) colorDialog.findViewById(R.id.btnLightGreen);
 
                 mBtnDarkPink.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialDarkPink));
@@ -173,6 +178,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 });
 
                 mBtOrange.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialOrange));
@@ -187,6 +193,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 });
 
                 mBtnPink.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialPink));
@@ -201,6 +208,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 });
 
                 mBtnGreen.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialGreen));
@@ -216,6 +224,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 });
 
                 mBtnRed.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialRed));
@@ -230,6 +239,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                     }
                 });
                 mBtnBlue.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialBlue));
@@ -244,6 +254,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 });
 
                 mBtnDarkIndigo.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialIndigo));
@@ -258,6 +269,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 });
 
                 mBtnLightGreen.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onClick(View view) {
                         new MemoUtils().PreferenceSave(DetailActivity.this, "colorSaved", ContextCompat.getColor(getApplicationContext(), R.color.materialLightGreen));
@@ -277,6 +289,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 //
     }
 
+
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String [] projector = {
@@ -292,6 +306,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         return cursorLoader;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
@@ -509,7 +524,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         if (requestCode == 12 && resultCode == RESULT_OK) {
             Uri uriDataImage = data.getData();
             if (uriDataImage != null) {
-                new MemoUtils().PreferenceSaveImageUri(DetailActivity.this, "UriImageSave", uriDataImage.toString());
                 mSQLdata = mHelper.getWritableDatabase();
                 ContentValues images = new ContentValues();
                 images.put(ContractMemoApp.MemoAppContract.COLUMN_IMAGES, String.valueOf(uriDataImage));

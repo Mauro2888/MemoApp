@@ -1,4 +1,4 @@
-package app.memo.com.memoapp;
+package app.memo.com.memoapp.UI;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import app.memo.com.memoapp.R;
 import app.memo.com.memoapp.UI.MainActivityMemo;
 
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="400dp"
+    android:padding="20dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/TextInsNotaAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:padding="5dp"
+        android:text="Visualizza note" />
+
+    <TextView
+        android:gravity="center|left"
+        android:drawablePadding="@dimen/paddingCard"
+        android:drawableLeft="@drawable/ic_dehaze"
+        android:id="@+id/normalStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp"
+        android:text="Lista" />
+
+    <TextView
+        android:drawablePadding="@dimen/paddingCard"
+        android:drawableLeft="@drawable/ic_grid_on"
+        android:gravity="center|left"
+        android:id="@+id/compactStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp"
+        android:text="Griglia " />
+
+</LinearLayout>

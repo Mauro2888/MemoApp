@@ -1,10 +1,12 @@
-package app.memo.com.memoapp;
+package app.memo.com.memoapp.UI;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+
+import app.memo.com.memoapp.R;
 
 /**
  * Created by Msi-Locale on 05/05/2017.

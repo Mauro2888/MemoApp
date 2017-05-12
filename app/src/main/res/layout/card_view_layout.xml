@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="10"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="@dimen/paddingCard"
                     android:paddingLeft="@dimen/paddingCard"
                     android:paddingRight="@dimen/paddingCard"
                     android:paddingTop="5dp"
