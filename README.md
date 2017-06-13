@@ -1,4 +1,7 @@
 # MemoMaterial
+
+BETA AVAILABLE ON PLAYSTORE https://play.google.com/store/apps/details?id=app.memo.com.memoapp
+
 Color Memo application 
 - Now 1.0
 <p align="center">
