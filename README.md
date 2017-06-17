@@ -3,7 +3,10 @@
 
 
 BETA AVAILABLE ON PLAYSTORE https://play.google.com/store/apps/details?id=app.memo.com.memoapp
-<img src="https://user-images.githubusercontent.com/15950481/27251845-5bd01a14-5350-11e7-9102-ed5351092a62.png" width"100"/>
+<p>
+<img src="https://user-images.githubusercontent.com/15950481/27251845-5bd01a14-5350-11e7-9102-ed5351092a62.png" width="250"/>
+<p/>
+
 Color Memo application 
 - Now 1.0
 <p align="center">
