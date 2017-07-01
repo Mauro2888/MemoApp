@@ -16,7 +16,7 @@ Color Memo application
 <p/>
 <p>
   <img src="https://user-images.githubusercontent.com/15950481/27763128-2b115094-5e7e-11e7-9b87-17ebaffe2d8f.png" width="250"/>
-  <img src="https://user-images.githubusercontent.com/15950481/27763129-2b2f2376-5e7e-11e7-8ebe-4320562cb1ac.png"/>
+  <img src="https://user-images.githubusercontent.com/15950481/27763129-2b2f2376-5e7e-11e7-8ebe-4320562cb1ac.png" width="250/>
   <img src="https://cloud.githubusercontent.com/assets/15950481/25306264/ea8df124-2789-11e7-9c7b-76b46add6887.png" width="250"/>
 </p>
 
